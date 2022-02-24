@@ -1,0 +1,109 @@
+.farmlist {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-right: 16px;
+  padding-left: 30px;
+}
+
+.farmlist_title {
+  display: flex;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.farmlist_action_area {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.action_filter_area {
+  display: flex;
+}
+
+.filter_button_text,
+.button_text {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.ant-input:placeholder-shown {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.action_filter_state {
+  display: flex;
+}
+
+.action_filter_city {
+  display: flex;
+  margin-left: 16px;
+}
+
+.farmlist_search_area {
+  display: flex;
+}
+
+.farmlist_search {
+  display: flex;
+}
+
+.farmlist_create_new {
+  display: flex;
+  margin-left: 16px;
+}
+
+.farmlist_table {
+  display: flex;
+  width: 100%;
+  padding: 20px 16px;
+  background-color: white;
+  margin-top: 16px;
+  min-height: 75vh;
+}
+
+.ant-table-thead th {
+  font-size: 14px !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  line-height: 22px !important;
+  letter-spacing: 0em !important;
+  text-align: left !important;
+}
+
+.ant-table-tbody td {
+  font-size: 14px !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  line-height: 22px !important;
+  letter-spacing: 0em !important;
+  text-align: left !important;
+}
+
+.dot_badge {
+  display: flex;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.status_text {
+  display: flex;
+  align-items: center;
+}
