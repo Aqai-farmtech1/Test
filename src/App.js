@@ -6,10 +6,12 @@ import "antd/dist/antd.css";
 import Dashboard from "./pages/dasboard/Dashboard";
 import FarmList from "./pages/farm list/FarmList";
 import FarmInfo from "./pages/farm info/FarmInfo";
+import Login from "./pages/login/Login";
 
 function App() {
   return (
     <Routes>
+      <Route path="/login" element={<Login />} />
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />

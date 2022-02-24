@@ -18,7 +18,7 @@ import { getpathArray } from "../../utils/pathnameToArray";
 const { Header, Sider, Content } = Layout;
 
 export default function MainLayout() {
-  const [collapse, setCollapse] = useState(false);
+  const [collapse, setCollapse] = useState(true);
   const [selectedMenu, setSelectedMenu] = useState("1");
   const location = useLocation();
   const { pathname } = location;
@@ -42,25 +42,25 @@ export default function MainLayout() {
   const navMenuItem = [
     {
       key: "1",
-      icon: <UserOutlined />,
+      icon: <UserOutlined style={{ fontSize: "18px" }} />,
       link: "/dashboard",
       title: "Dashboard",
     },
     {
       key: "2",
-      icon: <VideoCameraOutlined />,
+      icon: <VideoCameraOutlined style={{ fontSize: "18px" }} />,
       link: "/farm",
       title: "Farm",
     },
     {
       key: "3",
-      icon: <VideoCameraOutlined />,
+      icon: <VideoCameraOutlined style={{ fontSize: "18px" }} />,
       link: "/transaction",
       title: "Transaction",
     },
     {
       key: "4",
-      icon: <VideoCameraOutlined />,
+      icon: <VideoCameraOutlined style={{ fontSize: "18px" }} />,
       link: "/report",
       title: "Report",
     },
@@ -77,7 +77,6 @@ export default function MainLayout() {
     <Layout>
       <Sider
         onCollapse={handleCollapse}
-        collapsible
         collapsed={collapse}
         className="layout_sider"
       >
