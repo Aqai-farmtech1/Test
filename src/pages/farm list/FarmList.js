@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Dropdown, Menu, Input, Table, Badge } from "antd";
 import { DownOutlined, UserOutlined, PlusOutlined } from "@ant-design/icons";
 import "./farmlist.css";
+import { NavLink } from "react-router-dom";
 
 const { Search } = Input;
 
@@ -19,7 +20,16 @@ export default function FarmList() {
     {
       title: "Farm Code",
       dataIndex: "farmcode",
-      render: (value) => <div style={{ color: "blue" }}>{value}</div>,
+      render: (value, columns) => (
+        <NavLink
+          to={{
+            pathname: `/farm/${columns.farmname}`,
+          }}
+          state={{ farmcode: value }}
+        >
+          <div style={{ color: "blue" }}>{value}</div>
+        </NavLink>
+      ),
     },
     {
       title: "Farm Name",
@@ -69,7 +79,7 @@ export default function FarmList() {
       dataIndex: "action",
       width: "6%",
       render: () => (
-        <Button block type="primary" ghost>
+        <Button style={{ borderRadius: "4px" }} block type="primary" ghost>
           View
         </Button>
       ),
@@ -184,7 +194,7 @@ export default function FarmList() {
         <div className="action_filter_area">
           <div className="action_filter_state">
             <Dropdown trigger={["click"]} overlay={menu}>
-              <Button size="large">
+              <Button style={{ borderRadius: "4px" }} size="large">
                 <span className="filter_button_text">
                   State : {selectedState}
                 </span>
@@ -194,7 +204,7 @@ export default function FarmList() {
           </div>
           <div className="action_filter_city">
             <Dropdown trigger={["click"]} overlay={menu}>
-              <Button size="large">
+              <Button size="large" style={{ borderRadius: "4px" }}>
                 <span className="filter_button_text">
                   City : {selectedCity}
                 </span>
@@ -209,12 +219,17 @@ export default function FarmList() {
               placeholder="Search by Code, Farm Name"
               allowClear
               onSearch={handleSearch}
-              style={{ width: 264 }}
               size="large"
+              style={{ borderRadius: "4px", width: 264 }}
             />
           </div>
           <div className="farmlist_create_new">
-            <Button type="primary" icon={<PlusOutlined />} size="large">
+            <Button
+              style={{ borderRadius: "4px" }}
+              type="primary"
+              icon={<PlusOutlined />}
+              size="large"
+            >
               <span className="button_text">Create New</span>
             </Button>
           </div>

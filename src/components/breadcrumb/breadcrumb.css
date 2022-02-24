@@ -1,0 +1,13 @@
+.breadcrumb {
+  display: flex;
+  margin-left: 30px;
+}
+
+.breadcrum_item {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+}
