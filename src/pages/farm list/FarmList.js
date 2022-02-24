@@ -55,7 +55,6 @@ export default function FarmList() {
     {
       title: "Mortality",
       dataIndex: "mortality",
-      ellipsis: true,
     },
     {
       title: "Status",
@@ -77,9 +76,9 @@ export default function FarmList() {
     {
       title: "Action",
       dataIndex: "action",
-      width: "6%",
+      width: "8%",
       render: () => (
-        <Button style={{ borderRadius: "4px" }} block type="primary" ghost>
+        <Button style={{ borderRadius: "4px" }} type="primary" ghost>
           View
         </Button>
       ),
@@ -237,6 +236,7 @@ export default function FarmList() {
       </div>
       <div className="farmlist_table">
         <Table
+          style={{ width: "100%" }}
           columns={columns}
           dataSource={data}
           onChange={handleTableChange}

@@ -39,6 +39,7 @@ export default function Login() {
                     ]}
                   >
                     <Input
+                      size="large"
                       prefix={<UserOutlined className="site-form-item-icon" />}
                       placeholder="Email"
                     />
@@ -54,6 +55,7 @@ export default function Login() {
                     ]}
                   >
                     <Input
+                      size="large"
                       prefix={<LockOutlined className="site-form-item-icon" />}
                       type="password"
                       placeholder="Password"
@@ -81,6 +83,10 @@ export default function Login() {
                   </Form.Item>
                 </Form>
               </div>
+            </div>
+            <div className="copyrights_text">
+              Copyright ©2020 Produced by Ant Finance Experience Technology
+              Department
             </div>
           </div>
         </Col>

@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Dropdown, Layout, Menu } from "antd";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
-import {
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-} from "@ant-design/icons";
+import { UserOutlined, VideoCameraOutlined } from "@ant-design/icons";
 import "./mainlayout.css";
 import {
   profileImage,
@@ -34,9 +30,9 @@ export default function MainLayout() {
 
   useEffect(() => {
     const currentNavItem = navMenuItem.find(
-      (obj) => obj.link === `/${pathnameList[0].link}`
+      (obj) => obj.link === `/${pathnameList[0]?.link || ""}`
     );
-    setSelectedMenu(currentNavItem.key);
+    setSelectedMenu(currentNavItem?.key || "1");
   }, [pathname]);
 
   const navMenuItem = [

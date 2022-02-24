@@ -7,6 +7,8 @@ import Dashboard from "./pages/dasboard/Dashboard";
 import FarmList from "./pages/farm list/FarmList";
 import FarmInfo from "./pages/farm info/FarmInfo";
 import Login from "./pages/login/Login";
+import Transaction from "./pages/transaction/Transaction";
+import Report from "./pages/report/Report";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="farm" element={<FarmList />} />
         <Route path="farm/:farmid" element={<FarmInfo />} />
+        <Route path="transaction" element={<Transaction />} />
+        <Route path="report" element={<Report />} />
       </Route>
     </Routes>
   );
