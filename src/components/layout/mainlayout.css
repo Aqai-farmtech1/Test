@@ -111,3 +111,11 @@
   justify-content: center;
   align-items: center;
 }
+
+.ant-tooltip {
+  display: none !important;
+}
+
+.notification_icon:hover {
+  cursor: pointer;
+}

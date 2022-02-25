@@ -5,4 +5,4 @@ export const layoutSiderLogo = require("../assets/images/layout_sider_logo.png")
 export { notificationIcon };
 
 //Login Page Images
-export const loginImage = require("../assets/images/login_image.png");
+export const loginImage = require("../assets/images/login_image900*900.png");

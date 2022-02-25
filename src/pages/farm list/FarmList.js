@@ -3,6 +3,7 @@ import { Button, Dropdown, Menu, Input, Table, Badge } from "antd";
 import { DownOutlined, UserOutlined, PlusOutlined } from "@ant-design/icons";
 import "./farmlist.css";
 import { NavLink } from "react-router-dom";
+import PageTitle from "../../components/pagetitle/PageTitle";
 
 const { Search } = Input;
 
@@ -27,7 +28,17 @@ export default function FarmList() {
           }}
           state={{ farmcode: value }}
         >
-          <div style={{ color: "blue" }}>{value}</div>
+          <div
+            style={{
+              color: "#2D9CDB",
+              fontStyle: "normal",
+              fontSize: "14px",
+              fontWeight: 500,
+              lineHeight: "22px",
+            }}
+          >
+            {value}
+          </div>
         </NavLink>
       ),
     },
@@ -77,10 +88,17 @@ export default function FarmList() {
       title: "Action",
       dataIndex: "action",
       width: "8%",
-      render: () => (
-        <Button style={{ borderRadius: "4px" }} type="primary" ghost>
-          View
-        </Button>
+      render: (value, columns) => (
+        <NavLink
+          to={{
+            pathname: `/farm/${columns.farmname}`,
+          }}
+          state={{ farmcode: columns.farmcode }}
+        >
+          <Button style={{ borderRadius: "4px" }} type="primary" ghost>
+            View
+          </Button>
+        </NavLink>
       ),
     },
   ];
@@ -88,7 +106,7 @@ export default function FarmList() {
   const data = [
     {
       key: 1,
-      farmcode: "FRM-21515",
+      farmcode: "FRM-123456",
       farmname: "Red Hills Farm",
       location: "Chennai-TN",
       readytosale: 1000,
@@ -100,7 +118,7 @@ export default function FarmList() {
     },
     {
       key: 2,
-      farmcode: "FRM-21515",
+      farmcode: "FRM-111111",
       farmname: "Red Hills Farm",
       location: "Chennai-TN",
       readytosale: 1000,
@@ -112,7 +130,7 @@ export default function FarmList() {
     },
     {
       key: 3,
-      farmcode: "FRM-21515",
+      farmcode: "FRM-222222",
       farmname: "Red Hills Farm",
       location: "Chennai-TN",
       readytosale: 1000,
@@ -124,7 +142,7 @@ export default function FarmList() {
     },
     {
       key: 4,
-      farmcode: "FRM-21515",
+      farmcode: "FRM-333333",
       farmname: "Red Hills Farm",
       location: "Chennai-TN",
       readytosale: 1000,
@@ -136,7 +154,7 @@ export default function FarmList() {
     },
     {
       key: 5,
-      farmcode: "FRM-21515",
+      farmcode: "FRM-444444",
       farmname: "Red Hills Farm",
       location: "Chennai-TN",
       readytosale: 1000,
@@ -148,7 +166,7 @@ export default function FarmList() {
     },
     {
       key: 6,
-      farmcode: "FRM-21515",
+      farmcode: "FRM-555555",
       farmname: "Red Hills Farm",
       location: "Chennai-TN",
       readytosale: 1000,
@@ -160,7 +178,7 @@ export default function FarmList() {
     },
     {
       key: 7,
-      farmcode: "FRM-21515",
+      farmcode: "FRM-666666",
       farmname: "Red Hills Farm",
       location: "Chennai-TN",
       readytosale: 1000,
@@ -188,7 +206,7 @@ export default function FarmList() {
 
   return (
     <div className="farmlist">
-      <div className="farmlist_title">Farms</div>
+      <PageTitle title={"Farms"} />
       <div className="farmlist_action_area">
         <div className="action_filter_area">
           <div className="action_filter_state">
@@ -223,14 +241,16 @@ export default function FarmList() {
             />
           </div>
           <div className="farmlist_create_new">
-            <Button
-              style={{ borderRadius: "4px" }}
-              type="primary"
-              icon={<PlusOutlined />}
-              size="large"
-            >
-              <span className="button_text">Create New</span>
-            </Button>
+            <NavLink to="/farm/create">
+              <Button
+                style={{ borderRadius: "4px" }}
+                type="primary"
+                icon={<PlusOutlined />}
+                size="large"
+              >
+                <span className="button_text">Create New</span>
+              </Button>
+            </NavLink>
           </div>
         </div>
       </div>

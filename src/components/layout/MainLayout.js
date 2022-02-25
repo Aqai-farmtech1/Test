@@ -7,9 +7,9 @@ import {
   profileImage,
   notificationIcon,
   layoutSiderLogo,
-} from "../../constants/constants";
+} from "../../utils/constants";
 import BreadCrumb from "../breadcrumb/BreadCrumb";
-import { getpathArray } from "../../utils/pathnameToArray";
+import { getPathArray } from "../../utils/urlPathConversion";
 
 const { Header, Sider, Content } = Layout;
 
@@ -18,7 +18,7 @@ export default function MainLayout() {
   const [selectedMenu, setSelectedMenu] = useState("1");
   const location = useLocation();
   const { pathname } = location;
-  const pathnameList = getpathArray(pathname);
+  const pathnameList = getPathArray(pathname);
 
   const handleMenuClick = (val) => {
     setCollapse(val);
@@ -95,7 +95,11 @@ export default function MainLayout() {
             <BreadCrumb />
             <ul>
               <li>
-                <img src={notificationIcon} alt="notification icon" />
+                <img
+                  src={notificationIcon}
+                  className="notification_icon"
+                  alt="notification icon"
+                />
               </li>
               <li>
                 <Dropdown trigger={["click"]} overlay={profileMenu}>

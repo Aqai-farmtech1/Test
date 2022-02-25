@@ -2,22 +2,20 @@ import React from "react";
 import { Breadcrumb } from "antd";
 import { NavLink, useLocation } from "react-router-dom";
 import "./breadcrumb.css";
-import { getpathArray } from "../../utils/pathnameToArray";
+import { getPathArray, getPathName } from "../../utils/urlPathConversion";
 
 export default function BreadCrumb() {
   const location = useLocation();
   const { pathname, state } = location;
-  const pathNameList = getpathArray(pathname);
+  const pathNameList = getPathArray(pathname);
 
   return (
     <div className="breadcrumb">
       {pathNameList.length > 1 && (
         <Breadcrumb>
           {pathNameList.map((el, index) => {
-            const routeLink = `/${pathNameList
-              .slice(0, index + 1)
-              .map((el) => el.link)
-              .join("/")}`;
+            const routeLink = getPathName(pathNameList, index);
+            const encodedRouteLink = encodeURI(routeLink);
             const isLast = index === pathNameList.length - 1;
 
             return (
@@ -25,7 +23,7 @@ export default function BreadCrumb() {
                 {isLast ? (
                   <span className="breadcrum_item">{el.name}</span>
                 ) : (
-                  <NavLink to={routeLink} state={state}>
+                  <NavLink to={encodedRouteLink} state={state}>
                     <span className="breadcrum_item">{el.name}</span>
                   </NavLink>
                 )}

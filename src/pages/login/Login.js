@@ -2,11 +2,25 @@ import React from "react";
 import { Row, Col, Form, Input, Checkbox, Button } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "./login.css";
-import { loginImage } from "../../constants/constants";
+import { loginImage } from "../../utils/constants";
+import axios from "axios";
 
 export default function Login() {
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+  const handleFormSubmit = async (values) => {
+    const { email, password, remember } = values;
+    try {
+      const res = await axios({
+        method: "POST",
+        url: "https://1c36-2405-201-e02b-10ae-8530-f265-e2f1-f241.ngrok.io/v1/login/",
+        data: {
+          email,
+          password,
+        },
+      });
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -26,15 +40,19 @@ export default function Login() {
                   name="normal_login"
                   className="login-form"
                   initialValues={{ remember: true }}
-                  onFinish={onFinish}
+                  onFinish={handleFormSubmit}
                 >
                   <Form.Item
                     className="username_input_form"
-                    name="username"
+                    name="email"
                     rules={[
                       {
                         required: true,
-                        message: "Please input your Username!",
+                        message: "Email Required!",
+                      },
+                      {
+                        type: "email",
+                        message: "Invalid Email!",
                       },
                     ]}
                   >
@@ -54,7 +72,7 @@ export default function Login() {
                       },
                     ]}
                   >
-                    <Input
+                    <Input.Password
                       size="large"
                       prefix={<LockOutlined className="site-form-item-icon" />}
                       type="password"

@@ -4,6 +4,6 @@ import "./farminfo.css";
 
 export default function FarmInfo() {
   const location = useLocation();
-  console.log(location);
-  return <div>FarmInfo</div>;
+  const { state } = location;
+  return <div>{state.farmcode}</div>;
 }
