@@ -1,3 +1,3 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "url";
+axios.defaults.baseURL = process.env;

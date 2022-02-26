@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Dropdown, Menu, Input, Table, Badge } from "antd";
 import { DownOutlined, UserOutlined, PlusOutlined } from "@ant-design/icons";
 import "./farmlist.css";
 import { NavLink } from "react-router-dom";
 import PageTitle from "../../components/pagetitle/PageTitle";
+import usePageInfo from "../../hooks/usePageInfo";
 
 const { Search } = Input;
 
 export default function FarmList() {
   const [selectedState, setSelectedState] = useState("All");
   const [selectedCity, setSelectedCity] = useState("All");
+  const { setPageTitle } = usePageInfo();
+
+  useEffect(() => {
+    setPageTitle("Farm");
+  }, [setPageTitle]);
 
   const handleMenuClick = () => {};
 
@@ -24,9 +30,8 @@ export default function FarmList() {
       render: (value, columns) => (
         <NavLink
           to={{
-            pathname: `/farm/${columns.farmname}`,
+            pathname: `/farm/${value}`,
           }}
-          state={{ farmcode: value }}
         >
           <div
             style={{
@@ -91,9 +96,8 @@ export default function FarmList() {
       render: (value, columns) => (
         <NavLink
           to={{
-            pathname: `/farm/${columns.farmname}`,
+            pathname: `/farm/${columns.farmcode}`,
           }}
-          state={{ farmcode: columns.farmcode }}
         >
           <Button style={{ borderRadius: "4px" }} type="primary" ghost>
             View
@@ -206,7 +210,6 @@ export default function FarmList() {
 
   return (
     <div className="farmlist">
-      <PageTitle title={"Farms"} />
       <div className="farmlist_action_area">
         <div className="action_filter_area">
           <div className="action_filter_state">

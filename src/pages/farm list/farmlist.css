@@ -2,8 +2,6 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding-right: 16px;
-  padding-left: 30px;
 }
 
 .farmlist_title {
@@ -75,6 +73,7 @@
   background-color: white;
   margin-top: 16px;
   min-height: 75vh;
+  border-radius: 10px;
 }
 
 .ant-table-thead th {

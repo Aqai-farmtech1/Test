@@ -4,23 +4,17 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "./login.css";
 import { loginImage } from "../../utils/constants";
 import axios from "axios";
+import tryCatch from "../../helper/tryCatch.helper";
 
 export default function Login() {
   const handleFormSubmit = async (values) => {
     const { email, password, remember } = values;
-    try {
-      const res = await axios({
-        method: "POST",
-        url: "https://1c36-2405-201-e02b-10ae-8530-f265-e2f1-f241.ngrok.io/v1/login/",
-        data: {
-          email,
-          password,
-        },
-      });
-      console.log(res);
-    } catch (err) {
-      console.log(err);
-    }
+    const [response, error] = await tryCatch(
+      axios({
+        method: "GET",
+        url: "https://jsonplaceholder.typicode.com/todos/1",
+      })
+    );
   };
 
   return (

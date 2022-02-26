@@ -10,12 +10,15 @@ import {
 } from "../../utils/constants";
 import BreadCrumb from "../breadcrumb/BreadCrumb";
 import { getPathArray } from "../../utils/urlPathConversion";
+import PageTitle from "../pagetitle/PageTitle";
+import usePageInfo from "../../hooks/usePageInfo";
 
 const { Header, Sider, Content } = Layout;
 
 export default function MainLayout() {
   const [collapse, setCollapse] = useState(true);
   const [selectedMenu, setSelectedMenu] = useState("1");
+  const { pageTitle } = usePageInfo();
   const location = useLocation();
   const { pathname } = location;
   const pathnameList = getPathArray(pathname);
@@ -92,7 +95,7 @@ export default function MainLayout() {
       <Layout className="main_layout_container">
         <Header className="layout_header">
           <div className="layout_header_container">
-            <BreadCrumb />
+            <PageTitle title={pageTitle} />
             <ul>
               <li>
                 <img

@@ -1,0 +1,334 @@
+.farm_info {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.farm_info_details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: white;
+  padding-top: 20px;
+  border-radius: 10px;
+  padding-bottom: 30px;
+}
+
+.farm_image {
+  display: flex;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #c3c3c3;
+  outline: solid;
+  outline-width: 1px;
+  outline-color: black;
+  outline-offset: 4px;
+}
+
+.farm_status {
+  display: flex;
+  margin-top: 16px;
+}
+
+.farm_info_name {
+  display: flex;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 30px;
+  letter-spacing: 0em;
+  text-align: center;
+  margin-top: 12px;
+}
+
+.farm_info_code {
+  display: flex;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-top: 4px;
+}
+
+.farm_info_edit {
+  display: flex;
+  margin-top: 12px;
+  margin-bottom: 16px;
+}
+
+.farm_info_edit_button {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 12px;
+  letter-spacing: 0em;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.farm_info_general_details {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0px 20px;
+}
+
+.farm_info_incharge_details {
+  display: flex;
+  flex-direction: column;
+}
+
+.farm_info_incharge_details_title {
+  display: flex;
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #85878e;
+}
+.farm_info_incharge_details_value {
+  display: flex;
+  font-family: Manrope;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-top: 4px;
+}
+
+.farm_info_contact_details {
+  display: flex;
+  flex-direction: column;
+}
+
+.farm_info_contact_details_title {
+  display: flex;
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #85878e;
+}
+.farm_info_contact_details_value {
+  display: flex;
+  font-family: Manrope;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-top: 4px;
+}
+
+.farm_info_capacity {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.farm_info_capacity_details {
+  display: flex;
+  flex-direction: column;
+}
+
+.farm_info_capacity_title {
+  display: flex;
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #85878e;
+}
+
+.farm_info_capacity_value {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.farm_info_capacity_details_total {
+  display: flex;
+  font-family: Manrope;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.farm_info_capacity_details_free {
+  display: flex;
+  font-family: Manrope;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.farm_info_machine_details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.farm_info_machine_details_title {
+  display: flex;
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #85878e;
+}
+
+.farm_info_machine_details_value {
+  display: flex;
+  font-family: Manrope;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.farm_info_address_details {
+  display: flex;
+  flex-direction: column;
+}
+
+.farm_info_address_details_title {
+  display: flex;
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #85878e;
+}
+.farm_info_address_details_value {
+  display: flex;
+  font-family: Manrope;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-top: 4px;
+}
+
+.farm_info_divider {
+  margin: 8px 0px !important;
+}
+
+.farm_info_content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.farm_info_content_cards_container {
+  width: 100%;
+}
+
+.farm_info_card {
+  display: flex;
+  width: 100%;
+  border-radius: 10px;
+  background-color: #c4c4c4;
+  height: 150px;
+}
+
+.farm_info_goat_list_action {
+  display: flex;
+  margin-top: 30px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.farm_info_goat_filter {
+  display: flex;
+}
+
+.farm_info_goat_search {
+  display: flex;
+}
+
+.farm_info_goat_filter_button {
+  border-radius: 6px !important;
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.ant-input-affix-wrapper {
+  border-top-left-radius: 6px !important;
+  border-bottom-left-radius: 6px !important;
+}
+
+.ant-input-search
+  > .ant-input-group
+  > .ant-input-group-addon:last-child
+  .ant-input-search-button:not(.ant-btn-primary) {
+  border-top-right-radius: 6px !important;
+  border-bottom-right-radius: 6px !important;
+}
+
+.farm_info_goat_list_table {
+  display: flex;
+  width: 100%;
+  margin-top: 20px;
+  padding: 20px 16px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.form_modal_container {
+  width: 100%;
+  height: 50vh;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+.ant-modal-content {
+  border-radius: 6px 6px 6px 6px;
+}
+
+.ant-modal-header {
+  border-radius: 6px 6px 0px 0px;
+}
+
+.ant-modal-footer {
+  border-radius: 0px 0px 6px 6px;
+}
