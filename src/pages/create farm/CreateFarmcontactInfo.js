@@ -30,9 +30,19 @@ export default function CreateFarmcontactInfo({
             className="create_farm_form_item"
             name="address"
             label="Address"
-            rules={[{ required: true }]}
+            rules={[
+              { required: true, message: "Please enter Farm Address!" },
+              {
+                min: 10,
+                message: "Address should be minimum 10 characters length!",
+              },
+              {
+                max: 256,
+                message: "Address should be maximum 256 characters length!",
+              },
+            ]}
           >
-            <Input size="large" placeholder="Enter your Farm Name here" />
+            <Input size="large" placeholder="Enter your Farm Full Address" />
           </Form.Item>
         </Col>
         <Col span={12}>
@@ -40,9 +50,20 @@ export default function CreateFarmcontactInfo({
             className="create_farm_form_item"
             name="pincode"
             label="Pincode"
-            rules={[{ required: true }]}
+            rules={[
+              { required: true, message: "Please enter Pincode!" },
+              {
+                min: 6,
+                max: 6,
+                message: "Invalid Pincode!",
+              },
+            ]}
           >
-            <Input size="large" placeholder="Enter your Farm Code here" />
+            <Input
+              type="number"
+              size="large"
+              placeholder="Enter your Farm Code here"
+            />
           </Form.Item>
         </Col>
       </Row>
@@ -52,9 +73,9 @@ export default function CreateFarmcontactInfo({
             className="create_farm_form_item"
             name="state"
             label="State"
-            rules={[{ required: true }]}
+            rules={[{ required: true, message: "Please select State!" }]}
           >
-            <Select size="large" placeholder="Please select">
+            <Select size="large" placeholder="Select State">
               <Option value="mac001">Mac001</Option>
             </Select>
           </Form.Item>
@@ -64,9 +85,9 @@ export default function CreateFarmcontactInfo({
             className="create_farm_form_item"
             name="city"
             label="City"
-            rules={[{ required: true }]}
+            rules={[{ required: true, message: "Please select City!" }]}
           >
-            <Select size="large" placeholder="Please select">
+            <Select size="large" placeholder="Select City">
               <Option value="mac001">Mac001</Option>
             </Select>
           </Form.Item>
@@ -78,9 +99,23 @@ export default function CreateFarmcontactInfo({
             className="create_farm_form_item"
             name="contactpersonname"
             label="Contact Person Name"
-            rules={[{ required: true }]}
+            rules={[
+              { required: true, message: "Please enter contact person Name!" },
+              {
+                min: 3,
+                message: "Name is too short!",
+              },
+              {
+                max: 50,
+                message: "Name is too long!",
+              },
+            ]}
           >
-            <Input size="large" placeholder="Enter your Farm Name here" />
+            <Input
+              type="number"
+              size="large"
+              placeholder="Enter Contact Person Name "
+            />
           </Form.Item>
         </Col>
         <Col span={12}>
@@ -88,9 +123,15 @@ export default function CreateFarmcontactInfo({
             className="create_farm_form_item"
             name="email"
             label="Email Id"
-            rules={[{ required: true }]}
+            rules={[
+              { required: true, message: "Please enter your Email Id!" },
+              {
+                type: "email",
+                message: "Invalid Email!",
+              },
+            ]}
           >
-            <Input size="large" placeholder="Enter your Farm Name here" />
+            <Input size="large" placeholder="Enter your Email Id" />
           </Form.Item>
         </Col>
       </Row>
@@ -100,9 +141,16 @@ export default function CreateFarmcontactInfo({
             className="create_farm_form_item"
             name="phoneno"
             label="Phone No"
-            rules={[{ required: true }]}
+            rules={[
+              { required: true, message: "Please enter your Phone No!" },
+              {
+                max: 10,
+                min: 10,
+                message: "Invalid Phone No!",
+              },
+            ]}
           >
-            <Input size="large" placeholder="Enter your Farm Name here" />
+            <Input size="large" placeholder="Enter your Mobile No " />
           </Form.Item>
         </Col>
         <Col span={12}>
@@ -110,9 +158,19 @@ export default function CreateFarmcontactInfo({
             className="create_farm_form_item"
             name="alternatephoneno"
             label="Alternate Phone No"
-            rules={[{ required: true }]}
+            rules={[
+              {
+                max: 10,
+                min: 10,
+                message: "Invalid Phone No!",
+              },
+            ]}
           >
-            <Input size="large" placeholder="Enter your Farm Name here" />
+            <Input
+              type="number"
+              size="large"
+              placeholder="Enter your Alternate Mobile No"
+            />
           </Form.Item>
         </Col>
       </Row>

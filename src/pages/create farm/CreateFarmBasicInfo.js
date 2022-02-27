@@ -36,10 +36,10 @@ export default function CreateFarmBasicInfo({
     >
       <Form.Item
         className="create_farm_form_item"
-        className="create_farm_form_item"
         label="Farm Type"
         name="farmtype"
         initialValue={"ownfarm"}
+        rules={[{ required: true, message: "Farm Type is Required!" }]}
       >
         <Radio.Group size="large">
           <Radio value="ownfarm">Own Farm</Radio>
@@ -52,9 +52,23 @@ export default function CreateFarmBasicInfo({
             className="create_farm_form_item"
             name="farmname"
             label="Farm Name"
-            rules={[{ required: true }]}
+            rules={[
+              { required: true, message: "Please enter Farm Name" },
+              {
+                min: 3,
+                message: "Farm Name is too short!",
+              },
+              {
+                max: 50,
+                message: "Farm Name is too long!",
+              },
+            ]}
           >
-            <Input size="large" placeholder="Enter your Farm Name here" />
+            <Input
+              style={{ textTransform: "capitalize" }}
+              size="large"
+              placeholder="Enter your Farm Name here"
+            />
           </Form.Item>
         </Col>
         <Col span={12}>
@@ -62,9 +76,23 @@ export default function CreateFarmBasicInfo({
             className="create_farm_form_item"
             name="farmcode"
             label="Farm Code"
-            rules={[{ required: true }]}
+            rules={[
+              { required: true, message: "Please enter your Farm Code" },
+              {
+                min: 3,
+                message: "Farm code is too short!",
+              },
+              {
+                max: 50,
+                message: "Farm code is too long!",
+              },
+            ]}
           >
-            <Input size="large" placeholder="Enter your Farm Code here" />
+            <Input
+              style={{ textTransform: "uppercase" }}
+              size="large"
+              placeholder="Enter your Farm Code here"
+            />
           </Form.Item>
         </Col>
       </Row>
@@ -72,11 +100,21 @@ export default function CreateFarmBasicInfo({
         <Col span={12}>
           <Form.Item
             className="create_farm_form_item"
-            name="lattitude"
-            label="Lattitude"
-            rules={[{ required: true }]}
+            name="latitude"
+            label="Latitude"
+            rules={[
+              { required: true, message: "Please enter Farm Latitude!" },
+              {
+                min: 1,
+                message: "Latitude is too short!",
+              },
+            ]}
           >
-            <Input size="large" placeholder="Lattitude Here" />
+            <Input
+              type="number"
+              size="large"
+              placeholder="Enter Farm Lattitude Here"
+            />
           </Form.Item>
         </Col>
         <Col span={12}>
@@ -84,9 +122,19 @@ export default function CreateFarmBasicInfo({
             className="create_farm_form_item"
             name="longitude"
             label="Longitude"
-            rules={[{ required: true }]}
+            rules={[
+              { required: true, message: "Please enter Farm Longitude!" },
+              {
+                min: 1,
+                message: "Longitude is too short!",
+              },
+            ]}
           >
-            <Input size="large" placeholder="Enter your Farm Code here" />
+            <Input
+              type="number"
+              size="large"
+              placeholder="Enter Farm Longitude Here"
+            />
           </Form.Item>
         </Col>
       </Row>
@@ -96,7 +144,7 @@ export default function CreateFarmBasicInfo({
             className="create_farm_form_item"
             name="producttype"
             label="Product Type"
-            rules={[{ required: true }]}
+            rules={[{ required: true, message: "Please select Product!" }]}
             initialValue={["goat"]}
           >
             <Select disabled size="large" placeholder="Select Product">
@@ -109,7 +157,7 @@ export default function CreateFarmBasicInfo({
             className="create_farm_form_item"
             name="capacity"
             label="Capacity"
-            rules={[{ required: true }]}
+            rules={[{ required: true, message: "Please enter Capacity!" }]}
           >
             <InputNumber size="large" min={1} />
           </Form.Item>
@@ -121,7 +169,9 @@ export default function CreateFarmBasicInfo({
             className="create_farm_form_item"
             name="choosemachines"
             label="Choose Machines"
-            rules={[{ required: true }]}
+            rules={[
+              { required: true, message: "Please select atleast one machine!" },
+            ]}
             initialValue={["a10", "c12"]}
           >
             <Select mode="tags" size="large" placeholder="Please select">

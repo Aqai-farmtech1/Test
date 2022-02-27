@@ -37,7 +37,13 @@
   font-size: 14px !important;
   font-style: normal !important;
   font-weight: 400 !important;
-  line-height: 22px !;
-  letter-spacing: 0em !;
+  line-height: 22px !important;
+  letter-spacing: 0em !important;
   text-align: center;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
