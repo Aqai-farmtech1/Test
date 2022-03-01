@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Button, Dropdown, Menu, Input, Table, Badge } from "antd";
 import { DownOutlined, UserOutlined, PlusOutlined } from "@ant-design/icons";
-import "./farmlist.css";
+import "./farmlistgoat.css";
 import { NavLink } from "react-router-dom";
 import PageTitle from "../../components/pagetitle/PageTitle";
 import usePageInfo from "../../hooks/usePageInfo";
 
 const { Search } = Input;
 
-export default function FarmList() {
+export default function FarmGoatList() {
   const [selectedState, setSelectedState] = useState("All");
   const [selectedCity, setSelectedCity] = useState("All");
   const { setPageTitle } = usePageInfo();
@@ -53,12 +53,41 @@ export default function FarmList() {
       width: "20%",
     },
     {
-      title: "State",
-      dataIndex: "state",
+      title: "Location",
+      dataIndex: "location",
     },
     {
-      title: "Product & Capacity",
-      dataIndex: "productcapacity",
+      title: "Ready to Sale",
+      dataIndex: "readytosale",
+    },
+    {
+      title: "Free Capacity",
+      dataIndex: "freecapacity",
+    },
+    {
+      title: "Sick",
+      dataIndex: "sick",
+    },
+    {
+      title: "Mortality",
+      dataIndex: "mortality",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      render: (value) => (
+        <div className="status_text">
+          <div
+            style={
+              value === "Active"
+                ? { backgroundColor: "#52C41A" }
+                : { backgroundColor: "#FF4D4F" }
+            }
+            className="dot_badge"
+          ></div>
+          {value}
+        </div>
+      ),
     },
     {
       title: "Action",
@@ -83,56 +112,84 @@ export default function FarmList() {
       key: 1,
       farmcode: "FRM-123456",
       farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
+      location: "Chennai-TN",
+      readytosale: 1000,
+      freecapacity: 500,
+      sick: 50,
+      mortality: 10,
+      status: "Active",
       action: "View",
     },
     {
       key: 2,
       farmcode: "FRM-111111",
       farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
+      location: "Chennai-TN",
+      readytosale: 1000,
+      freecapacity: 500,
+      sick: 50,
+      mortality: 10,
+      status: "In Active",
       action: "View",
     },
     {
       key: 3,
       farmcode: "FRM-222222",
       farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
+      location: "Chennai-TN",
+      readytosale: 1000,
+      freecapacity: 500,
+      sick: 50,
+      mortality: 10,
+      status: "In Active",
       action: "View",
     },
     {
       key: 4,
       farmcode: "FRM-333333",
       farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
+      location: "Chennai-TN",
+      readytosale: 1000,
+      freecapacity: 500,
+      sick: 50,
+      mortality: 10,
+      status: "Active",
       action: "View",
     },
     {
       key: 5,
       farmcode: "FRM-444444",
       farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
+      location: "Chennai-TN",
+      readytosale: 1000,
+      freecapacity: 500,
+      sick: 50,
+      mortality: 10,
+      status: "Active",
       action: "View",
     },
     {
       key: 6,
       farmcode: "FRM-555555",
       farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
+      location: "Chennai-TN",
+      readytosale: 1000,
+      freecapacity: 500,
+      sick: 50,
+      mortality: 10,
+      status: "Active",
       action: "View",
     },
     {
       key: 7,
       farmcode: "FRM-666666",
       farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
+      location: "Chennai-TN",
+      readytosale: 1000,
+      freecapacity: 500,
+      sick: 50,
+      mortality: 10,
+      status: "Active",
       action: "View",
     },
   ];

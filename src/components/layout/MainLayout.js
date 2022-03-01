@@ -42,26 +42,20 @@ export default function MainLayout() {
     {
       key: "1",
       icon: <UserOutlined style={{ fontSize: "18px" }} />,
-      link: "/dashboard",
-      title: "Dashboard",
+      link: "/farm",
+      title: "Farms",
     },
     {
       key: "2",
       icon: <VideoCameraOutlined style={{ fontSize: "18px" }} />,
-      link: "/farm",
-      title: "Farm",
+      link: "/goat",
+      title: "Goats",
     },
     {
       key: "3",
       icon: <VideoCameraOutlined style={{ fontSize: "18px" }} />,
-      link: "/transaction",
-      title: "Transaction",
-    },
-    {
-      key: "4",
-      icon: <VideoCameraOutlined style={{ fontSize: "18px" }} />,
-      link: "/report",
-      title: "Report",
+      link: "/device",
+      title: "Devices",
     },
   ];
 
