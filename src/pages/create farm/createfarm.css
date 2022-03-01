@@ -1,0 +1,49 @@
+.create_farm {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.page_title_create_farm {
+  display: flex;
+  margin-top: 20px;
+}
+
+.create_farm_form_area {
+  display: flex;
+  width: 100%;
+  padding: 30px 60px;
+  margin-top: 10px;
+  background-color: white;
+  border-radius: 10px;
+  /* min-height: 75vh; */
+  align-items: center;
+}
+
+.create_farm_form_item {
+  font-size: 16px !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  line-height: 22px !;
+  letter-spacing: 0em !;
+  text-align: left;
+}
+
+.create_farm_action_button_area {
+  margin-top: 10px;
+}
+
+.create_farm_form_item_buttons {
+  font-size: 14px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 22px !important;
+  letter-spacing: 0em !important;
+  text-align: center;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

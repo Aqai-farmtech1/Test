@@ -1,23 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dropdown, Layout, Menu } from "antd";
-import { NavLink, Outlet } from "react-router-dom";
-import {
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-} from "@ant-design/icons";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { UserOutlined, VideoCameraOutlined } from "@ant-design/icons";
 import "./mainlayout.css";
-
 import {
   profileImage,
   notificationIcon,
   layoutSiderLogo,
-} from "../../constants/constants";
+} from "../../utils/constants";
+import BreadCrumb from "../breadcrumb/BreadCrumb";
+import { getPathArray } from "../../utils/urlPathConversion";
+import PageTitle from "../pagetitle/PageTitle";
+import usePageInfo from "../../hooks/usePageInfo";
 
 const { Header, Sider, Content } = Layout;
 
 export default function MainLayout() {
-  const [collapse, setCollapse] = useState(false);
+  const [collapse, setCollapse] = useState(true);
+  const [selectedMenu, setSelectedMenu] = useState("1");
+  const { pageTitle } = usePageInfo();
+  const location = useLocation();
+  const { pathname } = location;
+  const pathnameList = getPathArray(pathname);
 
   const handleMenuClick = (val) => {
     setCollapse(val);
@@ -26,6 +30,40 @@ export default function MainLayout() {
   const handleCollapse = (val) => {
     setCollapse(val);
   };
+
+  useEffect(() => {
+    const currentNavItem = navMenuItem.find(
+      (obj) => obj.link === `/${pathnameList[0]?.link || ""}`
+    );
+    setSelectedMenu(currentNavItem?.key || "1");
+  }, [pathname]);
+
+  const navMenuItem = [
+    {
+      key: "1",
+      icon: <UserOutlined style={{ fontSize: "18px" }} />,
+      link: "/dashboard",
+      title: "Dashboard",
+    },
+    {
+      key: "2",
+      icon: <VideoCameraOutlined style={{ fontSize: "18px" }} />,
+      link: "/farm",
+      title: "Farm",
+    },
+    {
+      key: "3",
+      icon: <VideoCameraOutlined style={{ fontSize: "18px" }} />,
+      link: "/transaction",
+      title: "Transaction",
+    },
+    {
+      key: "4",
+      icon: <VideoCameraOutlined style={{ fontSize: "18px" }} />,
+      link: "/report",
+      title: "Report",
+    },
+  ];
 
   const profileMenu = (
     <Menu onClick={handleMenuClick}>
@@ -38,38 +76,33 @@ export default function MainLayout() {
     <Layout>
       <Sider
         onCollapse={handleCollapse}
-        collapsible
         collapsed={collapse}
         className="layout_sider"
       >
         <div className="sider_logo">
           <img src={layoutSiderLogo} alt="layout sider logo" />
         </div>
-        <Menu mode="inline" defaultSelectedKeys={["1"]}>
-          <Menu.Item key="1" icon={<UserOutlined />}>
-            <NavLink to="/dashboard">
-              <span className="menu_item_span">Dashboard</span>
-            </NavLink>
-          </Menu.Item>
-          <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-            <NavLink to="/farm">
-              <span className="menu_item_span">Farms</span>
-            </NavLink>
-          </Menu.Item>
-          <Menu.Item key="3" icon={<VideoCameraOutlined />}>
-            <span className="menu_item_span">Transactions</span>
-          </Menu.Item>
-          <Menu.Item key="4" icon={<UploadOutlined />}>
-            <span className="menu_item_span">Reports</span>
-          </Menu.Item>
+        <Menu mode="inline" selectedKeys={[selectedMenu]}>
+          {navMenuItem.map((el) => (
+            <Menu.Item key={el.key} icon={el.icon}>
+              <NavLink to={el.link}>
+                <span className="menu_item_span">{el.title}</span>
+              </NavLink>
+            </Menu.Item>
+          ))}
         </Menu>
       </Sider>
       <Layout className="main_layout_container">
         <Header className="layout_header">
           <div className="layout_header_container">
+            <PageTitle title={pageTitle} />
             <ul>
               <li>
-                <img src={notificationIcon} alt="notification icon" />
+                <img
+                  src={notificationIcon}
+                  className="notification_icon"
+                  alt="notification icon"
+                />
               </li>
               <li>
                 <Dropdown trigger={["click"]} overlay={profileMenu}>

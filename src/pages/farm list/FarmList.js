@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Dropdown, Menu, Input, Table, Badge } from "antd";
 import { DownOutlined, UserOutlined, PlusOutlined } from "@ant-design/icons";
 import "./farmlist.css";
+import { NavLink } from "react-router-dom";
+import PageTitle from "../../components/pagetitle/PageTitle";
+import usePageInfo from "../../hooks/usePageInfo";
 
 const { Search } = Input;
 
 export default function FarmList() {
   const [selectedState, setSelectedState] = useState("All");
   const [selectedCity, setSelectedCity] = useState("All");
+  const { setPageTitle } = usePageInfo();
+
+  useEffect(() => {
+    setPageTitle("Farm");
+  }, [setPageTitle]);
 
   const handleMenuClick = () => {};
 
@@ -19,7 +27,25 @@ export default function FarmList() {
     {
       title: "Farm Code",
       dataIndex: "farmcode",
-      render: (value) => <div style={{ color: "blue" }}>{value}</div>,
+      render: (value, columns) => (
+        <NavLink
+          to={{
+            pathname: `/farm/${value}`,
+          }}
+        >
+          <div
+            style={{
+              color: "#2D9CDB",
+              fontStyle: "normal",
+              fontSize: "14px",
+              fontWeight: 500,
+              lineHeight: "22px",
+            }}
+          >
+            {value}
+          </div>
+        </NavLink>
+      ),
     },
     {
       title: "Farm Name",
@@ -45,7 +71,6 @@ export default function FarmList() {
     {
       title: "Mortality",
       dataIndex: "mortality",
-      ellipsis: true,
     },
     {
       title: "Status",
@@ -67,11 +92,17 @@ export default function FarmList() {
     {
       title: "Action",
       dataIndex: "action",
-      width: "6%",
-      render: () => (
-        <Button block type="primary" ghost>
-          View
-        </Button>
+      width: "8%",
+      render: (value, columns) => (
+        <NavLink
+          to={{
+            pathname: `/farm/${columns.farmcode}`,
+          }}
+        >
+          <Button style={{ borderRadius: "4px" }} type="primary" ghost>
+            View
+          </Button>
+        </NavLink>
       ),
     },
   ];
@@ -79,7 +110,7 @@ export default function FarmList() {
   const data = [
     {
       key: 1,
-      farmcode: "FRM-21515",
+      farmcode: "FRM-123456",
       farmname: "Red Hills Farm",
       location: "Chennai-TN",
       readytosale: 1000,
@@ -91,7 +122,7 @@ export default function FarmList() {
     },
     {
       key: 2,
-      farmcode: "FRM-21515",
+      farmcode: "FRM-111111",
       farmname: "Red Hills Farm",
       location: "Chennai-TN",
       readytosale: 1000,
@@ -103,7 +134,7 @@ export default function FarmList() {
     },
     {
       key: 3,
-      farmcode: "FRM-21515",
+      farmcode: "FRM-222222",
       farmname: "Red Hills Farm",
       location: "Chennai-TN",
       readytosale: 1000,
@@ -115,7 +146,7 @@ export default function FarmList() {
     },
     {
       key: 4,
-      farmcode: "FRM-21515",
+      farmcode: "FRM-333333",
       farmname: "Red Hills Farm",
       location: "Chennai-TN",
       readytosale: 1000,
@@ -127,7 +158,7 @@ export default function FarmList() {
     },
     {
       key: 5,
-      farmcode: "FRM-21515",
+      farmcode: "FRM-444444",
       farmname: "Red Hills Farm",
       location: "Chennai-TN",
       readytosale: 1000,
@@ -139,7 +170,7 @@ export default function FarmList() {
     },
     {
       key: 6,
-      farmcode: "FRM-21515",
+      farmcode: "FRM-555555",
       farmname: "Red Hills Farm",
       location: "Chennai-TN",
       readytosale: 1000,
@@ -151,7 +182,7 @@ export default function FarmList() {
     },
     {
       key: 7,
-      farmcode: "FRM-21515",
+      farmcode: "FRM-666666",
       farmname: "Red Hills Farm",
       location: "Chennai-TN",
       readytosale: 1000,
@@ -179,12 +210,11 @@ export default function FarmList() {
 
   return (
     <div className="farmlist">
-      <div className="farmlist_title">Farms</div>
       <div className="farmlist_action_area">
         <div className="action_filter_area">
           <div className="action_filter_state">
             <Dropdown trigger={["click"]} overlay={menu}>
-              <Button size="large">
+              <Button style={{ borderRadius: "4px" }} size="large">
                 <span className="filter_button_text">
                   State : {selectedState}
                 </span>
@@ -194,7 +224,7 @@ export default function FarmList() {
           </div>
           <div className="action_filter_city">
             <Dropdown trigger={["click"]} overlay={menu}>
-              <Button size="large">
+              <Button size="large" style={{ borderRadius: "4px" }}>
                 <span className="filter_button_text">
                   City : {selectedCity}
                 </span>
@@ -209,19 +239,27 @@ export default function FarmList() {
               placeholder="Search by Code, Farm Name"
               allowClear
               onSearch={handleSearch}
-              style={{ width: 264 }}
               size="large"
+              style={{ borderRadius: "4px", width: 264 }}
             />
           </div>
           <div className="farmlist_create_new">
-            <Button type="primary" icon={<PlusOutlined />} size="large">
-              <span className="button_text">Create New</span>
-            </Button>
+            <NavLink to="/farm/create">
+              <Button
+                style={{ borderRadius: "4px" }}
+                type="primary"
+                icon={<PlusOutlined />}
+                size="large"
+              >
+                <span className="button_text">Create New</span>
+              </Button>
+            </NavLink>
           </div>
         </div>
       </div>
       <div className="farmlist_table">
         <Table
+          style={{ width: "100%" }}
           columns={columns}
           dataSource={data}
           onChange={handleTableChange}
