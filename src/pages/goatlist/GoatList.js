@@ -1,27 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { Button, Dropdown, Menu, Input, Table, Badge } from "antd";
-import { DownOutlined, UserOutlined, PlusOutlined } from "@ant-design/icons";
-import "./farmlist.css";
-import { NavLink } from "react-router-dom";
-import PageTitle from "../../components/pagetitle/PageTitle";
-import { editIcon, viewIcon } from "../../utils/constants";
+import React, { useEffect } from "react";
+import BreadCrumb from "../../components/breadcrumb/BreadCrumb";
 import usePageInfo from "../../hooks/usePageInfo";
+import { Dropdown, Button, Menu, Input, Table } from "antd";
+import { DownOutlined, UserOutlined } from "@ant-design/icons";
+import { NavLink } from "react-router-dom";
+import { viewIcon } from "../../utils/constants";
+import "./goatlist.css";
 
 const { Search } = Input;
 
-export default function FarmList() {
-  const [selectedState, setSelectedState] = useState("All");
-  const [selectedCity, setSelectedCity] = useState("All");
+export default function GoatList() {
   const { setPageTitle } = usePageInfo();
 
-  useEffect(() => {
-    setPageTitle("Farm");
-  }, [setPageTitle]);
-
   const handleMenuClick = () => {};
-
   const handleSearch = () => {};
-
   const handleTableChange = () => {};
 
   const columns = [
@@ -67,22 +59,10 @@ export default function FarmList() {
       width: "8%",
       render: (value, columns) => (
         <div className="action_button_div">
-          <NavLink to={`/farm/create`}>
-            <Button
-              className="user_list_buttons"
-              style={{ borderRadius: "4px" }}
-              block
-              type="primary"
-              ghost
-            >
-              <img className="button_icon" src={editIcon} alt="edit icon" />
-              Edit
-            </Button>
-          </NavLink>
           <NavLink to={`/farm/${columns.farmcode}`}>
             <Button
               className="user_list_buttons"
-              style={{ borderRadius: "4px", marginLeft: 6 }}
+              style={{ borderRadius: "4px" }}
               block
               type="primary"
               ghost
@@ -169,56 +149,28 @@ export default function FarmList() {
     </Menu>
   );
 
+  useEffect(() => {
+    setPageTitle("Goats");
+  }, []);
   return (
-    <div className="farmlist">
-      <div className="farmlist_action_area">
-        <div className="action_filter_area">
-          <div className="action_filter_state">
-            <Dropdown trigger={["click"]} overlay={menu}>
-              <Button style={{ borderRadius: "4px" }} size="large">
-                <span className="filter_button_text">
-                  State : {selectedState}
-                </span>
-                <DownOutlined />
-              </Button>
-            </Dropdown>
-          </div>
-          <div className="action_filter_city">
-            <Dropdown trigger={["click"]} overlay={menu}>
-              <Button size="large" style={{ borderRadius: "4px" }}>
-                <span className="filter_button_text">
-                  City : {selectedCity}
-                </span>
-                <DownOutlined />
-              </Button>
-            </Dropdown>
-          </div>
-        </div>
-        <div className="farmlist_search_area">
-          <div className="farmlist_search">
-            <Search
-              placeholder="Search by Code, Farm Name"
-              allowClear
-              onSearch={handleSearch}
-              size="large"
-              style={{ borderRadius: "4px", width: 264 }}
-            />
-          </div>
-          <div className="farmlist_create_new">
-            <NavLink to="/farm/create">
-              <Button
-                style={{ borderRadius: "4px" }}
-                type="primary"
-                icon={<PlusOutlined />}
-                size="large"
-              >
-                <span className="button_text">Create New</span>
-              </Button>
-            </NavLink>
-          </div>
-        </div>
+    <div className="goat_list_main">
+      <BreadCrumb />
+      <div className="goat_list_main_action_container">
+        <Dropdown trigger={["click"]} overlay={menu}>
+          <Button style={{ borderRadius: "4px" }} size="large">
+            <span className="filter_button_text">Status : Ready to Sale</span>
+            <DownOutlined />
+          </Button>
+        </Dropdown>
+        <Search
+          placeholder="Search by Goat RFID"
+          allowClear
+          onSearch={handleSearch}
+          size="large"
+          style={{ borderRadius: "4px", width: 264 }}
+        />
       </div>
-      <div className="farmlist_table">
+      <div className="goat_list_table_area">
         <Table
           style={{ width: "100%" }}
           columns={columns}

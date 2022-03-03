@@ -11,13 +11,13 @@
 
 .create_farm_form_area {
   display: flex;
+  flex-direction: column;
   width: 100%;
   padding: 30px 60px;
   margin-top: 10px;
   background-color: white;
   border-radius: 10px;
   /* min-height: 75vh; */
-  align-items: center;
 }
 
 .create_farm_form_item {
@@ -46,4 +46,16 @@ input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+.form_section_heading {
+  display: flex;
+  font-family: Manrope;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-bottom: 36px;
 }
