@@ -23,6 +23,7 @@ export default function CreateFarmBasicInfo({
 
   const handleFormSubmit = (values) => {
     const inputValues = { ...formInputValues, ...values };
+    console.log('Input values check', inputValues);
     setFormInputValues(inputValues);
     console.log("s");
     setFormStepNo(2);

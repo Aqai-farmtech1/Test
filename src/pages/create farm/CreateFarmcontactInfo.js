@@ -19,7 +19,6 @@ export default function CreateFarmcontactInfo({
 }) {
   const handleSubmit = (values) => {
     const inputValues = { ...formInputValues, ...values };
-    console.log(inputValues);
   };
 
   return (
