@@ -59,7 +59,7 @@ export default function GoatList() {
       width: "8%",
       render: (value, columns) => (
         <div className="action_button_div">
-          <NavLink to={`/farm/${columns.farmcode}`}>
+          <NavLink to={`/farm/${columns.farmcode}/goat/${columns.farmcode}`}>
             <Button
               className="user_list_buttons"
               style={{ borderRadius: "4px" }}

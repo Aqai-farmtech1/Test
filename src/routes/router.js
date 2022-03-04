@@ -10,6 +10,7 @@ import GoatInfo from "../pages/goat info/GoatInfo";
 import FarmList from "../pages/farm list/FarmList";
 import DeviceList from "../pages/device/DeviceList";
 import GoatList from "../pages/goatlist/GoatList";
+import AddDevice from "../pages/adddevice/AddDevice";
 
 export const loginroutes = [
   // {
@@ -52,7 +53,7 @@ export const authenticatedroutes = [
     title: "Acgromalin | Farm Info",
   },
   {
-    path: "/farm/:farmid/:goatid",
+    path: "/farm/:farmid/goat/:goatid",
     component: <GoatInfo />,
     title: "Acgromalin | Goat Info",
   },
