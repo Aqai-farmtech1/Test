@@ -1,0 +1,35 @@
+.device_list_main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.device_list_action_area {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.device_list_filter_area {
+  display: flex;
+}
+
+.device_list_search_area {
+  display: flex;
+}
+
+.device_list_table_area {
+  display: flex;
+  width: 100%;
+  background-color: white;
+  padding: 20px 16px;
+  margin-top: 20px;
+}
+
+.ant-modal-content {
+  border-radius: 10px !important;
+}
+
+.ant-modal-header {
+  border-radius: 10px 10px 0px 0px;
+}

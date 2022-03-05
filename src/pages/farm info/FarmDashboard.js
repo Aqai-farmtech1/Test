@@ -1,6 +1,7 @@
 import { Col, Row } from "antd";
 import React from "react";
 import ProductCard from "./ProductCard";
+import "./farminfo.css";
 
 export default function FarmDashboard() {
   return (

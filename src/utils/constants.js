@@ -12,3 +12,4 @@ export const profileImage = require("../assets/images/profile.jpeg");
 export const layoutSiderLogo = require("../assets/images/layout_sider_logo.png");
 export const loginImage = require("../assets/images/login_image900*900.png");
 export const productGoat = require("../assets/images/product_goat.png");
+export const goatInfoImage = require("../assets/images/goat_info.png");
