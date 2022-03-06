@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./createfarm.css";
 import BreadCrumb from "../../components/breadcrumb/BreadCrumb";
-import PageTitle from "../../components/pagetitle/PageTitle";
 import usePageInfo from "../../hooks/usePageInfo";
+import useMasters from "../../hooks/useMasters";
 import {
   Col,
   Form,
@@ -12,17 +12,90 @@ import {
   Select,
   InputNumber,
   Button,
+  message,
 } from "antd";
 import { useNavigate } from "react-router-dom";
+import tryCatch from "../../helper/tryCatch.helper";
+import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { createFarm } from "../../api/farm.api";
 
 const { Option } = Select;
 
 export default function CreateFarm() {
-  const [formInputValues, setFormInputValues] = useState({});
+  const { productMaster, stateMaster } = useMasters();
   const { setPageTitle } = usePageInfo();
+  const [isLoading, setIsLoading] = useState(false);
+  const [productList, setProductList] = useState(productMaster);
   const navigate = useNavigate();
 
-  const handleFormSubmit = () => {};
+  // const handleFormChange = (value) => {
+  //   const selectedProducts = value.products;
+  //   console.log(selectedProducts);
+  // };
+
+  const handleFormSubmit = async (values) => {
+    const {
+      address1,
+      city,
+      code,
+      country,
+      email,
+      farm_type,
+      latitude,
+      longitude,
+      name,
+      phone_no,
+      pincode,
+      state,
+      products,
+    } = values;
+
+    const allowed_product = products.map((el) => el.product);
+    const product_capacity = products.map((el) => ({
+      product: el["product"],
+      capacity: el["capacity"],
+    }));
+
+    const postData = {
+      farm_type,
+      name,
+      code,
+      latitude,
+      longitude,
+      allowed_product,
+      product_capacity,
+      phone_no,
+      email,
+      address1,
+      city,
+      state,
+      country,
+      pincode,
+    };
+
+    setIsLoading(true);
+    message.loading({
+      content: "Creating Farm...",
+      key: "createfarm",
+    });
+    const [farmResponse, farmError] = await tryCatch(createFarm(postData));
+
+    if (!farmError) {
+      message.success({
+        content: "Farm created successfully!",
+        key: "createfarm",
+      });
+      setIsLoading(false);
+      navigate("/farm");
+    } else {
+      setIsLoading(false);
+      const errors = farmError.response.data.error;
+      for (let err in errors) {
+        const errorMessage = errors[err][0];
+        message.error({ content: errorMessage, key: "createfarm" });
+      }
+    }
+  };
 
   useEffect(() => {
     setPageTitle("Create Farm");
@@ -42,20 +115,20 @@ export default function CreateFarm() {
           <Form.Item
             className="create_farm_form_item"
             label="Farm Type"
-            name="farmtype"
-            initialValue={"ownfarm"}
+            name="farm_type"
+            initialValue={"1"}
             rules={[{ required: true, message: "Farm Type is Required!" }]}
           >
             <Radio.Group size="large">
-              <Radio value="ownfarm">Own Farm</Radio>
-              <Radio value="partnerfarm">Partner Farm</Radio>
+              <Radio value="1">Own Farm</Radio>
+              <Radio value="2">Partner Farm</Radio>
             </Radio.Group>
           </Form.Item>
           <Row gutter={20}>
             <Col span={12}>
               <Form.Item
                 className="create_farm_form_item"
-                name="farmname"
+                name="name"
                 label="Farm Name"
                 rules={[
                   { required: true, message: "Please enter Farm Name" },
@@ -79,7 +152,7 @@ export default function CreateFarm() {
             <Col span={12}>
               <Form.Item
                 className="create_farm_form_item"
-                name="farmcode"
+                name="code"
                 label="Farm Code"
                 rules={[
                   { required: true, message: "Please enter your Farm Code" },
@@ -143,29 +216,80 @@ export default function CreateFarm() {
               </Form.Item>
             </Col>
           </Row>
-          <Row gutter={20}>
-            <Col span={12}>
-              <Form.Item
-                className="create_farm_form_item"
-                name="producttype"
-                label="Product Type"
-                rules={[{ required: true, message: "Please select Product!" }]}
-                initialValue={["goat"]}
+          <Row>
+            <Col span={24}>
+              <Form.List
+                initialValue={[
+                  { name: 0, key: 0, isListField: true, fieldKey: 0 },
+                ]}
+                name="products"
               >
-                <Select disabled size="large" placeholder="Select Product">
-                  <Option value="goat">Goat</Option>
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                className="create_farm_form_item"
-                name="capacity"
-                label="Capacity"
-                rules={[{ required: true, message: "Please enter Capacity!" }]}
-              >
-                <InputNumber size="large" min={1} />
-              </Form.Item>
+                {(fields, { add, remove }) => (
+                  <>
+                    {fields.map(({ key, name, ...restField }) => (
+                      <Row key={key} style={{ width: "100%" }} gutter={20}>
+                        <Col span={12}>
+                          <Form.Item
+                            className="create_farm_form_item"
+                            {...restField}
+                            name={[name, "product"]}
+                            label="Product Type"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please select Product!",
+                              },
+                            ]}
+                          >
+                            <Select size="large" placeholder="Select Product">
+                              {productList.map((el) => (
+                                <Option key={el.id} value={el.id}>
+                                  {el.name}
+                                </Option>
+                              ))}
+                            </Select>
+                          </Form.Item>
+                        </Col>
+                        <Col
+                          span={12}
+                          style={{ display: "flex", alignItems: "center" }}
+                        >
+                          <Form.Item
+                            className="create_farm_form_item"
+                            {...restField}
+                            name={[name, "capacity"]}
+                            label="Capacity"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please enter Capacity!",
+                              },
+                            ]}
+                          >
+                            <InputNumber size="large" min={1} />
+                          </Form.Item>
+                          {fields.length > 1 && (
+                            <MinusCircleOutlined
+                              style={{ marginLeft: "10px" }}
+                              onClick={() => remove(name)}
+                            />
+                          )}
+                        </Col>
+                      </Row>
+                    ))}
+                    <Form.Item>
+                      <Button
+                        type="primary"
+                        onClick={() => add()}
+                        icon={<PlusOutlined />}
+                        ghost
+                      >
+                        Add Product
+                      </Button>
+                    </Form.Item>
+                  </>
+                )}
+              </Form.List>
             </Col>
           </Row>
           <div className="form_section_heading">Contact Info</div>
@@ -173,7 +297,7 @@ export default function CreateFarm() {
             <Col span={12}>
               <Form.Item
                 className="create_farm_form_item"
-                name="phoneno"
+                name="phone_no"
                 label="Contact No"
                 rules={[
                   { required: true, message: "Please enter your Phone No!" },
@@ -209,7 +333,7 @@ export default function CreateFarm() {
             <Col span={24}>
               <Form.Item
                 className="create_farm_form_item"
-                name="address"
+                name="address1"
                 label="Address"
                 rules={[
                   { required: true, message: "Please enter Farm Address!" },
@@ -238,7 +362,11 @@ export default function CreateFarm() {
                 label="City"
                 rules={[{ required: true, message: "Please enter City!" }]}
               >
-                <Input type="text" placeholder="Enter your Farm city" />
+                <Input
+                  size="large"
+                  type="text"
+                  placeholder="Enter your Farm city"
+                />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -249,7 +377,11 @@ export default function CreateFarm() {
                 rules={[{ required: true, message: "Please select State!" }]}
               >
                 <Select size="large" placeholder="Select State">
-                  <Option value="mac001">Mac001</Option>
+                  {stateMaster.map((el) => (
+                    <Option key={el.id} value={el.id}>
+                      {el.name}
+                    </Option>
+                  ))}
                 </Select>
               </Form.Item>
             </Col>
@@ -293,11 +425,12 @@ export default function CreateFarm() {
           <Row className="create_farm_action_button_area">
             <Col span={24} style={{ textAlign: "left" }}>
               <Button
+                loading={isLoading}
                 className="create_farm_form_item_buttons"
                 type="primary"
                 htmlType="submit"
               >
-                Next
+                Save
               </Button>
               <Button
                 className="create_farm_form_item_buttons"

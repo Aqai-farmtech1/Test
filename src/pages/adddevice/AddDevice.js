@@ -27,8 +27,8 @@ export default function AddDevice({ activeToggle }) {
         )}
         <Form.Item
           className="create_farm_form_item"
-          name="producttype1"
-          label="Product Type"
+          name="device_type"
+          label="Machine Type"
           rules={[{ required: true, message: "Please select Product!" }]}
           initialValue={["goat"]}
         >
@@ -38,8 +38,8 @@ export default function AddDevice({ activeToggle }) {
         </Form.Item>
         <Form.Item
           className="create_farm_form_item"
-          name="farmname1"
-          label="Farm Name"
+          name="device_type_name"
+          label="Machine Id"
           rules={[
             { required: true, message: "Please enter Farm Name" },
             {
@@ -60,8 +60,8 @@ export default function AddDevice({ activeToggle }) {
         </Form.Item>
         <Form.Item
           className="create_farm_form_item"
-          name="producttype"
-          label="Product Type"
+          name="farm"
+          label="Farm"
           rules={[{ required: true, message: "Please select Product!" }]}
           initialValue={["goat"]}
         >
@@ -71,8 +71,8 @@ export default function AddDevice({ activeToggle }) {
         </Form.Item>
         <Form.Item
           className="create_farm_form_item"
-          name="farmname"
-          label="Farm Name"
+          name="frimware_version"
+          label="Frimware Version"
           rules={[
             { required: true, message: "Please enter Farm Name" },
             {
@@ -85,11 +85,7 @@ export default function AddDevice({ activeToggle }) {
             },
           ]}
         >
-          <Input
-            style={{ textTransform: "capitalize" }}
-            size="large"
-            placeholder="Enter your Farm Name here"
-          />
+          <Input size="large" placeholder="Enter your Farm Name here" />
         </Form.Item>
         <Button
           className="create_farm_form_item_buttons"

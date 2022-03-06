@@ -1,37 +1,78 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Dropdown, Menu, Input, Table, Modal } from "antd";
 import { DownOutlined, UserOutlined, PlusOutlined } from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
 import { editIcon } from "../../utils/constants";
 import "./devicelist.css";
 import AddDevice from "../adddevice/AddDevice";
+import tryCatch from "../../helper/tryCatch.helper";
+import { getAllDevice } from "../../api/device.api";
 
 const { Search } = Input;
 
 export default function DeviceList() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [deviceList, setDeviceList] = useState([]);
+  const [deviceTypeList, setDeviceTypeList] = useState([
+    {
+      device_type: 0,
+      device_type_name: "All",
+    },
+  ]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
   const handleSearch = () => {};
   const handleMenuClick = () => {};
   const handleTableChange = () => {};
+  const handleDeviceTypeChange = (value) => {
+    console.log(value);
+  };
+
+  const getDeviceList = async () => {
+    setIsLoading(true);
+    const [deviceResponse, deviceError] = await tryCatch(getAllDevice());
+
+    if (!deviceError) {
+      const deviceDetails = deviceResponse.data.map((el) => ({
+        ...el,
+        key: el.id,
+      }));
+      const deviceTypes = deviceDetails
+        .map((el) => ({
+          device_type: el.device_type,
+          device_type_name: el.device_type_name,
+        }))
+        .filter(
+          (val, i, self) =>
+            i === self.findIndex((t) => t.device_type === val.device_type)
+        );
+      setDeviceTypeList(deviceTypes);
+      setDeviceList(deviceDetails);
+      setIsLoading(false);
+    } else {
+      console.log(deviceError.response);
+      setIsLoading(false);
+    }
+  };
 
   const columns = [
     {
       title: "Machine Id",
-      dataIndex: "machineid",
+      dataIndex: "device_name",
     },
     {
       title: "Machine Type",
-      dataIndex: "machinetype",
+      dataIndex: "device_type_name",
     },
     {
       title: "Frim Ware Versions",
-      dataIndex: "frimware",
+      dataIndex: "frimware_version",
+      render: (value) => value || "-",
     },
     {
       title: "Farm Name",
-      dataIndex: "farmname",
+      dataIndex: "farm_name",
     },
     {
       title: "Action",
@@ -55,15 +96,6 @@ export default function DeviceList() {
     },
   ];
 
-  const data = [
-    {
-      machineid: "000000819263278",
-      machinetype: "Weighing Machine",
-      frimware: "11.09.22",
-      farmname: "Red Hills Farm",
-    },
-  ];
-
   const menu = (
     <Menu onClick={handleMenuClick}>
       <Menu.Item key="1" icon={<UserOutlined />}>
@@ -78,6 +110,18 @@ export default function DeviceList() {
     </Menu>
   );
 
+  const deviceTypeMenu = (
+    <Menu onClick={handleDeviceTypeChange}>
+      {deviceTypeList.map((el) => (
+        <Menu.Item key={el.device_type}>{el.device_type_name}</Menu.Item>
+      ))}
+    </Menu>
+  );
+
+  useEffect(() => {
+    getDeviceList();
+  }, []);
+
   return (
     <div className="device_list_main">
       <div className="device_list_action_area">
@@ -91,12 +135,12 @@ export default function DeviceList() {
               <DownOutlined />
             </Button>
           </Dropdown>
-          <Dropdown trigger={["click"]} overlay={menu}>
+          <Dropdown trigger={["click"]} overlay={deviceTypeMenu}>
             <Button
               style={{ borderRadius: "4px", marginRight: 16 }}
               size="large"
             >
-              <span className="filter_button_text">Device Type : All</span>
+              <span className="filter_button_text">Device Type : </span>
               <DownOutlined />
             </Button>
           </Dropdown>
@@ -129,9 +173,10 @@ export default function DeviceList() {
       </div>
       <div className="device_list_table_area">
         <Table
+          loading={isLoading}
           style={{ width: "100%" }}
           columns={columns}
-          dataSource={data}
+          dataSource={deviceList}
           onChange={handleTableChange}
           bordered
         />
