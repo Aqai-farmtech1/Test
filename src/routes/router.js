@@ -1,16 +1,11 @@
 import Dashboard from "../pages/dasboard/Dashboard";
 import FarmGoatList from "../pages/farm list goat wise/FarmGoatList";
 import FarmInfo from "../pages/farm info/FarmInfo";
-import Login from "../pages/login/Login";
 import CreateFarm from "../pages/create farm/CreateFarm";
-import AuthenticatedRoute from "../components/wrapper/AuthenticatedRoute";
-import PageNotFound from "../pages/error 404/PageNotFound";
-import PageInfoProvider from "../contexts/PageInfoContext";
 import GoatInfo from "../pages/goat info/GoatInfo";
 import FarmList from "../pages/farm list/FarmList";
 import DeviceList from "../pages/device/DeviceList";
 import GoatList from "../pages/goatlist/GoatList";
-import AddDevice from "../pages/adddevice/AddDevice";
 
 export const loginroutes = [
   // {
@@ -25,8 +20,7 @@ export const loginroutes = [
   // },
 ];
 
-{
-  /* <Route index element={<FarmList />} />
+/* <Route index element={<FarmList />} />
 <Route path="/dashboard" element={<Dashboard />} />
 <Route path="farm" element={<FarmList />} />
 <Route path="farm/:farmid" element={<FarmInfo />} />
@@ -34,7 +28,6 @@ export const loginroutes = [
 <Route path="farm/create" element={<CreateFarm />} />
 <Route path="goat" element={<FarmGoatList />} />
 <Route path="device" element={<DeviceList />} /> */
-}
 
 export const authenticatedroutes = [
   {
