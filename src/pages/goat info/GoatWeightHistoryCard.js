@@ -2,7 +2,7 @@ import React from "react";
 import { goatInfoImage, weightIcon24 } from "../../utils/constants";
 import GoatWeightDiffCard from "./GoatWeightDiffCard";
 
-export default function GoatWeightHistoryCard() {
+export default function GoatWeightHistoryCard({ weightData }) {
   return (
     <div className="goat_weight_history_card_main">
       <div className="goat_weight_history_card_date">
