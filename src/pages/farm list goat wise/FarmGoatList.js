@@ -5,28 +5,56 @@ import "./farmlistgoat.css";
 import { NavLink } from "react-router-dom";
 import PageTitle from "../../components/pagetitle/PageTitle";
 import usePageInfo from "../../hooks/usePageInfo";
+import tryCatch from "../../helper/tryCatch.helper";
+import { getAllFarm } from "../../api/farm.api";
 
 const { Search } = Input;
 
 export default function FarmGoatList() {
+  const [farmList, setFarmList] = useState([]);
   const [selectedState, setSelectedState] = useState("All");
   const [selectedCity, setSelectedCity] = useState("All");
   const { setPageTitle } = usePageInfo();
 
+  const getFarmList = async () => {
+    const [farmResponse, farmError] = await tryCatch(getAllFarm());
+
+    if (!farmError) {
+      const alteredFarmList = farmResponse.data.data
+        .map((el) => ({
+          ...el,
+          product_capacity: el.product_capacity.filter((f) => f.product === 3),
+        }))
+        .filter((fil) => fil.product_capacity.length)
+        .map((ell) => ({
+          ...ell,
+          free_capacity: ell.product_capacity[0].capacity - ell.total_goats,
+          sick: 0,
+          mortality: 0,
+          key: ell.id,
+        }));
+      console.log(alteredFarmList);
+      setFarmList(alteredFarmList);
+    } else {
+      console.log(farmError.response);
+    }
+  };
+
   useEffect(() => {
     setPageTitle("Farm");
+    getFarmList();
   }, [setPageTitle]);
 
-  const handleMenuClick = () => { };
+  const handleMenuClick = () => {};
 
-  const handleSearch = () => { };
+  const handleSearch = () => {};
 
-  const handleTableChange = () => { };
+  const handleTableChange = () => {};
 
   const columns = [
     {
       title: "Farm Code",
-      dataIndex: "farmcode",
+      dataIndex: "code",
       render: (value, columns) => (
         <NavLink
           to={{
@@ -49,20 +77,20 @@ export default function FarmGoatList() {
     },
     {
       title: "Farm Name",
-      dataIndex: "farmname",
+      dataIndex: "name",
       width: "20%",
     },
     {
       title: "Location",
-      dataIndex: "location",
+      dataIndex: "state_name",
     },
     {
       title: "Ready to Sale",
-      dataIndex: "readytosale",
+      dataIndex: "total_goats",
     },
     {
       title: "Free Capacity",
-      dataIndex: "freecapacity",
+      dataIndex: "free_capacity",
     },
     {
       title: "Sick",
@@ -73,30 +101,13 @@ export default function FarmGoatList() {
       dataIndex: "mortality",
     },
     {
-      title: "Status",
-      dataIndex: "status",
-      render: (value) => (
-        <div className="status_text">
-          <div
-            style={
-              value === "Active"
-                ? { backgroundColor: "#52C41A" }
-                : { backgroundColor: "#FF4D4F" }
-            }
-            className="dot_badge"
-          ></div>
-          {value}
-        </div>
-      ),
-    },
-    {
       title: "Action",
       dataIndex: "action",
       width: "8%",
       render: (value, columns) => (
         <NavLink
           to={{
-            pathname: `/farm/${columns.farmcode}`,
+            pathname: `/goat/${columns.key}`,
           }}
         >
           <Button style={{ borderRadius: "4px" }} type="primary" ghost>
@@ -104,93 +115,6 @@ export default function FarmGoatList() {
           </Button>
         </NavLink>
       ),
-    },
-  ];
-
-  const data = [
-    {
-      key: 1,
-      farmcode: "FRM-123456",
-      farmname: "Red Hills Farm",
-      location: "Chennai-TN",
-      readytosale: 1000,
-      freecapacity: 500,
-      sick: 50,
-      mortality: 10,
-      status: "Active",
-      action: "View",
-    },
-    {
-      key: 2,
-      farmcode: "FRM-111111",
-      farmname: "Red Hills Farm",
-      location: "Chennai-TN",
-      readytosale: 1000,
-      freecapacity: 500,
-      sick: 50,
-      mortality: 10,
-      status: "In Active",
-      action: "View",
-    },
-    {
-      key: 3,
-      farmcode: "FRM-222222",
-      farmname: "Red Hills Farm",
-      location: "Chennai-TN",
-      readytosale: 1000,
-      freecapacity: 500,
-      sick: 50,
-      mortality: 10,
-      status: "In Active",
-      action: "View",
-    },
-    {
-      key: 4,
-      farmcode: "FRM-333333",
-      farmname: "Red Hills Farm",
-      location: "Chennai-TN",
-      readytosale: 1000,
-      freecapacity: 500,
-      sick: 50,
-      mortality: 10,
-      status: "Active",
-      action: "View",
-    },
-    {
-      key: 5,
-      farmcode: "FRM-444444",
-      farmname: "Red Hills Farm",
-      location: "Chennai-TN",
-      readytosale: 1000,
-      freecapacity: 500,
-      sick: 50,
-      mortality: 10,
-      status: "Active",
-      action: "View",
-    },
-    {
-      key: 6,
-      farmcode: "FRM-555555",
-      farmname: "Red Hills Farm",
-      location: "Chennai-TN",
-      readytosale: 1000,
-      freecapacity: 500,
-      sick: 50,
-      mortality: 10,
-      status: "Active",
-      action: "View",
-    },
-    {
-      key: 7,
-      farmcode: "FRM-666666",
-      farmname: "Red Hills Farm",
-      location: "Chennai-TN",
-      readytosale: 1000,
-      freecapacity: 500,
-      sick: 50,
-      mortality: 10,
-      status: "Active",
-      action: "View",
     },
   ];
 
@@ -261,7 +185,7 @@ export default function FarmGoatList() {
         <Table
           style={{ width: "100%" }}
           columns={columns}
-          dataSource={data}
+          dataSource={farmList}
           onChange={handleTableChange}
           bordered
         />

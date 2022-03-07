@@ -3,18 +3,34 @@ import BreadCrumb from "../../components/breadcrumb/BreadCrumb";
 import usePageInfo from "../../hooks/usePageInfo";
 import { Dropdown, Button, Menu, Input, Table } from "antd";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { viewIcon } from "../../utils/constants";
 import "./goatlist.css";
+import tryCatch from "../../helper/tryCatch.helper";
+import { getFarmGoat } from "../../api/goat.api";
 
 const { Search } = Input;
 
 export default function GoatList() {
   const { setPageTitle } = usePageInfo();
+  const { farmid } = useParams();
 
   const handleMenuClick = () => {};
   const handleSearch = () => {};
   const handleTableChange = () => {};
+
+  const getGoatList = async () => {
+    const [goatResponse, goatError] = await tryCatch(getFarmGoat(farmid));
+    if (!goatError) {
+      console.log(goatResponse.data);
+    } else {
+      console.log(goatError.response);
+    }
+  };
+
+  useEffect(() => {
+    getGoatList();
+  }, []);
 
   const columns = [
     {
@@ -59,7 +75,7 @@ export default function GoatList() {
       width: "8%",
       render: (value, columns) => (
         <div className="action_button_div">
-          <NavLink to={`/farm/${columns.farmcode}/goat/${columns.farmcode}`}>
+          <NavLink to={`${columns.farmcode}`}>
             <Button
               className="user_list_buttons"
               style={{ borderRadius: "4px" }}

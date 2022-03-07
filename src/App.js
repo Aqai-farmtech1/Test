@@ -17,7 +17,6 @@ function App() {
 
   useEffect(() => {
     fetchMasters();
-    console.log("asmdkj");
   }, []);
 
   return (
