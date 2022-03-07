@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import BreadCrumb from "../../components/breadcrumb/BreadCrumb";
 import usePageInfo from "../../hooks/usePageInfo";
 import { Dropdown, Button, Menu, Input, Table } from "antd";
@@ -12,6 +12,7 @@ import { getFarmGoat } from "../../api/goat.api";
 const { Search } = Input;
 
 export default function GoatList() {
+  const [goatList, setGoatList] = useState([]);
   const { setPageTitle } = usePageInfo();
   const { farmid } = useParams();
 
@@ -22,7 +23,7 @@ export default function GoatList() {
   const getGoatList = async () => {
     const [goatResponse, goatError] = await tryCatch(getFarmGoat(farmid));
     if (!goatError) {
-      console.log(goatResponse.data);
+      setGoatList(goatResponse.data.data);
     } else {
       console.log(goatError.response);
     }
@@ -35,39 +36,31 @@ export default function GoatList() {
   const columns = [
     {
       title: "Farm Code",
-      dataIndex: "farmcode",
-      render: (value, columns) => (
-        <NavLink
-          to={{
-            pathname: `/farm/${value}`,
-          }}
-        >
-          <div
-            style={{
-              color: "#2D9CDB",
-              fontStyle: "normal",
-              fontSize: "14px",
-              fontWeight: 500,
-              lineHeight: "22px",
-            }}
-          >
-            {value}
-          </div>
-        </NavLink>
-      ),
+      dataIndex: "rfid",
     },
     {
       title: "Farm Name",
-      dataIndex: "farmname",
-      width: "20%",
+      dataIndex: "grade",
     },
     {
       title: "State",
-      dataIndex: "state",
+      dataIndex: "tooth",
     },
     {
       title: "Product & Capacity",
-      dataIndex: "productcapacity",
+      dataIndex: "breed",
+    },
+    {
+      title: "Product & Capacity",
+      dataIndex: "vaccination_status",
+    },
+    {
+      title: "Product & Capacity",
+      dataIndex: "period",
+    },
+    {
+      title: "Product & Capacity",
+      dataIndex: "current_weight",
     },
     {
       title: "Action",
