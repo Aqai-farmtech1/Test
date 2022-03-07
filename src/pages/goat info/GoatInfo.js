@@ -6,10 +6,13 @@ import GoatBasicInfo from "./GoatBasicInfo";
 import GoatWeightHistory from "./GoatWeightHistory";
 import tryCatch from "../../helper/tryCatch.helper";
 import { getGoatInfo } from "../../api/goat.api";
+import { useParams } from "react-router-dom";
 
 export default function GoatInfo() {
+  const { goatid } = useParams();
+
   const getGoatDetails = async () => {
-    const [goatResponse, goatError] = await tryCatch(getGoatInfo());
+    const [goatResponse, goatError] = await tryCatch(getGoatInfo(goatid));
 
     if (!goatError) {
       console.log(goatResponse);
