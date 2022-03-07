@@ -29,7 +29,8 @@ import "antd/dist/antd.css";
 // import PageInfoProvider from "./contexts/PageInfoContext";
 
 
-import PageInfoContext from '../contexts/PageInfoContext';
+import { PageInfoContext } from '../contexts/PageInfoProvider';
+import { AuthContext } from '../contexts/AuthProvider';
 
 // export const authenticatedroutes = [
 //   {
@@ -130,7 +131,7 @@ export const publicroutes = [
     "component": <Login />,
     "title": "Acgromalin | Login",
     "icon": "fas fa-address-card",
-    "provider": PageInfoContext,
+    "provider": AuthContext,
   }, {
     "name": "Login",
     "path": "forgetpassword",

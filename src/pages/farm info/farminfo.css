@@ -1,354 +1,236 @@
-.farm_info {
-  width: 100%;
-  margin-top: 20px;
-}
-
-.farm_info_details {
+.farm_info_main {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+}
+
+.ant-tabs-nav {
   background-color: white;
+  /* height: 78px; */
+  padding-left: 30px;
+  padding-right: 30px;
   padding-top: 20px;
   border-radius: 10px;
-  padding-bottom: 30px;
 }
 
-.farm_image {
+.ant-tabs {
+  margin-top: 10px;
+}
+
+.ant-tabs-tab {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.ant-tabs-content-holder {
+  margin-top: 10px;
+}
+
+.farm_dashboard_main {
   display: flex;
-  width: 120px;
-  height: 120px;
+  width: 100%;
+}
+
+.product_card_main {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  padding: 16px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.product_card_image_conatiner {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: #fafafa;
+  padding: 20px 0px;
+  align-items: center;
+}
+
+.product_image_wrapper {
+  display: flex;
+  width: 95px;
+  height: 95px;
   border-radius: 50%;
-  background-color: #c3c3c3;
-  outline: solid;
-  outline-width: 1px;
-  outline-color: black;
-  outline-offset: 4px;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border: 0.5px solid #dfe6e9;
+  -webkit-box-shadow: inset 0px 0px 0px 7px white;
+  -moz-box-shadow: inset 0px 0px 0px 7px white;
+  box-shadow: inset 0px 0px 0px 7px white;
+  box-sizing: border-box;
+  background-color: white;
+  margin-bottom: 10px;
 }
 
-.farm_status {
+.product_card_title {
   display: flex;
+  font-family: Manrope;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.product_image {
+  width: 100%;
+  height: auto;
+}
+
+.product_card_details {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.product_card_details_title {
+  display: flex;
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.product_card_details_content {
+  display: flex;
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.product_card_details_divider {
+  margin-top: 12px !important;
+  margin-bottom: 0px !important;
+}
+
+.product_details_view_button_container {
+  display: flex;
+  margin-top: 12px;
+  width: 100%;
+}
+
+.product_details_view_button {
+  font-family: Manrope;
+  font-size: 14px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 22px !important;
+  letter-spacing: 0em;
+  text-align: center !important;
+}
+
+.farm_information_main {
+  display: flex;
+  width: 100%;
+}
+
+.farm_information_table_conatainer {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.farm_information_basic_info_container {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 20px !important;
+}
+
+.farm_info_details_list_container {
+  display: flex;
+  padding: 16px;
+  width: 100%;
+  background-color: white;
+  flex-direction: column;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.farm_info_details_list_container_title {
+  font-family: Manrope;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.farm_info_details_list_container_table {
+  margin-top: 12px;
+}
+
+.farm_information_basic {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.farm_information_address {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+.farm_information_basic_head_area {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 0.5px solid #f5f5f5;
+  padding-bottom: 16px;
+}
+
+.farm_information_basic_head_title {
+  display: flex;
+  font-family: Manrope;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.farm_basic_info_content {
+  display: flex;
+  width: 100%;
   margin-top: 16px;
 }
 
-.farm_info_name {
-  display: flex;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 30px;
-  letter-spacing: 0em;
-  text-align: center;
-  margin-top: 12px;
-}
-
-.farm_info_code {
-  display: flex;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 24px;
-  letter-spacing: 0em;
-  text-align: left;
-  margin-top: 4px;
-}
-
-.farm_info_edit {
-  display: flex;
-  margin-top: 12px;
-  margin-bottom: 16px;
-}
-
-.farm_info_edit_button {
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 12px;
-  letter-spacing: 0em;
-  text-align: center;
-  border-radius: 4px;
-}
-
-.farm_info_general_details {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 0px 20px;
-}
-
-.farm_info_incharge_details {
-  display: flex;
-  flex-direction: column;
-}
-
-.farm_info_incharge_details_title {
+.farm_basic_info_content_title {
   display: flex;
   font-family: Manrope;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 18px;
+  line-height: 22px;
   letter-spacing: 0em;
   text-align: left;
-  color: #85878e;
-}
-.farm_info_incharge_details_value {
-  display: flex;
-  font-family: Manrope;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 28px;
-  letter-spacing: 0em;
-  text-align: left;
-  margin-top: 4px;
 }
 
-.farm_info_contact_details {
-  display: flex;
-  flex-direction: column;
-}
-
-.farm_info_contact_details_title {
+.farm_basic_info_content_value {
   display: flex;
   font-family: Manrope;
   font-size: 14px;
   font-style: normal;
-  font-weight: 400;
-  line-height: 18px;
-  letter-spacing: 0em;
-  text-align: left;
-  color: #85878e;
-}
-.farm_info_contact_details_value {
-  display: flex;
-  font-family: Manrope;
-  font-size: 16px;
-  font-style: normal;
   font-weight: 500;
-  line-height: 28px;
+  line-height: 22px;
   letter-spacing: 0em;
   text-align: left;
-  margin-top: 4px;
-}
-
-.farm_info_capacity {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-}
-
-.farm_info_capacity_details {
-  display: flex;
-  flex-direction: column;
-}
-
-.farm_info_capacity_title {
-  display: flex;
-  font-family: Manrope;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 18px;
-  letter-spacing: 0em;
-  text-align: left;
-  color: #85878e;
-}
-
-.farm_info_capacity_value {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-}
-
-.farm_info_capacity_details_total {
-  display: flex;
-  font-family: Manrope;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 28px;
-  letter-spacing: 0em;
-  text-align: left;
-}
-
-.farm_info_capacity_details_free {
-  display: flex;
-  font-family: Manrope;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 28px;
-  letter-spacing: 0em;
-  text-align: left;
-}
-
-.farm_info_machine_details {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.farm_info_machine_details_title {
-  display: flex;
-  font-family: Manrope;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 18px;
-  letter-spacing: 0em;
-  text-align: left;
-  color: #85878e;
-}
-
-.farm_info_machine_details_value {
-  display: flex;
-  font-family: Manrope;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 28px;
-  letter-spacing: 0em;
-  text-align: left;
-}
-
-.farm_info_address_details {
-  display: flex;
-  flex-direction: column;
-}
-
-.farm_info_address_details_title {
-  display: flex;
-  font-family: Manrope;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 18px;
-  letter-spacing: 0em;
-  text-align: left;
-  color: #85878e;
-}
-.farm_info_address_details_value {
-  display: flex;
-  font-family: Manrope;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 28px;
-  letter-spacing: 0em;
-  text-align: left;
-  margin-top: 4px;
-}
-
-.farm_info_divider {
-  margin: 8px 0px !important;
-}
-
-.farm_info_content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-.farm_info_content_cards_container {
-  width: 100%;
-}
-
-.farm_info_card {
-  display: flex;
-  width: 100%;
-  border-radius: 10px;
-  background-color: #c4c4c4;
-  height: 150px;
-}
-
-.farm_info_goat_list_action {
-  display: flex;
-  margin-top: 30px;
-  width: 100%;
-  justify-content: space-between;
-}
-
-.farm_info_goat_filter {
-  display: flex;
-}
-
-.farm_info_goat_search {
-  display: flex;
-}
-
-.farm_info_goat_filter_button {
-  border-radius: 6px !important;
-  font-family: Manrope;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 24px;
-  letter-spacing: 0em;
-  text-align: left;
-}
-
-.ant-input-affix-wrapper {
-  border-top-left-radius: 6px !important;
-  border-bottom-left-radius: 6px !important;
-}
-
-.ant-input-search
-  > .ant-input-group
-  > .ant-input-group-addon:last-child
-  .ant-input-search-button:not(.ant-btn-primary) {
-  border-top-right-radius: 6px !important;
-  border-bottom-right-radius: 6px !important;
-}
-
-.farm_info_goat_list_table {
-  display: flex;
-  width: 100%;
-  margin-top: 20px;
-  padding: 20px 16px;
-  background-color: white;
-  border-radius: 10px;
-}
-
-.form_modal_container {
-  width: 100%;
-  height: 60vh;
-  overflow: auto;
-  overflow-x: hidden;
-}
-
-.form_modal_container::-webkit-scrollbar {
-  width: 5px;
-}
-/* Track */
-.form_modal_container::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px rgba(128, 128, 128, 0.3);
-  border-radius: 50px;
-}
-
-/* Handle */
-.form_modal_container::-webkit-scrollbar-thumb {
-  background: #1890ff;
-  border-radius: 10px;
-}
-
-/* Handle on hover */
-.form_modal_container::-webkit-scrollbar-thumb:hover {
-  background: #b30000;
-}
-
-.ant-modal-content {
-  border-radius: 6px 6px 6px 6px;
-}
-
-.ant-modal-header {
-  border-radius: 6px 6px 0px 0px;
-}
-
-.ant-modal-footer {
-  border-radius: 0px 0px 6px 6px;
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Dropdown, Layout, Menu } from "antd";
+import { Dropdown, Layout, Menu, message } from "antd";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { UserOutlined, VideoCameraOutlined } from "@ant-design/icons";
 import "./mainlayout.css";
@@ -8,20 +8,19 @@ import {
   notificationIcon,
   layoutSiderLogo,
 } from "../../utils/constants";
-import BreadCrumb from "../breadcrumb/BreadCrumb";
 import { getPathArray } from "../../utils/urlPathConversion";
 import PageTitle from "../pagetitle/PageTitle";
 import usePageInfo from "../../hooks/usePageInfo";
 import { useNavigate } from 'react-router-dom';
+import tryCatch from "../../helper/tryCatch.helper";
+import { logout } from "../../api/logout.api";
+// import useAuth from "../../hooks/useAuth";
 
 const { Header, Sider, Content } = Layout;
 
 
-
-
-
-
 export default function MainLayout() {
+  // const { token, setToken } = useAuth();
   const [collapse, setCollapse] = useState(true);
   const [selectedMenu, setSelectedMenu] = useState("1");
   const { pageTitle } = usePageInfo();
@@ -30,8 +29,16 @@ export default function MainLayout() {
   const pathnameList = getPathArray(pathname);
   const navigate = useNavigate();
 
-  const handleMenuClick = (val) => {
-    setCollapse(val);
+  const handleLogout = async () => {
+    // const [logoutResponse, logoutError] = await tryCatch(logout(token));
+    // if (!logoutError) {
+    //   message.success("Logged out Successfully!");
+    //   localStorage.removeItem("token");
+    //   setToken("");
+    // } else {
+    //   console.log(logoutError.response.data);
+    //   message.error("Something went wrong!");
+    // }
   };
 
   const handleCollapse = (val) => {
@@ -72,10 +79,12 @@ export default function MainLayout() {
   ];
 
   const profileMenu = (
-    <Menu onClick={handleMenuClick}>
+    <Menu>
       <Menu.Item key="1">Profile</Menu.Item>
-      <Menu.Item key="2" onClick={logout}>Logout</Menu.Item>
-    </Menu>
+      <Menu.Item onClick={handleLogout} key="2">
+        Logout
+      </Menu.Item>
+    </Menu >
   );
 
   return (

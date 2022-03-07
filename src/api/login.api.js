@@ -1,8 +1,13 @@
 import axios from "axios";
 
+const USER_DEV_URL = process.env.REACT_APP_USER_DEV_URL;
+
 export const login = (data) =>
   axios({
     method: "POST",
-    url: "https://aqgromalin-user-dev-ta5iabl3za-el.a.run.app/v1/login/",
+    url: `${USER_DEV_URL}v1/login/`,
     data,
+    headers: {
+      Authorization: "",
+    },
   });

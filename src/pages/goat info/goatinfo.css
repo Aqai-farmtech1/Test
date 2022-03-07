@@ -1,0 +1,97 @@
+.farm_info_main {
+  display: flex;
+  flex-direction: column;
+}
+
+.farm_info_details_main {
+  display: flex;
+  margin-top: 20px;
+}
+
+.goat_basic_info {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 16px;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.goat_weight_history {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 16px;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.goat_info_navigation {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.goat_basic_info_head {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background-color: #fafafa;
+  align-items: center;
+  justify-content: center;
+}
+
+.goat_basic_info_head_status_container {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.goat_basic_info_head_status {
+  display: flex;
+  padding: 12px;
+  background-color: #e6fff8;
+  border: 1px solid #20c595;
+  border-radius: 4px;
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.goat_basic_info_head_image_wrapper {
+  display: flex;
+  width: 110px;
+  height: 110px;
+  background-color: white;
+  border: 0.5px solid #dfe6e9;
+  box-sizing: border-box;
+  -webkit-box-shadow: inset 0px 0px 0px 7px white;
+  -moz-box-shadow: inset 0px 0px 0px 7px white;
+  box-shadow: inset 0px 0px 0px 7px white;
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  overflow: hidden;
+}
+
+.goat_basic_info_head_image {
+  display: flex;
+  width: 100%;
+  height: auto;
+}
+
+.goat_info_rfid {
+  display: flex;
+  font-family: Manrope;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-top: 14px;
+}

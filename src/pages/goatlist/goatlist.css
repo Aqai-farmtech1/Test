@@ -1,0 +1,19 @@
+.goat_list_main {
+  display: flex;
+  flex-direction: column;
+}
+
+.goat_list_main_action_container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.goat_list_table_area {
+  display: flex;
+  background-color: white;
+  border-radius: 10px;
+  margin-top: 20px;
+  padding: 20px 16px;
+}

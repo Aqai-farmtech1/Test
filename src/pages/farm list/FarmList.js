@@ -3,25 +3,49 @@ import { Button, Dropdown, Menu, Input, Table, Badge } from "antd";
 import { DownOutlined, UserOutlined, PlusOutlined } from "@ant-design/icons";
 import "./farmlist.css";
 import { NavLink } from "react-router-dom";
-import PageTitle from "../../components/pagetitle/PageTitle";
+import { editIcon, viewIcon } from "../../utils/constants";
 import usePageInfo from "../../hooks/usePageInfo";
+import useMasters from "../../hooks/useMasters";
+import tryCatch from "../../helper/tryCatch.helper";
+import { getAllFarm } from "../../api/farm.api";
 
-import { PageInfoContext } from '../../contexts/PageInfoContext';
+// import { PageInfoContext } from '../../contexts/PageInfoContext';
 const { Search } = Input;
 
 export default function FarmList() {
   const [selectedState, setSelectedState] = useState("All");
-  const [selectedCity, setSelectedCity] = useState("All");
+  const [isLoading, setIsLoading] = useState(false);
+  const [farmList, setFarmList] = useState([]);
+  const { productMaster } = useMasters();
   const { setPageTitle } = usePageInfo();
-  const { setAlert, contextCheck } = useContext(PageInfoContext);
+  // const { setAlert, contextCheck } = useContext(PageInfoContext);
   // const { setAlert } = this.contextType;
 
-  useEffect(() => {
-    setPageTitle("Farm");
-    setAlert();
-    // alert('Farm');
-    // alert(contextCheck);
-  }, [setPageTitle]);
+  const getFarmList = async () => {
+    setIsLoading(true);
+    const [farmResponse, farmError] = await tryCatch(getAllFarm());
+    if (!farmError) {
+      setIsLoading(false);
+      const farmDataList = farmResponse.data.data.map((el) => ({
+        code: el.code,
+        key: el.id,
+        name: el.name,
+        state: el.state,
+        product_capacity: el.product_capacity
+          .map((e) =>
+            productMaster
+              .filter((f) => f.id === e.product)
+              .map((m) => `${m.name}-${e.capacity}`)
+              .join("")
+          )
+          .join(", "),
+      }));
+      setFarmList(farmDataList);
+    } else {
+      setIsLoading(false);
+      console.log(farmError.response);
+    }
+  };
 
   const handleMenuClick = () => { };
 
@@ -32,7 +56,7 @@ export default function FarmList() {
   const columns = [
     {
       title: "Farm Code",
-      dataIndex: "farmcode",
+      dataIndex: "code",
       render: (value, columns) => (
         <NavLink
           to={{
@@ -55,7 +79,7 @@ export default function FarmList() {
     },
     {
       title: "Farm Name",
-      dataIndex: "farmname",
+      dataIndex: "name",
       width: "20%",
     },
     {
@@ -64,82 +88,41 @@ export default function FarmList() {
     },
     {
       title: "Product & Capacity",
-      dataIndex: "productcapacity",
+      dataIndex: "product_capacity",
+      render: (value) => (value ? value : "No Products"),
     },
     {
       title: "Action",
       dataIndex: "action",
       width: "8%",
       render: (value, columns) => (
-        <NavLink
-          to={{
-            pathname: `/farm/${columns.farmcode}`,
-          }}
-        >
-          <Button style={{ borderRadius: "4px" }} type="primary" ghost>
-            View
-          </Button>
-        </NavLink>
+        <div className="action_button_div">
+          <NavLink to={`/farm/create`}>
+            <Button
+              className="user_list_buttons"
+              style={{ borderRadius: "4px" }}
+              block
+              type="primary"
+              ghost
+            >
+              <img className="button_icon" src={editIcon} alt="edit icon" />
+              Edit
+            </Button>
+          </NavLink>
+          <NavLink to={`/farm/${columns.key}`}>
+            <Button
+              className="user_list_buttons"
+              style={{ borderRadius: "4px", marginLeft: 6 }}
+              block
+              type="primary"
+              ghost
+            >
+              <img className="button_icon" src={viewIcon} alt="view icon" />
+              View
+            </Button>
+          </NavLink>
+        </div>
       ),
-    },
-  ];
-
-  const data = [
-    {
-      key: 1,
-      farmcode: "FRM-123456",
-      farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
-      action: "View",
-    },
-    {
-      key: 2,
-      farmcode: "FRM-111111",
-      farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
-      action: "View",
-    },
-    {
-      key: 3,
-      farmcode: "FRM-222222",
-      farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
-      action: "View",
-    },
-    {
-      key: 4,
-      farmcode: "FRM-333333",
-      farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
-      action: "View",
-    },
-    {
-      key: 5,
-      farmcode: "FRM-444444",
-      farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
-      action: "View",
-    },
-    {
-      key: 6,
-      farmcode: "FRM-555555",
-      farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
-      action: "View",
-    },
-    {
-      key: 7,
-      farmcode: "FRM-666666",
-      farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
-      action: "View",
     },
   ];
 
@@ -156,6 +139,11 @@ export default function FarmList() {
       </Menu.Item>
     </Menu>
   );
+
+  useEffect(() => {
+    setPageTitle("Farm");
+    getFarmList();
+  }, [setPageTitle]);
 
   return (
     <div className="farmlist">
@@ -174,9 +162,7 @@ export default function FarmList() {
           <div className="action_filter_city">
             <Dropdown trigger={["click"]} overlay={menu}>
               <Button size="large" style={{ borderRadius: "4px" }}>
-                <span className="filter_button_text">
-                  City : {selectedCity}
-                </span>
+                <span className="filter_button_text">Status : Active</span>
                 <DownOutlined />
               </Button>
             </Dropdown>
@@ -208,9 +194,10 @@ export default function FarmList() {
       </div>
       <div className="farmlist_table">
         <Table
+          loading={isLoading}
           style={{ width: "100%" }}
           columns={columns}
-          dataSource={data}
+          dataSource={farmList}
           onChange={handleTableChange}
           bordered
         />
