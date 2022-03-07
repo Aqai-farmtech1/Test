@@ -12,8 +12,14 @@ import BreadCrumb from "../breadcrumb/BreadCrumb";
 import { getPathArray } from "../../utils/urlPathConversion";
 import PageTitle from "../pagetitle/PageTitle";
 import usePageInfo from "../../hooks/usePageInfo";
+import { useNavigate } from 'react-router-dom';
 
 const { Header, Sider, Content } = Layout;
+
+
+
+
+
 
 export default function MainLayout() {
   const [collapse, setCollapse] = useState(true);
@@ -22,6 +28,7 @@ export default function MainLayout() {
   const location = useLocation();
   const { pathname } = location;
   const pathnameList = getPathArray(pathname);
+  const navigate = useNavigate();
 
   const handleMenuClick = (val) => {
     setCollapse(val);
@@ -38,6 +45,11 @@ export default function MainLayout() {
     setSelectedMenu(currentNavItem?.key || "1");
   }, [pathname]);
 
+  const logout = () => {
+    localStorage.removeItem('token');
+    // navigate('/');
+    window.location = '/';
+  }
   const navMenuItem = [
     {
       key: "1",
@@ -62,7 +74,7 @@ export default function MainLayout() {
   const profileMenu = (
     <Menu onClick={handleMenuClick}>
       <Menu.Item key="1">Profile</Menu.Item>
-      <Menu.Item key="2">Logout</Menu.Item>
+      <Menu.Item key="2" onClick={logout}>Logout</Menu.Item>
     </Menu>
   );
 

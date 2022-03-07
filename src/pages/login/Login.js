@@ -5,16 +5,27 @@ import "./login.css";
 import { loginImage } from "../../utils/constants";
 import axios from "axios";
 import tryCatch from "../../helper/tryCatch.helper";
+import { login } from "../../api/login.api";
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
-  const handleFormSubmit = async (values) => {
-    const { email, password, remember } = values;
-    const [response, error] = await tryCatch(
-      axios({
-        method: "GET",
-        url: "https://jsonplaceholder.typicode.com/todos/1",
-      })
-    );
+  const navigate = useNavigate();
+  const onFinish = async (values) => {
+    // setisLoading(true);
+    const [loginResponse, loginError] = await tryCatch(login(values));
+    console.log('Login response check', loginResponse, loginError);
+    if (loginResponse !== null) {
+      const token = loginResponse.data.token;
+      localStorage.setItem("token", token);
+      // navigate("/farm");
+      window.location = "/farm";
+      // setToken(token);
+      // setisLoading(false);
+    } else {
+      const errorMessage = loginError.response.data.error.message;
+      // setErrorMessage(errorMessage);
+      // setisLoading(false);
+    }
   };
 
   return (
@@ -34,7 +45,7 @@ export default function Login() {
                   name="normal_login"
                   className="login-form"
                   initialValues={{ remember: true }}
-                  onFinish={handleFormSubmit}
+                  onFinish={onFinish}
                 >
                   <Form.Item
                     className="username_input_form"

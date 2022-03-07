@@ -17,11 +17,11 @@ export default function FarmGoatList() {
     setPageTitle("Farm");
   }, [setPageTitle]);
 
-  const handleMenuClick = () => {};
+  const handleMenuClick = () => { };
 
-  const handleSearch = () => {};
+  const handleSearch = () => { };
 
-  const handleTableChange = () => {};
+  const handleTableChange = () => { };
 
   const columns = [
     {
@@ -244,7 +244,7 @@ export default function FarmGoatList() {
             />
           </div>
           <div className="farmlist_create_new">
-            <NavLink to="/farm/create">
+            <NavLink to="/createfarm">
               <Button
                 style={{ borderRadius: "4px" }}
                 type="primary"

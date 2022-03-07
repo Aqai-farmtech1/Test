@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Button, Dropdown, Menu, Input, Table, Badge } from "antd";
 import { DownOutlined, UserOutlined, PlusOutlined } from "@ant-design/icons";
 import "./farmlist.css";
@@ -6,22 +6,28 @@ import { NavLink } from "react-router-dom";
 import PageTitle from "../../components/pagetitle/PageTitle";
 import usePageInfo from "../../hooks/usePageInfo";
 
+import { PageInfoContext } from '../../contexts/PageInfoContext';
 const { Search } = Input;
 
 export default function FarmList() {
   const [selectedState, setSelectedState] = useState("All");
   const [selectedCity, setSelectedCity] = useState("All");
   const { setPageTitle } = usePageInfo();
+  const { setAlert, contextCheck } = useContext(PageInfoContext);
+  // const { setAlert } = this.contextType;
 
   useEffect(() => {
     setPageTitle("Farm");
+    setAlert();
+    // alert('Farm');
+    // alert(contextCheck);
   }, [setPageTitle]);
 
-  const handleMenuClick = () => {};
+  const handleMenuClick = () => { };
 
-  const handleSearch = () => {};
+  const handleSearch = () => { };
 
-  const handleTableChange = () => {};
+  const handleTableChange = () => { };
 
   const columns = [
     {
@@ -187,7 +193,7 @@ export default function FarmList() {
             />
           </div>
           <div className="farmlist_create_new">
-            <NavLink to="/farm/create">
+            <NavLink to="/createfarm">
               <Button
                 style={{ borderRadius: "4px" }}
                 type="primary"

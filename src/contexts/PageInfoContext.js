@@ -1,18 +1,26 @@
-import React, { createContext, useState } from "react";
+import React, { Component, createContext } from 'react';
 
 export const PageInfoContext = createContext();
 
-export default function PageInfoProvider(props) {
-  const [pageTitle, setPageTitle] = useState("");
+class PageInfoProvider extends Component {
+  state = {
+    pageTitle: "",
+    contextCheck: "checkmain"
+  };
+  setPageTitle = () => {
 
-  return (
-    <PageInfoContext.Provider
-      value={{
-        pageTitle,
-        setPageTitle,
-      }}
-    >
-      {props.children}
-    </PageInfoContext.Provider>
-  );
+  };
+  setAlert = () => {
+    // alert('Context integrated');
+  }
+  render() {
+    const { setPageTitle, setAlert } = this;
+    return (
+      <PageInfoContext.Provider value={{ pageTitle: this.state.pageTitle, contextCheck: this.state.contextCheck, setPageTitle, setAlert }}>
+        {this.props.children}
+      </PageInfoContext.Provider>
+    )
+  }
 }
+
+export default PageInfoProvider;

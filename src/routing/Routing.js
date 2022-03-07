@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 import Dashboard from "../pages/dasboard/Dashboard";
 import FarmGoatList from "../pages/farm list goat wise/FarmGoatList";
@@ -8,181 +8,165 @@ import Login from "../pages/login/Login";
 import CreateFarm from "../pages/create farm/CreateFarm";
 import AuthenticatedRoute from "../components/wrapper/AuthenticatedRoute";
 import PageNotFound from "../pages/error 404/PageNotFound";
-import PageInfoProvider from "../contexts/PageInfoContext";
+// import PageInfoProvider from "../contexts/PageInfoContext";
 import GoatInfo from "../pages/goat info/GoatInfo";
 import FarmList from "../pages/farm list/FarmList";
 import DeviceList from "../pages/device/DeviceList";
+import CheckYourMail from "../pages/forgetpassword/CheckYourMail";
+import ForgetPassword from "../pages/forgetpassword/ForgetPassword";
+
+import PrivateRoute from "./PrivateRoute.js";
+import PublicRoute from "./PublicRoute.js";
+
+// import React from "react";
+// import { Routes, Route } from "react-router-dom";
+// import MainLayout from "./components/layout/MainLayout";
+
+import "antd/dist/antd.css";
+// import Login from "pages/login/Login";
+// import AuthenticatedRoute from "./components/wrapper/AuthenticatedRoute";
+// import PageNotFound from "./pages/error 404/PageNotFound";
+// import PageInfoProvider from "./contexts/PageInfoContext";
 
 
+import PageInfoContext from '../contexts/PageInfoContext';
 
-import SectionContext from "context/SectionContext";
-import StandardContext from "context/StandardContext";
-import AcademicyearContext from "context/AcademicyearContext";
-import FeesContext from "context/FeesContext";
-import StudentContext from "context/StudentContext";
-import ParentContext from "context/ParentContext";
-import DashboardContext from "context/DashboardContext";
-import PaymentsContext from "context/PaymentsContext";
-import StudentwisereportContext from "context/StudentwisereportContext";
-import ClasswisereportContext from "context/ClasswisereportContext";
-import SmsContext from "context/SmsContext";
-
-
-
-export const authenticatedroutes = [
-  {
-    path: "/dashboard",
-    component: <Dashboard />,
-    title: "Acgromalin | Dashboard",
-  },
-  {
-    path: "/farm",
-    component: <FarmList />,
-    title: "Acgromalin | Farm List",
-  },
-  {
-    path: "/farm/:farmid",
-    component: <FarmInfo />,
-    title: "Acgromalin | Farm Info",
-  },
-  {
-    path: "/farm/:farmid/:goatid",
-    component: <GoatInfo />,
-    title: "Acgromalin | Goat Info",
-  },
-  {
-    path: "farm/create",
-    component: <CreateFarm />,
-    title: "Acgromalin | Create Farm",
-  },
-  {
-    path: "/goat",
-    component: <FarmGoatList />,
-    title: "Acgromalin | Farm Goat List",
-  },
-  {
-    path: "/device",
-    component: <DeviceList />,
-    title: "Acgromalin | Device List",
-  }
-];
+// export const authenticatedroutes = [
+//   {
+//     path: "/dashboard",
+//     component: <Dashboard />,
+//     title: "Acgromalin | Dashboard",
+//   },
+//   {
+//     path: "/farm",
+//     component: <FarmList />,
+//     title: "Acgromalin | Farm List",
+//   },
+//   {
+//     path: "/farm/:farmid",
+//     component: <FarmInfo />,
+//     title: "Acgromalin | Farm Info",
+//   },
+//   {
+//     path: "/farm/:farmid/:goatid",
+//     component: <GoatInfo />,
+//     title: "Acgromalin | Goat Info",
+//   },
+//   {
+//     path: "farm/create",
+//     component: <CreateFarm />,
+//     title: "Acgromalin | Create Farm",
+//   },
+//   {
+//     path: "/goat",
+//     component: <FarmGoatList />,
+//     title: "Acgromalin | Farm Goat List",
+//   },
+//   {
+//     path: "/device",
+//     component: <DeviceList />,
+//     title: "Acgromalin | Device List",
+//   }
+// ];
 
 
 export const privateroutes = [
   {
     "name": "Dashboard",
-    "path": "/dashboard",
-    "component": Dashboard,
+    "path": "dashboard",
+    "component": <Dashboard />,
     "title": "Acgromalin | Dashboard",
     "icon": "fas fa-tv",
-    "provider": DashboardContext,
+    "provider": PageInfoContext,
   }, {
     "name": "Farm",
-    "path": "/farm",
-    "component": Farm,
+    "path": "farm",
+    "component": <FarmList />,
     "title": "Acgromalin | Farm",
     "icon": "fas fa-address-card",
-    "provider": FarmContext,
+    "provider": PageInfoContext,
   }, {
     "name": "Farm",
-    "path": "/farm/:farmid",
-    "component": FarmInfo,
-    "title": "Acgromalin | Farm Info",
-    "icon": "fas fa-address-card",
-    "provider": FarmContext,
-  }, {
-    "name": "Farm",
-    "path": "/farm/:farmid/:goatid",
-    "component": FarmInfo,
-    "title": "Acgromalin | Goat Info",
-    "icon": "fas fa-address-card",
-    "provider": FarmContext,
-  }, {
-    "name": "Farm",
-    "path": "/farm/create",
-    "component": CreateFarm,
+    "path": "createfarm",
+    "component": <CreateFarm />,
     "title": "Acgromalin | Create Farm",
     "icon": "fas fa-address-card",
-    "provider": FarmContext,
+    "provider": PageInfoContext,
   }, {
     "name": "Farm",
-    "path": "/goat",
-    "component": FarmGoatList,
+    "path": "farm/:farmid",
+    "component": <FarmInfo />,
+    "title": "Acgromalin | Farm Info",
+    "icon": "fas fa-address-card",
+    "provider": PageInfoContext,
+  }, {
+    "name": "Farm",
+    "path": "farm/:farmid/:goatid",
+    "component": <FarmInfo />,
+    "title": "Acgromalin | Goat Info",
+    "icon": "fas fa-address-card",
+    "provider": PageInfoContext,
+  }, {
+    "name": "Farm",
+    "path": "goat",
+    "component": <FarmGoatList />,
     "title": "Acgromalin | Farm Goat List",
     "icon": "fas fa-address-card",
-    "provider": GoatContext,
+    "provider": PageInfoContext,
   }, {
     "name": "Farm",
-    "path": "/device",
-    "component": DeviceList,
+    "path": "device",
+    "component": <DeviceList />,
     "title": "Acgromalin | Device List",
     "icon": "fas fa-address-card",
-    "provider": DeviceContext,
+    "provider": PageInfoContext,
   }
 ]
 
 export const publicroutes = [
   {
     "name": "Login",
-    "path": "/admin",
-    "component": Login,
-    "title": "Little star school | Login",
-    "provider": ParentContext,
+    "path": "",
+    "component": <Login />,
+    "title": "Acgromalin | Login",
+    "icon": "fas fa-address-card",
+    "provider": PageInfoContext,
   }, {
-    "name": "Parent Login",
-    "path": "/",
-    "component": Parentlogin,
-    "title": "Little star school | Login",
-    "provider": ParentContext,
+    "name": "Login",
+    "path": "forgetpassword",
+    "component": <ForgetPassword />,
+    "title": "Acgromalin | ForgetPassword",
+    "icon": "fas fa-address-card",
+    "provider": PageInfoContext,
   }, {
-    "name": "Payment List",
-    "path": "/paymentlist",
-    "component": Paymentlist,
-    "title": "Little star school | Login",
-    "provider": ParentContext,
-  }, {
-    "name": "Payment Description",
-    "path": "/paymentdescription/:id",
-    "component": Paymentdescription,
-    "title": "Little star school | Login",
-    "provider": ParentContext,
-  }, {
-    "name": "My payments",
-    "path": "/mypayments",
-    "component": Mypayments,
-    "title": "Little star school | Login",
-    "provider": ParentContext,
-  }, {
-    "name": "Payment Success",
-    "path": "/paymentsuccess/:paymentID",
-    "component": Paymentsuccess,
-    "title": "Little star school | Payment Success",
-    "provider": ParentContext,
+    "name": "Login",
+    "path": "checkyourmail",
+    "component": <CheckYourMail />,
+    "title": "Acgromalin | Check Your Mail",
+    "icon": "fas fa-address-card",
+    "provider": PageInfoContext,
   }
-]
-
+];
 
 class Routing extends Component {
   render() {
     return (
       <BrowserRouter>
-        <Switch>
+        {/* <Routes> */}
+        {
+          publicroutes.map((routes) => {
+            return <PublicRoute key={routes.path} path={routes.path} provider={routes.provider} element={routes.component} />;
+          })
+        }
+        {
+          privateroutes.map((routes) => {
+            console.log('Provider chcekc', routes.provider);
+            return <PrivateRoute key={routes.path} path={routes.path} provider={routes.provider} element={routes.component} />;
+          })
+        }
 
-
-          {
-            publicroutes.map((routes) => {
-              return <PublicRoute key={routes.path} path={routes.path} provider={routes.provider} component={routes.component} exact />;
-            })
-          }
-          {
-            privateroutes.map((routes) => {
-              console.log('Provider chcekc', routes.provider);
-              return <PrivateRoute key={routes.path} path={routes.path} provider={routes.provider} component={routes.component} exact />;
-            })
-          }
-
-          <Redirect from="*" to="/" />
-        </Switch>
+        {/* <Navigate from="*" to="/" /> */}
+        {/* </Routes> */}
       </BrowserRouter>
     )
   }
