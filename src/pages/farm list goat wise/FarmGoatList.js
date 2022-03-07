@@ -149,18 +149,6 @@ export default function FarmGoatList() {
               style={{ borderRadius: "4px", width: 264 }}
             />
           </div>
-          <div className="farmlist_create_new">
-            <NavLink to="/createfarm">
-              <Button
-                style={{ borderRadius: "4px" }}
-                type="primary"
-                icon={<PlusOutlined />}
-                size="large"
-              >
-                <span className="button_text">Create New</span>
-              </Button>
-            </NavLink>
-          </div>
         </div>
       </div>
       <div className="farmlist_table">

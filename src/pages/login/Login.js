@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, Input, Checkbox, Button } from "antd";
+import { Form, Input, Checkbox, Button, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "./login.css";
 import tryCatch from "../../helper/tryCatch.helper";
@@ -23,9 +23,10 @@ export default function Login() {
     );
 
     if (!loginError) {
-      const token = loginResponse.data.token;
+      const { token, fullname } = loginResponse.data;
       localStorage.setItem("token", token);
       setIsLoading(false);
+      message.success({ content: `Welcome ${fullname}!` });
       fetchMasters(token);
       navigate("/farm");
     } else {

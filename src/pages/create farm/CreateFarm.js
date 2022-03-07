@@ -182,10 +182,6 @@ export default function CreateFarm() {
                 label="Latitude"
                 rules={[
                   { required: true, message: "Please enter Farm Latitude!" },
-                  {
-                    min: 1,
-                    message: "Latitude is too short!",
-                  },
                 ]}
               >
                 <Input
@@ -202,10 +198,6 @@ export default function CreateFarm() {
                 label="Longitude"
                 rules={[
                   { required: true, message: "Please enter Farm Longitude!" },
-                  {
-                    min: 1,
-                    message: "Longitude is too short!",
-                  },
                 ]}
               >
                 <Input
