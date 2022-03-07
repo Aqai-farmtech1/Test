@@ -1,10 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./goatinfo.css";
 import BreadCrumb from "../../components/breadcrumb/BreadCrumb";
 import { Col, Row } from "antd";
 import GoatBasicInfo from "./GoatBasicInfo";
+import GoatWeightHistory from "./GoatWeightHistory";
+import tryCatch from "../../helper/tryCatch.helper";
+import { getGoatInfo } from "../../api/goat.api";
 
 export default function GoatInfo() {
+  const getGoatDetails = async () => {
+    const [goatResponse, goatError] = await tryCatch(getGoatInfo());
+
+    if (!goatError) {
+      console.log(goatResponse);
+    } else {
+      console.log(goatError);
+    }
+  };
+
+  useEffect(() => {
+    getGoatDetails();
+  }, []);
+
   return (
     <div className="farm_info_main">
       <BreadCrumb />
@@ -14,7 +31,9 @@ export default function GoatInfo() {
             <GoatBasicInfo />
           </Col>
           <Col span={9}>
-            <div className="goat_weight_history"></div>
+            <div className="goat_weight_history">
+              <GoatWeightHistory />
+            </div>
           </Col>
           <Col span={6}>
             <div className="goat_info_navigation"></div>
