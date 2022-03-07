@@ -129,6 +129,14 @@ export const privateroutes = [
   },
   {
     name: "Farm",
+    path: "goat/:farmid/:goatid",
+    component: <GoatInfo />,
+    title: "Acgromalin | Goat Info",
+    icon: "fas fa-address-card",
+    provider: PageInfoContext,
+  },
+  {
+    name: "Farm",
     path: "goat",
     component: <FarmGoatList />,
     title: "Acgromalin | Farm Goat List",

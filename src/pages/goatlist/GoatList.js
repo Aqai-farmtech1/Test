@@ -12,6 +12,7 @@ import { getFarmGoat } from "../../api/goat.api";
 const { Search } = Input;
 
 export default function GoatList() {
+  const [isLoading, setIsLoading] = useState(false);
   const [goatList, setGoatList] = useState([]);
   const { setPageTitle } = usePageInfo();
   const { farmid } = useParams();
@@ -21,21 +22,20 @@ export default function GoatList() {
   const handleTableChange = () => {};
 
   const getGoatList = async () => {
+    setIsLoading(true);
     const [goatResponse, goatError] = await tryCatch(getFarmGoat(farmid));
     if (!goatError) {
       const alteredData = goatResponse.data.data.map((el) => ({
         ...el,
         key: el.id,
       }));
+      setIsLoading(false);
       setGoatList(alteredData);
     } else {
+      setIsLoading(false);
       console.log(goatError.response);
     }
   };
-
-  useEffect(() => {
-    getGoatList();
-  }, []);
 
   const columns = [
     {
@@ -108,6 +108,7 @@ export default function GoatList() {
   );
 
   useEffect(() => {
+    getGoatList();
     setPageTitle("Goats");
   }, []);
   return (
@@ -130,6 +131,7 @@ export default function GoatList() {
       </div>
       <div className="goat_list_table_area">
         <Table
+          loading={isLoading}
           style={{ width: "100%" }}
           columns={columns}
           dataSource={goatList}

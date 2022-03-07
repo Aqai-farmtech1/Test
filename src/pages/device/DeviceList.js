@@ -7,10 +7,12 @@ import "./devicelist.css";
 import AddDevice from "../adddevice/AddDevice";
 import tryCatch from "../../helper/tryCatch.helper";
 import { getAllDevice } from "../../api/device.api";
+import usePageInfo from "../../hooks/usePageInfo";
 
 const { Search } = Input;
 
 export default function DeviceList() {
+  const { setPageTitle } = usePageInfo();
   const [isLoading, setIsLoading] = useState(false);
   const [deviceList, setDeviceList] = useState([]);
   const [deviceTypeList, setDeviceTypeList] = useState([
@@ -119,6 +121,7 @@ export default function DeviceList() {
   );
 
   useEffect(() => {
+    setPageTitle("Device List");
     getDeviceList();
   }, []);
 
@@ -183,16 +186,16 @@ export default function DeviceList() {
       </div>
       <Modal
         width={478}
-        title={["Basic Modal"]}
+        title={["Add Device"]}
         visible={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
         footer={null}
       >
-        <AddDevice activeToggle={false} />
+        <AddDevice setIsModalVisible={setIsModalVisible} activeToggle={false} />
       </Modal>
       <Modal
         width={478}
-        title={["Basic Modal"]}
+        title={["Edit Device"]}
         visible={isEditModalVisible}
         onCancel={() => setIsEditModalVisible(false)}
         footer={null}
