@@ -3,7 +3,7 @@ import React from "react";
 import "./goatinfo.css";
 import GoatWeightHistoryCard from "./GoatWeightHistoryCard";
 
-export default function GoatWeightHistory() {
+export default function GoatWeightHistory({ goatData }) {
   return (
     <div className="goat_weight_history_main">
       <div className="goat_weight_history_title_container">
@@ -11,7 +11,9 @@ export default function GoatWeightHistory() {
         <Divider />
       </div>
       <div className="goat_weight_history_container">
-        <GoatWeightHistoryCard />
+        {goatData.weight_history.map((el) => (
+          <GoatWeightHistoryCard key={el.id} weightData={el} />
+        ))}
       </div>
     </div>
   );

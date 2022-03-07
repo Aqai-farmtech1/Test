@@ -9,7 +9,11 @@ import { useNavigate } from "react-router-dom";
 
 const { Option } = Select;
 
-export default function AddDevice({ activeToggle, setIsModalVisible }) {
+export default function AddDevice({
+  activeToggle,
+  setIsModalVisible,
+  getDeviceList,
+}) {
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
   const [isCreatingDevice, setIsCreatingDevice] = useState(false);
@@ -31,6 +35,7 @@ export default function AddDevice({ activeToggle, setIsModalVisible }) {
       });
       form.resetFields();
       setIsModalVisible(false);
+      getDeviceList();
     } else {
       const obj = deviceError.response.data.error;
       for (const key in obj) {

@@ -191,7 +191,11 @@ export default function DeviceList() {
         onCancel={() => setIsModalVisible(false)}
         footer={null}
       >
-        <AddDevice setIsModalVisible={setIsModalVisible} activeToggle={false} />
+        <AddDevice
+          getDeviceList={getDeviceList}
+          setIsModalVisible={setIsModalVisible}
+          activeToggle={false}
+        />
       </Modal>
       <Modal
         width={478}

@@ -31,7 +31,6 @@ export default function FarmInfo() {
             free: el.capacity - farmResponse.data.total_goats,
           })),
       };
-      console.log(alteredData);
       setIsLoading(false);
       setPageTitle(alteredData.name);
       setFarmDetail(alteredData);
