@@ -57,25 +57,6 @@ export default function FarmList() {
     {
       title: "Farm Code",
       dataIndex: "code",
-      render: (value, columns) => (
-        <NavLink
-          to={{
-            pathname: `/farm/${value}`,
-          }}
-        >
-          <div
-            style={{
-              color: "#2D9CDB",
-              fontStyle: "normal",
-              fontSize: "14px",
-              fontWeight: 500,
-              lineHeight: "22px",
-            }}
-          >
-            {value}
-          </div>
-        </NavLink>
-      ),
     },
     {
       title: "Farm Name",

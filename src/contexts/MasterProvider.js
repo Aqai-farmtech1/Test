@@ -4,6 +4,7 @@ import {
   getStateList,
   getDesignationList,
   getProductList,
+  getDeviceTypeList,
 } from "../api/master.api";
 import tryCatch from "../helper/tryCatch.helper";
 
@@ -51,11 +52,23 @@ export default function MasterProvider(props) {
     }
   };
 
-  const fetchDeviceType = async (token) => {};
+  const fetchDeviceType = async (token) => {
+    const [deviceTypeResponse, deviceTypeError] = await tryCatch(
+      getDeviceTypeList(token)
+    );
+
+    if (!deviceTypeError) {
+      setDeviceTypeMaster(deviceTypeResponse.data);
+    } else {
+      console.log(deviceTypeError.response);
+    }
+  };
 
   const fetchMasters = async (token) => {
     fetchState(token);
     fetchProduct(token);
+    fetchDesignation(token);
+    fetchDeviceType(token);
   };
 
   return (
@@ -64,6 +77,7 @@ export default function MasterProvider(props) {
         stateMaster,
         designationMaster,
         productMaster,
+        deviceTypeMaster,
         fetchMasters,
       }}
     >

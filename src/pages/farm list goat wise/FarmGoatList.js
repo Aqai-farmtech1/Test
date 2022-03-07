@@ -12,11 +12,13 @@ const { Search } = Input;
 
 export default function FarmGoatList() {
   const [farmList, setFarmList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedState, setSelectedState] = useState("All");
   const [selectedCity, setSelectedCity] = useState("All");
   const { setPageTitle } = usePageInfo();
 
   const getFarmList = async () => {
+    setIsLoading(true);
     const [farmResponse, farmError] = await tryCatch(getAllFarm());
 
     if (!farmError) {
@@ -33,15 +35,16 @@ export default function FarmGoatList() {
           mortality: 0,
           key: ell.id,
         }));
-      console.log(alteredFarmList);
+      setIsLoading(false);
       setFarmList(alteredFarmList);
     } else {
+      setIsLoading(false);
       console.log(farmError.response);
     }
   };
 
   useEffect(() => {
-    setPageTitle("Farm");
+    setPageTitle("Farm List - Goats");
     getFarmList();
   }, [setPageTitle]);
 
@@ -55,25 +58,6 @@ export default function FarmGoatList() {
     {
       title: "Farm Code",
       dataIndex: "code",
-      render: (value, columns) => (
-        <NavLink
-          to={{
-            pathname: `/farm/${value}`,
-          }}
-        >
-          <div
-            style={{
-              color: "#2D9CDB",
-              fontStyle: "normal",
-              fontSize: "14px",
-              fontWeight: 500,
-              lineHeight: "22px",
-            }}
-          >
-            {value}
-          </div>
-        </NavLink>
-      ),
     },
     {
       title: "Farm Name",
@@ -149,9 +133,7 @@ export default function FarmGoatList() {
           <div className="action_filter_city">
             <Dropdown trigger={["click"]} overlay={menu}>
               <Button size="large" style={{ borderRadius: "4px" }}>
-                <span className="filter_button_text">
-                  City : {selectedCity}
-                </span>
+                <span className="filter_button_text">Status : Active</span>
                 <DownOutlined />
               </Button>
             </Dropdown>
@@ -183,6 +165,7 @@ export default function FarmGoatList() {
       </div>
       <div className="farmlist_table">
         <Table
+          loading={isLoading}
           style={{ width: "100%" }}
           columns={columns}
           dataSource={farmList}
