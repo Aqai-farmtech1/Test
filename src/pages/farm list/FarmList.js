@@ -30,7 +30,7 @@ export default function FarmList() {
         code: el.code,
         key: el.id,
         name: el.name,
-        state: el.state,
+        state_name: el.state_name,
         product_capacity: el.product_capacity
           .map((e) =>
             productMaster
@@ -47,11 +47,11 @@ export default function FarmList() {
     }
   };
 
-  const handleMenuClick = () => { };
+  const handleMenuClick = () => {};
 
-  const handleSearch = () => { };
+  const handleSearch = () => {};
 
-  const handleTableChange = () => { };
+  const handleTableChange = () => {};
 
   const columns = [
     {
@@ -84,7 +84,7 @@ export default function FarmList() {
     },
     {
       title: "State",
-      dataIndex: "state",
+      dataIndex: "state_name",
     },
     {
       title: "Product & Capacity",

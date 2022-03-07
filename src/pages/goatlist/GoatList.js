@@ -27,7 +27,7 @@ export default function GoatList() {
         ...el,
         key: el.id,
       }));
-      setGoatList(goatResponse.data.data);
+      setGoatList(alteredData);
     } else {
       console.log(goatError.response);
     }
@@ -45,22 +45,26 @@ export default function GoatList() {
     {
       title: "Grade",
       dataIndex: "grade",
+      render: (value) => value || "-",
     },
     {
       title: "Tooth lost count",
       dataIndex: "tooth",
+      render: (value) => value || "-",
     },
     {
       title: "Breed",
       dataIndex: "breed",
+      render: (value) => value || "-",
     },
     {
       title: "Vaccination Status",
       dataIndex: "vaccination_status",
+      render: (value) => (value ? "Yes" : "No"),
     },
     {
       title: "Period (in Days)",
-      dataIndex: "period",
+      dataIndex: "total_days",
     },
     {
       title: "Weight",
@@ -72,7 +76,7 @@ export default function GoatList() {
       width: "8%",
       render: (value, columns) => (
         <div className="action_button_div">
-          <NavLink to={`${columns.farmcode}`}>
+          <NavLink to={`${columns.key}`}>
             <Button
               className="user_list_buttons"
               style={{ borderRadius: "4px" }}
