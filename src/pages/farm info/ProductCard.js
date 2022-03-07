@@ -4,7 +4,7 @@ import { productGoat } from "../../utils/constants";
 import { Button, Divider } from "antd";
 import { NavLink } from "react-router-dom";
 
-export default function ProductCard() {
+export default function ProductCard({ productDetail }) {
   return (
     <div className="product_card_main">
       <div className="product_card_image_conatiner">
@@ -19,17 +19,24 @@ export default function ProductCard() {
       </div>
       <div className="product_card_details">
         <div className="product_card_details_title">Farm Capacity</div>
-        <div className="product_card_details_content">1000</div>
+        <div className="product_card_details_content">
+          {productDetail.capacity}
+        </div>
       </div>
       <Divider className="product_card_details_divider" />
       <div className="product_card_details">
         <div className="product_card_details_title">Total Goats</div>
-        <div className="product_card_details_content">800</div>
+        <div className="product_card_details_content">
+          {productDetail.total_goats}
+        </div>
       </div>
       <Divider className="product_card_details_divider" />
       <div className="product_card_details">
         <div className="product_card_details_title">Total Weight</div>
-        <div className="product_card_details_content">12000 kg</div>
+        <div className="product_card_details_content">
+          {" "}
+          {productDetail.total_goats_weight} kg
+        </div>
       </div>
       <div className="product_details_view_button_container">
         <NavLink to="goat">

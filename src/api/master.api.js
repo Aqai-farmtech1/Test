@@ -28,3 +28,12 @@ export const getProductList = (token) =>
       Authorization: `Token ${token}`,
     },
   });
+
+export const getDeviceTypeList = (token) =>
+  axios({
+    method: "GET",
+    url: "v1/core/device-type",
+    headers: {
+      Authorization: `Token ${token}`,
+    },
+  });

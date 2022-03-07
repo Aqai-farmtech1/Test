@@ -7,13 +7,14 @@ import tryCatch from "../../helper/tryCatch.helper";
 import { login } from "../../api/login.api";
 import useMasters from "../../hooks/useMasters";
 import { getStateList } from "../../api/master.api";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  // const { setToken } = useAuth();
+  const navigate = useNavigate();
   const { fetchMasters } = useMasters();
-  // console.log('Destructure issue', useAuth());
+
   const handleFormSubmit = async (values) => {
     const { email, password } = values;
     setIsLoading(true);
@@ -26,9 +27,7 @@ export default function Login() {
       localStorage.setItem("token", token);
       setIsLoading(false);
       fetchMasters(token);
-      window.location = "/farm";
-      // setToken(token);
-      // localStorage.setItem()
+      navigate("/farm");
     } else {
       const errorMessages = loginError.response.data;
       setErrorMessage(errorMessages);

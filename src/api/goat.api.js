@@ -3,11 +3,11 @@ import axios from "axios";
 export const getFarmGoat = (farmid) =>
   axios({
     method: "GET",
-    url: `v1/goat/farm-goat-list/?farm=${farmid}/`,
+    url: `v1/goat/farm-goat-list/?farm=${farmid}`,
   });
 
-export const getGoatInfo = () =>
+export const getGoatInfo = (goatid, farmid) =>
   axios({
     method: "GET",
-    url: `v1/goat/goat-weight_history/41/`,
+    url: `v1/goat/goat-weight_history/${goatid}/?farm=${farmid}`,
   });

@@ -4,7 +4,7 @@ import { goatInfoImage, weightIcon } from "../../utils/constants";
 import GoatWeightDiffCard from "./GoatWeightDiffCard";
 import { Divider } from "antd";
 
-export default function GoatBasicInfo() {
+export default function GoatBasicInfo({ goatData }) {
   return (
     <div className="goat_basic_info">
       <div className="goat_basic_info_head">
@@ -18,13 +18,16 @@ export default function GoatBasicInfo() {
             alt={"goat_info_image"}
           />
         </div>
-        <div className="goat_info_rfid">E28011702000136480120AA1</div>
+        <div className="goat_info_rfid">{goatData.rfid}</div>
         <div className="goat_info_basic_weight">
           <div className="goat_info_basic_weight_info">
             <img src={weightIcon} alt="weight" />
-            <h1>20Kg</h1>
+            <h1>{goatData.current_weight}Kg</h1>
           </div>
-          <GoatWeightDiffCard weight="1.2" shrinkage={false} />
+          <GoatWeightDiffCard
+            weightDifference={goatData.weight_difference}
+            shrinkage={false}
+          />
         </div>
       </div>
       <div className="goat_basic_info_body">
@@ -36,28 +39,51 @@ export default function GoatBasicInfo() {
         </div>
         <Divider className="goat_basic_info_divider" />
         <div className="goat_basic_info_body_content_container">
-          <div className="goat_basic_info_body_content_title">Farm</div>
+          <div className="goat_basic_info_body_content_title">Enter Date</div>
+          <div className="goat_basic_info_body_content_value">
+            {goatData.in_date}
+          </div>
+        </div>
+        <Divider className="goat_basic_info_divider" />
+        <div className="goat_basic_info_body_content_container">
+          <div className="goat_basic_info_body_content_title">Breed</div>
           <div className="goat_basic_info_body_content_value">
             Red Hills Farm
           </div>
         </div>
         <Divider className="goat_basic_info_divider" />
         <div className="goat_basic_info_body_content_container">
-          <div className="goat_basic_info_body_content_title">Farm</div>
+          <div className="goat_basic_info_body_content_title">Tooth Count</div>
           <div className="goat_basic_info_body_content_value">
             Red Hills Farm
           </div>
         </div>
         <Divider className="goat_basic_info_divider" />
         <div className="goat_basic_info_body_content_container">
-          <div className="goat_basic_info_body_content_title">Farm</div>
+          <div className="goat_basic_info_body_content_title">
+            Vaccination Status
+          </div>
           <div className="goat_basic_info_body_content_value">
             Red Hills Farm
           </div>
         </div>
         <Divider className="goat_basic_info_divider" />
         <div className="goat_basic_info_body_content_container">
-          <div className="goat_basic_info_body_content_title">Farm</div>
+          <div className="goat_basic_info_body_content_title">Grade</div>
+          <div className="goat_basic_info_body_content_value">
+            Red Hills Farm
+          </div>
+        </div>
+        <Divider className="goat_basic_info_divider" />
+        <div className="goat_basic_info_body_content_container">
+          <div className="goat_basic_info_body_content_title">Period</div>
+          <div className="goat_basic_info_body_content_value">
+            Red Hills Farm
+          </div>
+        </div>
+        <Divider className="goat_basic_info_divider" />
+        <div className="goat_basic_info_body_content_container">
+          <div className="goat_basic_info_body_content_title">Sex</div>
           <div className="goat_basic_info_body_content_value">
             Red Hills Farm
           </div>

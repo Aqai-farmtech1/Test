@@ -1,19 +1,28 @@
 import { Col, Row } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import tryCatch from "../../helper/tryCatch.helper";
 import "./farminfo.css";
 import FarmInfoBasicDetail from "./FarmInfoBasicDetail";
 import FarmInfoDetailList from "./FarmInfoDetailList";
+import { getFarmDevice } from "../../api/device.api";
+import { getFarmUsers } from "../../api/user.api";
 
-export default function FarmInformation() {
+export default function FarmInformation({ farmDetails, isLoading }) {
+  const { farmid } = useParams();
+  const [productList, setProductList] = useState([]);
+  const [userList, setUserList] = useState([]);
+  const [deviceList, setDeviceList] = useState([]);
+
   const tableColumns = {
     productcapacity: [
       {
         title: "Product",
-        dataIndex: "product",
+        dataIndex: "product_name",
       },
       {
         title: "Total",
-        dataIndex: "total",
+        dataIndex: "capacity",
       },
       {
         title: "Free",
@@ -23,74 +32,66 @@ export default function FarmInformation() {
     userlist: [
       {
         title: "Emp No",
-        dataIndex: "empno",
+        dataIndex: "employee_id",
       },
       {
         title: "Emp Name",
-        dataIndex: "empname",
+        dataIndex: "fullname",
       },
       {
         title: "Contact Number",
-        dataIndex: "contactno",
+        dataIndex: "phone1",
       },
       {
         title: "Designation",
-        dataIndex: "designation",
+        dataIndex: "designation_name",
       },
     ],
     devicelist: [
-      { title: "Device Type", dataIndex: "devicetype" },
-      { title: "Device Id", dataIndex: "deviceid" },
-      { title: "Frim Ware", dataIndex: "frimware" },
+      { title: "Device Name", dataIndex: "device_name" },
+      { title: "Device Type", dataIndex: "device_type_name" },
+      { title: "Device Id", dataIndex: "device_id" },
+      { title: "Frim Ware", dataIndex: "firmware_version" },
     ],
   };
 
-  const tableData = {
-    productcapacity: [
-      {
-        key: 1,
-        product: "Goat",
-        total: 1000,
-        free: 500,
-      },
-      {
-        key: 2,
-        product: "Goat",
-        total: 1000,
-        free: 500,
-      },
-    ],
-    userlist: [
-      {
-        key: 1,
-        empno: 1234,
-        empname: "Ajith Abinash S",
-        contactno: 1234567890,
-        designation: "Staff",
-      },
-      {
-        key: 2,
-        empno: 1234,
-        empname: "Ajith Abinash S",
-        contactno: 1234567890,
-        designation: "Staff",
-      },
-    ],
-    devicelist: [
-      {
-        key: 1,
-        devicetype: "Weighing Machine",
-        deviceid: "0000234234799",
-        frimware: "FRM-1212128",
-      },
-      {
-        key: 2,
-        devicetype: "IoT",
-        deviceid: "0000234234799",
-        frimware: "FRM-1212128",
-      },
-    ],
+  const getDetails = async () => {
+    const alteredGoatList = farmDetails.goat_capacity?.map((el) => ({
+      ...el,
+      key: el.id,
+    }));
+    setProductList(alteredGoatList);
+
+    //Device List
+    const [deviceResponse, deviceError] = await tryCatch(getFarmDevice(farmid));
+
+    if (!deviceError) {
+      const alteredDevice = deviceResponse.data.map((el) => ({
+        ...el,
+        key: el.id,
+      }));
+      setDeviceList(alteredDevice);
+    } else {
+      console.log(deviceError.response);
+    }
+
+    //User List
+    const [userResponse, userError] = await tryCatch(getFarmUsers(farmid));
+
+    if (!userError) {
+      const alteredUser = userResponse.data.map((el) => ({
+        ...el,
+        key: el.id,
+      }));
+      setUserList(alteredUser);
+    } else {
+      console.log(userError.response);
+    }
   };
+
+  useEffect(() => {
+    getDetails();
+  }, []);
 
   return (
     <div className="farm_information_main">
@@ -98,24 +99,30 @@ export default function FarmInformation() {
         <Col span={14}>
           <div className="farm_information_table_conatainer">
             <FarmInfoDetailList
+              isLoading={isLoading}
               columns={tableColumns["productcapacity"]}
-              data={tableData["productcapacity"]}
+              data={productList}
               title={"Product & Capacity"}
             />
             <FarmInfoDetailList
+              isLoading={isLoading}
               columns={tableColumns["userlist"]}
-              data={tableData["userlist"]}
+              data={userList}
               title={"User Details"}
             />
             <FarmInfoDetailList
+              isLoading={isLoading}
               columns={tableColumns["devicelist"]}
-              data={tableData["devicelist"]}
+              data={deviceList}
               title={"Device Details"}
             />
           </div>
         </Col>
         <Col span={10}>
-          <FarmInfoBasicDetail />
+          <FarmInfoBasicDetail
+            farmDetails={farmDetails}
+            isLoading={isLoading}
+          />
         </Col>
       </Row>
     </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import BreadCrumb from "../../components/breadcrumb/BreadCrumb";
 import usePageInfo from "../../hooks/usePageInfo";
 import { Dropdown, Button, Menu, Input, Table } from "antd";
@@ -12,6 +12,8 @@ import { getFarmGoat } from "../../api/goat.api";
 const { Search } = Input;
 
 export default function GoatList() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [goatList, setGoatList] = useState([]);
   const { setPageTitle } = usePageInfo();
   const { farmid } = useParams();
 
@@ -20,54 +22,53 @@ export default function GoatList() {
   const handleTableChange = () => {};
 
   const getGoatList = async () => {
+    setIsLoading(true);
     const [goatResponse, goatError] = await tryCatch(getFarmGoat(farmid));
     if (!goatError) {
-      console.log(goatResponse.data);
+      const alteredData = goatResponse.data.data.map((el) => ({
+        ...el,
+        key: el.id,
+      }));
+      setIsLoading(false);
+      setGoatList(alteredData);
     } else {
+      setIsLoading(false);
       console.log(goatError.response);
     }
   };
 
-  useEffect(() => {
-    getGoatList();
-  }, []);
-
   const columns = [
     {
       title: "Farm Code",
-      dataIndex: "farmcode",
-      render: (value, columns) => (
-        <NavLink
-          to={{
-            pathname: `/farm/${value}`,
-          }}
-        >
-          <div
-            style={{
-              color: "#2D9CDB",
-              fontStyle: "normal",
-              fontSize: "14px",
-              fontWeight: 500,
-              lineHeight: "22px",
-            }}
-          >
-            {value}
-          </div>
-        </NavLink>
-      ),
+      dataIndex: "rfid",
     },
     {
-      title: "Farm Name",
-      dataIndex: "farmname",
-      width: "20%",
+      title: "Grade",
+      dataIndex: "grade",
+      render: (value) => value || "-",
     },
     {
-      title: "State",
-      dataIndex: "state",
+      title: "Tooth lost count",
+      dataIndex: "tooth",
+      render: (value) => value || "-",
     },
     {
-      title: "Product & Capacity",
-      dataIndex: "productcapacity",
+      title: "Breed",
+      dataIndex: "breed",
+      render: (value) => value || "-",
+    },
+    {
+      title: "Vaccination Status",
+      dataIndex: "vaccination_status",
+      render: (value) => (value ? "Yes" : "No"),
+    },
+    {
+      title: "Period (in Days)",
+      dataIndex: "total_days",
+    },
+    {
+      title: "Weight",
+      dataIndex: "current_weight",
     },
     {
       title: "Action",
@@ -75,7 +76,7 @@ export default function GoatList() {
       width: "8%",
       render: (value, columns) => (
         <div className="action_button_div">
-          <NavLink to={`${columns.farmcode}`}>
+          <NavLink to={`${columns.key}`}>
             <Button
               className="user_list_buttons"
               style={{ borderRadius: "4px" }}
@@ -89,65 +90,6 @@ export default function GoatList() {
           </NavLink>
         </div>
       ),
-    },
-  ];
-
-  const data = [
-    {
-      key: 1,
-      farmcode: "FRM-123456",
-      farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
-      action: "View",
-    },
-    {
-      key: 2,
-      farmcode: "FRM-111111",
-      farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
-      action: "View",
-    },
-    {
-      key: 3,
-      farmcode: "FRM-222222",
-      farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
-      action: "View",
-    },
-    {
-      key: 4,
-      farmcode: "FRM-333333",
-      farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
-      action: "View",
-    },
-    {
-      key: 5,
-      farmcode: "FRM-444444",
-      farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
-      action: "View",
-    },
-    {
-      key: 6,
-      farmcode: "FRM-555555",
-      farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
-      action: "View",
-    },
-    {
-      key: 7,
-      farmcode: "FRM-666666",
-      farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
-      action: "View",
     },
   ];
 
@@ -166,6 +108,7 @@ export default function GoatList() {
   );
 
   useEffect(() => {
+    getGoatList();
     setPageTitle("Goats");
   }, []);
   return (
@@ -188,9 +131,10 @@ export default function GoatList() {
       </div>
       <div className="goat_list_table_area">
         <Table
+          loading={isLoading}
           style={{ width: "100%" }}
           columns={columns}
-          dataSource={data}
+          dataSource={goatList}
           onChange={handleTableChange}
           bordered
         />

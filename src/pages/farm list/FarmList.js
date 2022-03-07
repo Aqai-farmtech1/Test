@@ -30,7 +30,7 @@ export default function FarmList() {
         code: el.code,
         key: el.id,
         name: el.name,
-        state: el.state,
+        state_name: el.state_name,
         product_capacity: el.product_capacity
           .map((e) =>
             productMaster
@@ -47,35 +47,16 @@ export default function FarmList() {
     }
   };
 
-  const handleMenuClick = () => { };
+  const handleMenuClick = () => {};
 
-  const handleSearch = () => { };
+  const handleSearch = () => {};
 
-  const handleTableChange = () => { };
+  const handleTableChange = () => {};
 
   const columns = [
     {
       title: "Farm Code",
       dataIndex: "code",
-      render: (value, columns) => (
-        <NavLink
-          to={{
-            pathname: `/farm/${value}`,
-          }}
-        >
-          <div
-            style={{
-              color: "#2D9CDB",
-              fontStyle: "normal",
-              fontSize: "14px",
-              fontWeight: 500,
-              lineHeight: "22px",
-            }}
-          >
-            {value}
-          </div>
-        </NavLink>
-      ),
     },
     {
       title: "Farm Name",
@@ -84,7 +65,7 @@ export default function FarmList() {
     },
     {
       title: "State",
-      dataIndex: "state",
+      dataIndex: "state_name",
     },
     {
       title: "Product & Capacity",
@@ -179,7 +160,7 @@ export default function FarmList() {
             />
           </div>
           <div className="farmlist_create_new">
-            <NavLink to="/createfarm">
+            <NavLink to="create">
               <Button
                 style={{ borderRadius: "4px" }}
                 type="primary"
