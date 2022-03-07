@@ -23,6 +23,10 @@ export default function GoatList() {
   const getGoatList = async () => {
     const [goatResponse, goatError] = await tryCatch(getFarmGoat(farmid));
     if (!goatError) {
+      const alteredData = goatResponse.data.data.map((el) => ({
+        ...el,
+        key: el.id,
+      }));
       setGoatList(goatResponse.data.data);
     } else {
       console.log(goatError.response);
@@ -39,27 +43,27 @@ export default function GoatList() {
       dataIndex: "rfid",
     },
     {
-      title: "Farm Name",
+      title: "Grade",
       dataIndex: "grade",
     },
     {
-      title: "State",
+      title: "Tooth lost count",
       dataIndex: "tooth",
     },
     {
-      title: "Product & Capacity",
+      title: "Breed",
       dataIndex: "breed",
     },
     {
-      title: "Product & Capacity",
+      title: "Vaccination Status",
       dataIndex: "vaccination_status",
     },
     {
-      title: "Product & Capacity",
+      title: "Period (in Days)",
       dataIndex: "period",
     },
     {
-      title: "Product & Capacity",
+      title: "Weight",
       dataIndex: "current_weight",
     },
     {
@@ -82,65 +86,6 @@ export default function GoatList() {
           </NavLink>
         </div>
       ),
-    },
-  ];
-
-  const data = [
-    {
-      key: 1,
-      farmcode: "FRM-123456",
-      farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
-      action: "View",
-    },
-    {
-      key: 2,
-      farmcode: "FRM-111111",
-      farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
-      action: "View",
-    },
-    {
-      key: 3,
-      farmcode: "FRM-222222",
-      farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
-      action: "View",
-    },
-    {
-      key: 4,
-      farmcode: "FRM-333333",
-      farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
-      action: "View",
-    },
-    {
-      key: 5,
-      farmcode: "FRM-444444",
-      farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
-      action: "View",
-    },
-    {
-      key: 6,
-      farmcode: "FRM-555555",
-      farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
-      action: "View",
-    },
-    {
-      key: 7,
-      farmcode: "FRM-666666",
-      farmname: "Red Hills Farm",
-      state: "Tamilnadu",
-      productcapacity: "d",
-      action: "View",
     },
   ];
 
@@ -183,7 +128,7 @@ export default function GoatList() {
         <Table
           style={{ width: "100%" }}
           columns={columns}
-          dataSource={data}
+          dataSource={goatList}
           onChange={handleTableChange}
           bordered
         />
