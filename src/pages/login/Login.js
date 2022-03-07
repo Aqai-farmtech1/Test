@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Input, Checkbox, Button } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "./login.css";
 import tryCatch from "../../helper/tryCatch.helper";
-import useAuth from "../../hooks/useAuth";
+// import useAuth from "../../hooks/useAuth";
 import { login } from "../../api/login.api";
 import useMasters from "../../hooks/useMasters";
 import { getStateList } from "../../api/master.api";
@@ -11,9 +11,9 @@ import { getStateList } from "../../api/master.api";
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { setToken } = useAuth();
+  // const { setToken } = useAuth();
   const { fetchMasters } = useMasters();
-
+  // console.log('Destructure issue', useAuth());
   const handleFormSubmit = async (values) => {
     const { email, password } = values;
     setIsLoading(true);
@@ -26,7 +26,9 @@ export default function Login() {
       localStorage.setItem("token", token);
       setIsLoading(false);
       fetchMasters(token);
-      setToken(token);
+      window.location = "/farm";
+      // setToken(token);
+      // localStorage.setItem()
     } else {
       const errorMessages = loginError.response.data;
       setErrorMessage(errorMessages);

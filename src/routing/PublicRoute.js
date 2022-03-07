@@ -1,13 +1,25 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 // import DashboardHeader from "components/Headers/DashboardHeader.js";
 
-const PublicRoute = ({ component: Component, ...rest }) => {
+import Login from "../pages/login/Login";
+// import AuthenticatedRoute from "../components/wrapper/AuthenticatedRoute";
+import PageNotFound from "../pages/error 404/PageNotFound";
+import LoginLayout from "../components/layout/login layout/LoginLayout";
+// import MainLayout from "../components/layout/MainLayout";
+
+const PublicRoute = ({ element: Component, ...rest }) => {
     let Provider = rest.provider;
-    return <Route {...rest} render={props =>
-        <Provider>
-            <Component {...props} />
-        </Provider>} />
+    return <Routes>
+        <Route element={<LoginLayout />}>
+            <Route {...rest} element={Component} render={props =>
+                <Provider>
+
+                    <Component {...props} />
+                </Provider>} />
+        </Route>
+
+    </Routes>
 }
 
 export default PublicRoute;

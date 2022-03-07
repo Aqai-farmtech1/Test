@@ -7,14 +7,6 @@ import MasterProvider from "./contexts/MasterProvider";
 import "./index.css";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Router>
-      <AuthProvider>
-        <MasterProvider>
-          <App />
-        </MasterProvider>
-      </AuthProvider>
-    </Router>
-  </React.StrictMode>,
+  <AuthProvider><MasterProvider><App /></MasterProvider></AuthProvider>,
   document.getElementById("root")
 );
