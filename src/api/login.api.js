@@ -8,6 +8,6 @@ export const login = (data) =>
     url: `${USER_DEV_URL}v1/login/`,
     data,
     headers: {
-      Authorization: "",
+      Authorization: " ",
     },
   });

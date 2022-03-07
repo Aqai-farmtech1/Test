@@ -160,7 +160,7 @@ export default function FarmList() {
             />
           </div>
           <div className="farmlist_create_new">
-            <NavLink to="/createfarm">
+            <NavLink to="create">
               <Button
                 style={{ borderRadius: "4px" }}
                 type="primary"

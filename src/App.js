@@ -1,21 +1,35 @@
 import React, { useEffect } from "react";
-// import MainLayout from "./components/layout/MainLayout";
 
 import "antd/dist/antd.css";
-import Login from "./pages/login/Login";
-// import AuthenticatedRoute from "./components/wrapper/AuthenticatedRoute";
-import PageNotFound from "./pages/error 404/PageNotFound";
 import "./helper/axios.helper";
 import PageInfoProvider from "./contexts/PageInfoProvider";
-import Routing from "./routing/Routing";
 import useMaster from "./hooks/useMasters";
+import Routing from "./router/Routing";
+import tryCatch from "./helper/tryCatch.helper";
+import { checkToken } from "./api/checktoken.api";
+import { useNavigate } from "react-router-dom";
 
-// import { authenticatedroutes, loginroutes } from "./routes/router";
 function App() {
   const { fetchMasters } = useMaster();
+  const navigate = useNavigate();
+
+  const checkTokenValidity = async () => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      const [tokenResponse, tokenError] = await tryCatch(checkToken());
+
+      if (!tokenError) {
+        fetchMasters(token);
+        navigate("/");
+      } else {
+        localStorage.removeItem("token");
+      }
+    }
+  };
 
   useEffect(() => {
-    fetchMasters();
+    checkTokenValidity();
   }, []);
 
   return (
