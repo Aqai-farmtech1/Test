@@ -2,7 +2,7 @@ import React from "react";
 import "./goatinfo.css";
 import { weightDiffDownArrow, weightDiffUpArrow } from "../../utils/constants";
 
-export default function GoatWeightDiffCard({ weight, shrinkage }) {
+export default function GoatWeightDiffCard({ weightDifference, shrinkage }) {
   const shrinkedStyle = {
     backgroundColor: "#FF5A75",
   };
@@ -16,13 +16,23 @@ export default function GoatWeightDiffCard({ weight, shrinkage }) {
   return (
     <div
       className="goat_weight_diff_card_conatiner"
-      style={shrinkage ? shrinkedStyle : notShrinkedStyle}
+      style={
+        weightDifference
+          ? shrinkage
+            ? shrinkedStyle
+            : notShrinkedStyle
+          : idleStyle
+      }
     >
-      <img
-        src={shrinkage ? weightDiffDownArrow : weightDiffUpArrow}
-        alt="diff indicator"
-      />
-      {weight}Kg
+      {weightDifference ? (
+        <img
+          src={shrinkage ? weightDiffDownArrow : weightDiffUpArrow}
+          alt="diff indicator"
+        />
+      ) : (
+        ""
+      )}
+      {weightDifference} Kg
     </div>
   );
 }

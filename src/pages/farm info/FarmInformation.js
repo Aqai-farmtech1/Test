@@ -83,8 +83,6 @@ export default function FarmInformation({ farmDetails, isLoading }) {
         ...el,
         key: el.id,
       }));
-      console.log(alteredUser);
-
       setUserList(alteredUser);
     } else {
       console.log(userError.response);
@@ -121,7 +119,10 @@ export default function FarmInformation({ farmDetails, isLoading }) {
           </div>
         </Col>
         <Col span={10}>
-          <FarmInfoBasicDetail isLoading={isLoading} />
+          <FarmInfoBasicDetail
+            farmDetails={farmDetails}
+            isLoading={isLoading}
+          />
         </Col>
       </Row>
     </div>

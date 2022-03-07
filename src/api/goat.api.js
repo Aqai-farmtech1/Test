@@ -6,8 +6,8 @@ export const getFarmGoat = (farmid) =>
     url: `v1/goat/farm-goat-list/?farm=${farmid}`,
   });
 
-export const getGoatInfo = (goatid) =>
+export const getGoatInfo = (goatid, farmid) =>
   axios({
     method: "GET",
-    url: `v1/goat/goat-weight_history/${goatid}/`,
+    url: `v1/goat/goat-weight_history/${goatid}/?farm=${farmid}`,
   });

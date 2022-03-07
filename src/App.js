@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
 // import MainLayout from "./components/layout/MainLayout";
 
 import "antd/dist/antd.css";
