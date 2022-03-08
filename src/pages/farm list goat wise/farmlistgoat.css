@@ -129,3 +129,7 @@
   border-top-right-radius: 4px !important;
   border-bottom-right-radius: 4px !important;
 }
+
+.user_list_buttons {
+  padding: 4px 6px !important;
+}

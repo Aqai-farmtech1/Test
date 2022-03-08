@@ -6,35 +6,36 @@ import { NavLink } from "react-router-dom";
 import PageTitle from "../../components/pagetitle/PageTitle";
 import usePageInfo from "../../hooks/usePageInfo";
 import tryCatch from "../../helper/tryCatch.helper";
-import { getAllFarm } from "../../api/farm.api";
+import { getGoatFarms } from "../../api/farm.api";
+import useMasters from "../../hooks/useMasters";
+import { viewIcon } from "../../utils/constants";
 
 const { Search } = Input;
 
 export default function FarmGoatList() {
   const [farmList, setFarmList] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedState, setSelectedState] = useState("All");
-  const [selectedCity, setSelectedCity] = useState("All");
+  const [selectedState, setSelectedState] = useState(0);
+  const [selectedStatus, setSelectedStatus] = useState(1);
   const { setPageTitle } = usePageInfo();
+  const { stateMaster } = useMasters();
 
-  const getFarmList = async () => {
+  const getFarmList = async (page = 1, state = 0, status = 1) => {
     setIsLoading(true);
-    const [farmResponse, farmError] = await tryCatch(getAllFarm());
+    const [farmResponse, farmError] = await tryCatch(
+      getGoatFarms(page, state, status)
+    );
 
     if (!farmError) {
-      const alteredFarmList = farmResponse.data.data
-        .map((el) => ({
-          ...el,
-          product_capacity: el.product_capacity.filter((f) => f.product === 3),
-        }))
-        .filter((fil) => fil.product_capacity.length)
-        .map((ell) => ({
-          ...ell,
-          free_capacity: ell.product_capacity[0].capacity - ell.total_goats,
-          sick: 0,
-          mortality: 0,
-          key: ell.id,
-        }));
+      const alteredFarmList = farmResponse.data.data.map((ell) => ({
+        ...ell,
+        free_capacity: 0,
+        sick: 0,
+        mortality: 0,
+        key: ell.id,
+      }));
+      setTotalPages(farmResponse.data.count);
       setIsLoading(false);
       setFarmList(alteredFarmList);
     } else {
@@ -48,29 +49,35 @@ export default function FarmGoatList() {
     getFarmList();
   }, [setPageTitle]);
 
-  const handleMenuClick = () => {};
+  const handleMenuClick = (value) => {
+    setSelectedStatus(value.key);
+    getFarmList(1, selectedState, value.key);
+  };
+
+  const handleStateMenuClick = (value) => {
+    setSelectedState(Number(value.key));
+    getFarmList(1, value.key, selectedStatus);
+  };
 
   const handleSearch = () => {};
-
-  const handleTableChange = () => {};
 
   const columns = [
     {
       title: "Farm Code",
-      dataIndex: "code",
+      dataIndex: "farm_code",
     },
     {
       title: "Farm Name",
-      dataIndex: "name",
+      dataIndex: "farm_name",
       width: "20%",
     },
     {
       title: "Location",
-      dataIndex: "state_name",
+      dataIndex: "state",
     },
     {
       title: "Ready to Sale",
-      dataIndex: "total_goats",
+      dataIndex: "ready_to_sale",
     },
     {
       title: "Free Capacity",
@@ -94,7 +101,13 @@ export default function FarmGoatList() {
             pathname: `/goat/${columns.key}`,
           }}
         >
-          <Button style={{ borderRadius: "4px" }} type="primary" ghost>
+          <Button
+            className="user_list_buttons"
+            style={{ borderRadius: "4px" }}
+            type="primary"
+            ghost
+          >
+            <img className="button_icon" src={viewIcon} alt="view icon" />
             View
           </Button>
         </NavLink>
@@ -104,15 +117,17 @@ export default function FarmGoatList() {
 
   const menu = (
     <Menu onClick={handleMenuClick}>
-      <Menu.Item key="1" icon={<UserOutlined />}>
-        1st menu item
-      </Menu.Item>
-      <Menu.Item key="2" icon={<UserOutlined />}>
-        2nd menu item
-      </Menu.Item>
-      <Menu.Item key="3" icon={<UserOutlined />}>
-        3rd menu item
-      </Menu.Item>
+      <Menu.Item key={1}>Active</Menu.Item>
+      <Menu.Item key={0}>In Active</Menu.Item>
+    </Menu>
+  );
+
+  const stateMenu = (
+    <Menu onClick={handleStateMenuClick}>
+      <Menu.Item key={0}>{"All"}</Menu.Item>
+      {stateMaster?.map((el) => (
+        <Menu.Item key={el.id}>{el.name}</Menu.Item>
+      ))}
     </Menu>
   );
 
@@ -121,10 +136,13 @@ export default function FarmGoatList() {
       <div className="farmlist_action_area">
         <div className="action_filter_area">
           <div className="action_filter_state">
-            <Dropdown trigger={["click"]} overlay={menu}>
+            <Dropdown trigger={["click"]} overlay={stateMenu}>
               <Button style={{ borderRadius: "4px" }} size="large">
                 <span className="filter_button_text">
-                  State : {selectedState}
+                  State :{" "}
+                  {!selectedState
+                    ? "All"
+                    : stateMaster.filter((f) => f.id === selectedState)[0].name}
                 </span>
                 <DownOutlined />
               </Button>
@@ -133,7 +151,9 @@ export default function FarmGoatList() {
           <div className="action_filter_city">
             <Dropdown trigger={["click"]} overlay={menu}>
               <Button size="large" style={{ borderRadius: "4px" }}>
-                <span className="filter_button_text">Status : Active</span>
+                <span className="filter_button_text">
+                  Status : {Number(selectedStatus) ? "Active" : "In Active"}
+                </span>
                 <DownOutlined />
               </Button>
             </Dropdown>
@@ -155,9 +175,13 @@ export default function FarmGoatList() {
         <Table
           loading={isLoading}
           style={{ width: "100%" }}
+          pagination={{
+            total: totalPages,
+            pageSize: 10,
+            onChange: (page) => getFarmList(page),
+          }}
           columns={columns}
           dataSource={farmList}
-          onChange={handleTableChange}
           bordered
         />
       </div>

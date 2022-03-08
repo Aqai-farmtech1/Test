@@ -14,6 +14,7 @@ const { Search } = Input;
 export default function DeviceList() {
   const { setPageTitle } = usePageInfo();
   const [isLoading, setIsLoading] = useState(false);
+  const [totalPages, setTotalPages] = useState(0);
   const [deviceList, setDeviceList] = useState([]);
   const [deviceTypeList, setDeviceTypeList] = useState([
     {
@@ -26,7 +27,6 @@ export default function DeviceList() {
 
   const handleSearch = () => {};
   const handleMenuClick = () => {};
-  const handleTableChange = () => {};
   const handleDeviceTypeChange = (value) => {
     console.log(value);
   };
@@ -49,6 +49,7 @@ export default function DeviceList() {
           (val, i, self) =>
             i === self.findIndex((t) => t.device_type === val.device_type)
         );
+
       setDeviceTypeList(deviceTypes);
       setDeviceList(deviceDetails);
       setIsLoading(false);
@@ -184,7 +185,6 @@ export default function DeviceList() {
           style={{ width: "100%" }}
           columns={columns}
           dataSource={deviceList}
-          onChange={handleTableChange}
           bordered
         />
       </div>
