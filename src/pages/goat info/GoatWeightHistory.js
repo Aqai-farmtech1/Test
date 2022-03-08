@@ -11,9 +11,10 @@ export default function GoatWeightHistory({ goatData }) {
         <Divider />
       </div>
       <div className="goat_weight_history_container">
-        {goatData.weight_history.map((el) => (
-          <GoatWeightHistoryCard key={el.id} weightData={el} />
-        ))}
+        {goatData.weight_history &&
+          goatData.weight_history.map((el) => (
+            <GoatWeightHistoryCard key={el.id} weightData={el} />
+          ))}
       </div>
     </div>
   );
