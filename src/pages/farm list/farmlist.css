@@ -141,3 +141,8 @@
 .user_list_buttons {
   padding: 4px 6px !important;
 }
+
+.ant-dropdown-menu {
+  max-height: 260px;
+  overflow: auto;
+}

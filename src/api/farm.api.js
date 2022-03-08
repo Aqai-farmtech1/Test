@@ -1,20 +1,30 @@
 import axios from "axios";
 
 export const createFarm = (data) =>
-    axios({
-        method: "POST",
-        url: "v1/farm/farm/",
-        data,
-    });
+  axios({
+    method: "POST",
+    url: "v1/farm/farm/",
+    data,
+  });
 
-export const getAllFarm = () =>
-    axios({
-        method: "GET",
-        url: "v1/farm/farm",
-    });
+export const getAllFarm = (page, state, status) => {
+  const stateQuery = Number(state) ? `&state=${state}` : "";
+  return axios({
+    method: "GET",
+    url: `v1/farm/farm/?page=${page}${stateQuery}&status=${status}`,
+  });
+};
 
 export const getFarm = (id) =>
-    axios({
-        method: "GET",
-        url: `v1/farm/farm/${id}`,
-    });
+  axios({
+    method: "GET",
+    url: `v1/farm/farm/${id}`,
+  });
+
+export const getGoatFarms = (page, state, status) => {
+  const stateQuery = Number(state) ? `&state=${state}` : "";
+  return axios({
+    method: "GET",
+    url: `v1/farm/farm-goat/?page=${page}${stateQuery}&status=${status}`,
+  });
+};

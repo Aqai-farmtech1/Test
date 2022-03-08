@@ -5,6 +5,7 @@ import GoatWeightDiffCard from "./GoatWeightDiffCard";
 import { Divider } from "antd";
 
 export default function GoatBasicInfo({ goatData }) {
+  console.log(goatData);
   const inDate = new Date(goatData.in_date);
   const enterDate = `${("0" + inDate.getDate()).slice(-2)}/${(
     "0" +
