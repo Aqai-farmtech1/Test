@@ -60,8 +60,12 @@ export default function DeviceList() {
 
   const columns = [
     {
-      title: "Machine Id",
+      title: "Machine Name",
       dataIndex: "device_name",
+    },
+    {
+      title: "Machine Id",
+      dataIndex: "device_id",
     },
     {
       title: "Machine Type",
