@@ -17,13 +17,14 @@ function App() {
     const token = localStorage.getItem("token");
 
     if (token) {
-      const [tokenResponse, tokenError] = await tryCatch(checkToken());
+      const [tokenResponse, tokenError] = await tryCatch(checkToken(token));
 
       if (!tokenError) {
         fetchMasters(token);
         navigate("/");
       } else {
         localStorage.removeItem("token");
+        navigate("/login");
       }
     }
   };
