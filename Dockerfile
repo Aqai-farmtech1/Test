@@ -5,6 +5,7 @@ RUN npm install yarn
 COPY . ./
 RUN yarn install 
 RUN yarn run dev
+COPY nginx.conf /etc/nginx/nginx.conf
 
 FROM nginx:1.12-alpine
 COPY nginx.conf /etc/nginx/nginx.conf
