@@ -1,8 +1,8 @@
 FROM node:16.0 as build-deps
 WORKDIR /usr/src/app
-COPY package.json package-lock.json ./
+COPY package.json package-lock.json .
 RUN npm install yarn
-COPY . ./
+COPY . .
 RUN yarn install 
 RUN yarn run dev
 
