@@ -32,13 +32,9 @@ export default function FarmList() {
         name: el.name,
         state_name: el.state_name,
         product_capacity: el.product_capacity
-          .map((e) =>
-            productMaster
-              .filter((f) => f.id === e.product)
-              .map((m) => `${m.name}-${e.capacity}`)
-              .join("")
-          )
+          .map((el) => `${el.product_name}-${el.capacity}`)
           .join(", "),
+        kk: el.product_capacity,
       }));
       setFarmList(farmDataList);
     } else {
