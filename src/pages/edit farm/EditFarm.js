@@ -32,74 +32,75 @@ export default function EditFarm() {
   const { farmid } = useParams();
 
   const handleFormSubmit = async (values) => {
-    const {
-      address1,
-      city,
-      code,
-      country,
-      email,
-      farm_type,
-      latitude,
-      longitude,
-      name,
-      phone_no,
-      pincode,
-      state,
-      products,
-    } = values;
+    console.log(farmDetails);
+    console.log(values);
+    // const {
+    //   address1,
+    //   city,
+    //   code,
+    //   country,
+    //   email,
+    //   farm_type,
+    //   latitude,
+    //   longitude,
+    //   name,
+    //   phone_no,
+    //   pincode,
+    //   state,
+    //   products,
+    // } = values;
 
-    const allowed_product = products.map((el) => el.product);
-    const product_capacity = products.map((el) => ({
-      product: el["product"],
-      capacity: el["capacity"],
-    }));
+    // const allowed_product = products.map((el) => el.product);
+    // const product_capacity = products.map((el) => ({
+    //   product: el["product"],
+    //   capacity: el["capacity"],
+    // }));
 
-    const postData = {
-      farm_type,
-      name,
-      code,
-      latitude,
-      longitude,
-      allowed_product,
-      product_capacity,
-      phone_no,
-      email,
-      address1,
-      city,
-      state,
-      country,
-      pincode,
-    };
+    // const postData = {
+    //   farm_type,
+    //   name,
+    //   code,
+    //   latitude,
+    //   longitude,
+    //   allowed_product,
+    //   product_capacity,
+    //   phone_no,
+    //   email,
+    //   address1,
+    //   city,
+    //   state,
+    //   country,
+    //   pincode,
+    // };
 
-    setIsLoading(true);
-    message.loading({
-      content: "Updating Farm Details...",
-      key: "editfarm",
-    });
-    const [farmResponse, farmError] = await tryCatch(createFarm(postData));
+    // setIsLoading(true);
+    // message.loading({
+    //   content: "Updating Farm Details...",
+    //   key: "editfarm",
+    // });
+    // const [farmResponse, farmError] = await tryCatch(createFarm(postData));
 
-    if (!farmError) {
-      message.success({
-        content: "Farm created successfully!",
-        key: "editfarm",
-      });
-      setIsLoading(false);
-      navigate("/farm");
-    } else {
-      setIsLoading(false);
-      const errors = farmError.response.data.error;
-      for (let err in errors) {
-        const errorMessage = errors[err][0];
-        message.error({ content: errorMessage, key: "editfarm" });
-      }
-    }
+    // if (!farmError) {
+    //   message.success({
+    //     content: "Farm created successfully!",
+    //     key: "editfarm",
+    //   });
+    //   setIsLoading(false);
+    //   navigate("/farm");
+    // } else {
+    //   setIsLoading(false);
+    //   const errors = farmError.response.data.error;
+    //   for (let err in errors) {
+    //     const errorMessage = errors[err][0];
+    //     message.error({ content: errorMessage, key: "editfarm" });
+    //   }
+    // }
   };
 
   const getFarmDetails = async () => {
     const [farmResponse, farmError] = await tryCatch(getFarm(farmid));
 
     if (!farmError) {
-      console.log(farmResponse.data);
       const {
         primary_address,
         city,
@@ -137,7 +138,7 @@ export default function EditFarm() {
         state,
         products,
       });
-
+      setFarmDetails(farmResponse.data);
       setSelectedProduct(products);
     } else {
       console.log(farmError.response);
@@ -493,7 +494,7 @@ export default function EditFarm() {
                 type="primary"
                 htmlType="submit"
               >
-                Save
+                Update
               </Button>
               <Button
                 className="create_farm_form_item_buttons"

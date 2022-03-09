@@ -7,11 +7,12 @@ import useMaster from "./hooks/useMasters";
 import Routing from "./router/Routing";
 import tryCatch from "./helper/tryCatch.helper";
 import { checkToken } from "./api/checktoken.api";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function App() {
   const { fetchMasters } = useMaster();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const checkTokenValidity = async () => {
     const token = localStorage.getItem("token");
@@ -21,7 +22,7 @@ function App() {
 
       if (!tokenError) {
         fetchMasters(token);
-        navigate("/");
+        navigate(pathname);
       } else {
         localStorage.removeItem("token");
         navigate("/login");
