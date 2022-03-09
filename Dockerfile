@@ -8,11 +8,10 @@ RUN yarn install
 FROM build-deps as dev
 RUN yarn run build
 
-FROM scratch as staging
+FROM build-deps as staging
 RUN yarn run staging
 
 FROM nginx:1.12-alpine
 COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
-EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 
