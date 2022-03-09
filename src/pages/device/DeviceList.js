@@ -8,12 +8,14 @@ import AddDevice from "../adddevice/AddDevice";
 import tryCatch from "../../helper/tryCatch.helper";
 import { getAllDevice } from "../../api/device.api";
 import usePageInfo from "../../hooks/usePageInfo";
+import { getAllFarmList } from "../../api/farm.api";
 
 const { Search } = Input;
 
 export default function DeviceList() {
   const { setPageTitle } = usePageInfo();
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedFarm, setSelectedFarm] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [deviceList, setDeviceList] = useState([]);
   const [deviceTypeList, setDeviceTypeList] = useState([
@@ -29,6 +31,10 @@ export default function DeviceList() {
   const handleMenuClick = () => {};
   const handleDeviceTypeChange = (value) => {
     console.log(value);
+  };
+
+  const getFarmList = async () => {
+    const [farmResponse, farmError] = await tryCatch(getAllFarmList());
   };
 
   const getDeviceList = async () => {
@@ -117,6 +123,12 @@ export default function DeviceList() {
     </Menu>
   );
 
+  const farmMenu = (
+    <Menu onClick={handleMenuClick}>
+      <Menu.Item key={0}>All</Menu.Item>
+    </Menu>
+  );
+
   const deviceTypeMenu = (
     <Menu onClick={handleDeviceTypeChange}>
       {deviceTypeList.map((el) => (
@@ -128,6 +140,7 @@ export default function DeviceList() {
   useEffect(() => {
     setPageTitle("Device List");
     getDeviceList();
+    // getFarmList();
   }, []);
 
   return (
