@@ -6,10 +6,12 @@ COPY . ./
 RUN yarn install 
 
 FROM build-deps
-RUN yarn build "$MODE"="dev"
+RUN yarn build 
+ARG ["$MODE"="dev"]
 
 FROM build-deps
-RUN yarn staging "$MODE"="staging"
+ARG ["$MODE"="staging"]
+RUN yarn staging 
 
 FROM nginx:1.12-alpine
 COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
