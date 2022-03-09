@@ -6,7 +6,7 @@ COPY . ./
 RUN yarn install 
 
 ARG mode
-RUN if [ "x$mode" = "xdev" ] ; then echo "yarn dev" ; else echo "yarn staging" ; fi
+RUN if [ "x$mode" = "xdev" ] ; then "yarn dev" ; else "yarn staging" ; fi
 
 FROM nginx:1.12-alpine
 COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
