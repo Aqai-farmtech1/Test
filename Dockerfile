@@ -6,11 +6,9 @@ COPY . ./
 RUN yarn install 
 
 FROM build-deps AS dev
-ARG mode ["$mode" = "dev"]
 RUN yarn build
 
 FROM build-deps AS staging
-ARG mode [ "$mode" = "staging" ]
 RUN yarn staging
 
 FROM nginx:1.12-alpine
