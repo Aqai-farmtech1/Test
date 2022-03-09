@@ -5,11 +5,13 @@ RUN npm install yarn
 COPY . ./
 RUN yarn install 
 
-ARG ["$MODE"="dev"]
+ARG mode if ["$MODE"="dev"];
 RUN yarn build 
+fi
 
-ARG ["$MODE"="staging"]
+ARG mode if ["$MODE"="staging"];
 RUN yarn staging 
+fi
 
 FROM nginx:1.12-alpine
 COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
