@@ -12,7 +12,7 @@ FROM build-deps AS staging
 RUN yarn staging 
 
 FROM nginx:1.12-alpine
+EXPOSE 80
 COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
-EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
