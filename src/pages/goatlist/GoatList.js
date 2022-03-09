@@ -30,7 +30,6 @@ export default function GoatList() {
         ...el,
         key: el.id,
       }));
-      console.log(goatResponse);
       setTotalPages(goatResponse.data.count);
       setIsLoading(false);
       setGoatList(alteredData);

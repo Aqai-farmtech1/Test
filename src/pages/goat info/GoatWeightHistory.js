@@ -4,6 +4,7 @@ import "./goatinfo.css";
 import GoatWeightHistoryCard from "./GoatWeightHistoryCard";
 
 export default function GoatWeightHistory({ goatData }) {
+  // console.log(goatData);
   return (
     <div className="goat_weight_history_main">
       <div className="goat_weight_history_title_container">

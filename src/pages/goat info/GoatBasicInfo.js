@@ -4,12 +4,9 @@ import { goatInfoImage, weightIcon } from "../../utils/constants";
 import GoatWeightDiffCard from "./GoatWeightDiffCard";
 import { Divider } from "antd";
 
-export default function GoatBasicInfo({ goatData }) {
+export default function GoatBasicInfo({ goatData, isLoading }) {
   const inDate = new Date(goatData.in_date);
-  const enterDate = `${("0" + inDate.getDate()).slice(-2)}/${(
-    "0" +
-    (Number(inDate.getMonth()) + 1)
-  ).slice(-2)}/${inDate.getFullYear()}`;
+  const enterDate = inDate.toLocaleDateString();
 
   return (
     <div className="goat_basic_info">
