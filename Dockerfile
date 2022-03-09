@@ -9,7 +9,7 @@ FROM build-ups AS dev
 RUN yarn build
 
 FROM build-ups AS staging
-RUN yarn build
+RUN yarn staging
 
 FROM nginx:1.12-alpine
 COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
