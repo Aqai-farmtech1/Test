@@ -4,7 +4,7 @@ COPY package.json package-lock.json ./
 RUN npm install yarn
 COPY . ./
 RUN yarn install 
-RUN yarn build -o
+RUN yarn build 
 
 FROM build-ups AS dev
 FROM nginx:1.12-alpine
