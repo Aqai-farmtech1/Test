@@ -15,6 +15,8 @@ import GoatList from "../pages/goatlist/GoatList";
 import GoatInfo from "../pages/goat info/GoatInfo";
 import FarmGoatList from "../pages/farm list goat wise/FarmGoatList";
 import DeviceList from "../pages/device/DeviceList";
+import EditFarm from "../pages/edit farm/EditFarm";
+import PageNotFound from "../pages/error 404/PageNotFound";
 
 const loginRoutes = [
   {
@@ -45,6 +47,10 @@ const AuthenticatedRoutes = [
   {
     element: <CreateFarm />,
     path: "farm/create",
+  },
+  {
+    element: <EditFarm />,
+    path: "farm/:farmid/edit",
   },
   {
     element: <FarmInfo />,
@@ -101,6 +107,8 @@ export default function Routing() {
           ))}
         </Route>
       </Route>
+
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 }

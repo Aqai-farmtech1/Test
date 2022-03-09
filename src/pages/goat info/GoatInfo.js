@@ -33,7 +33,7 @@ export default function GoatInfo() {
       <BreadCrumb />
       <div className="farm_info_details_main">
         <Row gutter={20} style={{ width: "100%" }}>
-          <Col span={8}>
+          <Col style={{ display: "table-cell" }} span={8}>
             <GoatBasicInfo goatData={goatData} />
           </Col>
           <Col span={9}>
@@ -41,7 +41,7 @@ export default function GoatInfo() {
               <GoatWeightHistory goatData={goatData} />
             </div>
           </Col>
-          <Col span={7}>
+          <Col style={{ display: "table-cell" }} span={7}>
             <div className="goat_info_navigation"></div>
           </Col>
         </Row>

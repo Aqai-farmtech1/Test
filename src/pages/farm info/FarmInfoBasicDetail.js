@@ -23,7 +23,7 @@ export default function FarmInfoBasicDetail({ farmDetails, isLoading }) {
               <div className="farm_information_basic_head_title">
                 Basic Info
               </div>
-              <NavLink to={`/farm/create`}>
+              <NavLink to={`/farm/${farmDetails.id}/edit`}>
                 <Button
                   className="user_list_buttons"
                   style={{ borderRadius: "4px" }}

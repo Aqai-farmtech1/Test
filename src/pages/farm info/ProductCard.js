@@ -1,10 +1,10 @@
 import React from "react";
 import "./farminfo.css";
 import { productGoat } from "../../utils/constants";
-import { Button, Divider } from "antd";
+import { Button, Divider, Skeleton } from "antd";
 import { NavLink } from "react-router-dom";
 
-export default function ProductCard({ productDetail }) {
+export default function ProductCard({ productDetail, isLoading }) {
   return (
     <div className="product_card_main">
       <div className="product_card_image_conatiner">

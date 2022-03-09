@@ -81,7 +81,7 @@ export default function FarmList() {
       width: "8%",
       render: (value, columns) => (
         <div className="action_button_div">
-          <NavLink to={`/farm/create`}>
+          <NavLink to={`/farm/${columns.key}/edit`}>
             <Button
               className="user_list_buttons"
               style={{ borderRadius: "4px" }}

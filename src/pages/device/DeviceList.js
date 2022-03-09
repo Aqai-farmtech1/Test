@@ -9,32 +9,34 @@ import tryCatch from "../../helper/tryCatch.helper";
 import { getAllDevice } from "../../api/device.api";
 import usePageInfo from "../../hooks/usePageInfo";
 import { getAllFarmList } from "../../api/farm.api";
+import useMasters from "../../hooks/useMasters";
 
 const { Search } = Input;
 
 export default function DeviceList() {
   const { setPageTitle } = usePageInfo();
+  const { farmMaster, deviceTypeMaster } = useMasters();
   const [isLoading, setIsLoading] = useState(false);
   const [selectedFarm, setSelectedFarm] = useState(0);
+  const [selectedDeviceType, setSelectedDeviceType] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [deviceList, setDeviceList] = useState([]);
-  const [deviceTypeList, setDeviceTypeList] = useState([
-    {
-      device_type: 0,
-      device_type_name: "All",
-    },
-  ]);
+  const [selectedStatus, setSelectedStatus] = useState(1);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
   const handleSearch = () => {};
-  const handleMenuClick = () => {};
-  const handleDeviceTypeChange = (value) => {
-    console.log(value);
+
+  const handleMenuClick = (value) => {
+    setSelectedFarm(Number(value.key));
   };
 
-  const getFarmList = async () => {
-    const [farmResponse, farmError] = await tryCatch(getAllFarmList());
+  const handleDeviceTypeChange = (value) => {
+    setSelectedDeviceType(Number(value.key));
+  };
+
+  const handleStatusMenuClick = (value) => {
+    setSelectedStatus(Number(value.key));
   };
 
   const getDeviceList = async () => {
@@ -46,17 +48,7 @@ export default function DeviceList() {
         ...el,
         key: el.id,
       }));
-      const deviceTypes = deviceDetails
-        .map((el) => ({
-          device_type: el.device_type,
-          device_type_name: el.device_type_name,
-        }))
-        .filter(
-          (val, i, self) =>
-            i === self.findIndex((t) => t.device_type === val.device_type)
-        );
 
-      setDeviceTypeList(deviceTypes);
       setDeviceList(deviceDetails);
       setIsLoading(false);
     } else {
@@ -80,7 +72,7 @@ export default function DeviceList() {
     },
     {
       title: "Frim Ware Versions",
-      dataIndex: "frimware_version",
+      dataIndex: "firmware_version",
       render: (value) => value || "-",
     },
     {
@@ -109,30 +101,27 @@ export default function DeviceList() {
     },
   ];
 
-  const menu = (
-    <Menu onClick={handleMenuClick}>
-      <Menu.Item key="1" icon={<UserOutlined />}>
-        1st menu item
-      </Menu.Item>
-      <Menu.Item key="2" icon={<UserOutlined />}>
-        2nd menu item
-      </Menu.Item>
-      <Menu.Item key="3" icon={<UserOutlined />}>
-        3rd menu item
-      </Menu.Item>
+  const statusMenu = (
+    <Menu onClick={handleStatusMenuClick}>
+      <Menu.Item key={1}>Active</Menu.Item>
+      <Menu.Item key={0}>In Acitve</Menu.Item>
     </Menu>
   );
 
   const farmMenu = (
     <Menu onClick={handleMenuClick}>
       <Menu.Item key={0}>All</Menu.Item>
+      {farmMaster?.map((el) => (
+        <Menu.Item key={el.id}>{el.farm_name}</Menu.Item>
+      ))}
     </Menu>
   );
 
   const deviceTypeMenu = (
     <Menu onClick={handleDeviceTypeChange}>
-      {deviceTypeList.map((el) => (
-        <Menu.Item key={el.device_type}>{el.device_type_name}</Menu.Item>
+      <Menu.Item key={0}>{"All"}</Menu.Item>
+      {deviceTypeMaster?.map((el) => (
+        <Menu.Item key={el.id}>{el.name}</Menu.Item>
       ))}
     </Menu>
   );
@@ -140,19 +129,24 @@ export default function DeviceList() {
   useEffect(() => {
     setPageTitle("Device List");
     getDeviceList();
-    // getFarmList();
   }, []);
 
   return (
     <div className="device_list_main">
       <div className="device_list_action_area">
         <div className="device_list_filter_area">
-          <Dropdown trigger={["click"]} overlay={menu}>
+          <Dropdown trigger={["click"]} overlay={farmMenu}>
             <Button
               style={{ borderRadius: "4px", marginRight: 16 }}
               size="large"
             >
-              <span className="filter_button_text">Farm : Redhills</span>
+              <span className="filter_button_text">
+                Farm :{" "}
+                {!selectedFarm
+                  ? "All"
+                  : farmMaster.filter((f) => f.id === selectedFarm)[0]
+                      .farm_name}
+              </span>
               <DownOutlined />
             </Button>
           </Dropdown>
@@ -161,13 +155,22 @@ export default function DeviceList() {
               style={{ borderRadius: "4px", marginRight: 16 }}
               size="large"
             >
-              <span className="filter_button_text">Device Type : </span>
+              <span className="filter_button_text">
+                Device Type :{" "}
+                {!selectedDeviceType
+                  ? "All"
+                  : deviceTypeMaster.filter(
+                      (f) => f.id === selectedDeviceType
+                    )[0].name}{" "}
+              </span>
               <DownOutlined />
             </Button>
           </Dropdown>
-          <Dropdown trigger={["click"]} overlay={menu}>
+          <Dropdown trigger={["click"]} overlay={statusMenu}>
             <Button style={{ borderRadius: "4px" }} size="large">
-              <span className="filter_button_text">Status : Active</span>
+              <span className="filter_button_text">
+                Status : {selectedStatus ? "Acitve" : "In Active"}
+              </span>
               <DownOutlined />
             </Button>
           </Dropdown>
