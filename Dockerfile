@@ -12,7 +12,7 @@ RUN yarn build
 fi
 
 FROM build-deps AS staging
-RUN if [ "$mode" = "dev" ]
+RUN if [ "$mode" = "staging" ]
 RUN yarn staging
 fi
 
