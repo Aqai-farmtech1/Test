@@ -28,3 +28,9 @@ export const getGoatFarms = (page, state, status) => {
     url: `v1/farm/farm-goat/?page=${page}${stateQuery}&status=${status}`,
   });
 };
+
+
+export const getAllFarmList = () => axios({
+  method : "GET",
+  url : "v1/farm/farm-list"
+})
