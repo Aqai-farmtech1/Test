@@ -7,16 +7,16 @@ RUN yarn install
 
 FROM build-deps AS dev
 RUN yarn build 
-EXPOSE 80
-COPY --from=build-deps /usr/src/app/dev/build /usr/share/nginx/html
+COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 
-FROM build-deps AS staging
+FROM base AS staging
 RUN yarn staging 
 
 FROM nginx:1.12-alpine
-EXPOSE 80
-COPY --from=build-deps /usr/src/app/staging/build /usr/share/nginx/html
+COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
