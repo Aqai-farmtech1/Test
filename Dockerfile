@@ -5,10 +5,10 @@ RUN npm install yarn
 COPY . ./
 RUN yarn install 
 
-FROM build-ups AS dev
+FROM build-deps AS dev
 RUN yarn build
 
-FROM build-ups AS staging
+FROM build-deps AS staging
 RUN yarn staging
 
 FROM nginx:1.12-alpine
