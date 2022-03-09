@@ -14,6 +14,7 @@ const { Search } = Input;
 export default function GoatList() {
   const [isLoading, setIsLoading] = useState(false);
   const [goatList, setGoatList] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
   const { setPageTitle } = usePageInfo();
   const { farmid } = useParams();
 
@@ -21,14 +22,15 @@ export default function GoatList() {
   const handleSearch = () => {};
   const handleTableChange = () => {};
 
-  const getGoatList = async () => {
+  const getGoatList = async (page = 1) => {
     setIsLoading(true);
-    const [goatResponse, goatError] = await tryCatch(getFarmGoat(farmid));
+    const [goatResponse, goatError] = await tryCatch(getFarmGoat(farmid, page));
     if (!goatError) {
       const alteredData = goatResponse.data.data.map((el) => ({
         ...el,
         key: el.id,
       }));
+      setTotalPages(goatResponse.data.count);
       setIsLoading(false);
       setGoatList(alteredData);
     } else {
@@ -39,7 +41,7 @@ export default function GoatList() {
 
   const columns = [
     {
-      title: "Farm Code",
+      title: "RFID",
       dataIndex: "rfid",
     },
     {
@@ -132,6 +134,13 @@ export default function GoatList() {
       <div className="goat_list_table_area">
         <Table
           loading={isLoading}
+          pagination={{
+            total: totalPages,
+            pageSize: 10,
+            onChange: (page) => {
+              getGoatList(page);
+            },
+          }}
           style={{ width: "100%" }}
           columns={columns}
           dataSource={goatList}

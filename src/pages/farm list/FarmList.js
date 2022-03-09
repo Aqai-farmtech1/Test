@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Button, Dropdown, Menu, Input, Table, Badge } from "antd";
+import { Button, Dropdown, Menu, Input, Table } from "antd";
 import { DownOutlined, UserOutlined, PlusOutlined } from "@ant-design/icons";
 import "./farmlist.css";
 import { NavLink } from "react-router-dom";
@@ -9,21 +9,22 @@ import useMasters from "../../hooks/useMasters";
 import tryCatch from "../../helper/tryCatch.helper";
 import { getAllFarm } from "../../api/farm.api";
 
-// import { PageInfoContext } from '../../contexts/PageInfoContext';
 const { Search } = Input;
 
 export default function FarmList() {
-  const [selectedState, setSelectedState] = useState("All");
   const [isLoading, setIsLoading] = useState(false);
+  const [totalPages, setTotalPages] = useState(0);
+  const [selectedState, setSelectedState] = useState(0);
+  const [selectedStatus, setSelectedStatus] = useState(1);
   const [farmList, setFarmList] = useState([]);
-  const { productMaster } = useMasters();
+  const { stateMaster } = useMasters();
   const { setPageTitle } = usePageInfo();
-  // const { setAlert, contextCheck } = useContext(PageInfoContext);
-  // const { setAlert } = this.contextType;
 
-  const getFarmList = async () => {
+  const getFarmList = async (page = 1, state = 0, status = 1) => {
     setIsLoading(true);
-    const [farmResponse, farmError] = await tryCatch(getAllFarm());
+    const [farmResponse, farmError] = await tryCatch(
+      getAllFarm(page, state, status)
+    );
     if (!farmError) {
       setIsLoading(false);
       const farmDataList = farmResponse.data.data.map((el) => ({
@@ -34,8 +35,8 @@ export default function FarmList() {
         product_capacity: el.product_capacity
           .map((el) => `${el.product_name}-${el.capacity}`)
           .join(", "),
-        kk: el.product_capacity,
       }));
+      setTotalPages(farmResponse.data.count);
       setFarmList(farmDataList);
     } else {
       setIsLoading(false);
@@ -43,11 +44,17 @@ export default function FarmList() {
     }
   };
 
-  const handleMenuClick = () => {};
+  const handleMenuClick = (value) => {
+    setSelectedStatus(value.key);
+    getFarmList(1, selectedState, value.key);
+  };
+
+  const handleStateMenuClick = (value) => {
+    setSelectedState(Number(value.key));
+    getFarmList(1, value.key, selectedStatus);
+  };
 
   const handleSearch = () => {};
-
-  const handleTableChange = () => {};
 
   const columns = [
     {
@@ -74,7 +81,7 @@ export default function FarmList() {
       width: "8%",
       render: (value, columns) => (
         <div className="action_button_div">
-          <NavLink to={`/farm/create`}>
+          <NavLink to={`/farm/${columns.key}/edit`}>
             <Button
               className="user_list_buttons"
               style={{ borderRadius: "4px" }}
@@ -105,15 +112,17 @@ export default function FarmList() {
 
   const menu = (
     <Menu onClick={handleMenuClick}>
-      <Menu.Item key="1" icon={<UserOutlined />}>
-        1st menu item
-      </Menu.Item>
-      <Menu.Item key="2" icon={<UserOutlined />}>
-        2nd menu item
-      </Menu.Item>
-      <Menu.Item key="3" icon={<UserOutlined />}>
-        3rd menu item
-      </Menu.Item>
+      <Menu.Item key={1}>Active</Menu.Item>
+      <Menu.Item key={0}>In Active</Menu.Item>
+    </Menu>
+  );
+
+  const stateMenu = (
+    <Menu onClick={handleStateMenuClick}>
+      <Menu.Item key={0}>{"All"}</Menu.Item>
+      {stateMaster?.map((el) => (
+        <Menu.Item key={el.id}>{el.name}</Menu.Item>
+      ))}
     </Menu>
   );
 
@@ -127,10 +136,13 @@ export default function FarmList() {
       <div className="farmlist_action_area">
         <div className="action_filter_area">
           <div className="action_filter_state">
-            <Dropdown trigger={["click"]} overlay={menu}>
+            <Dropdown trigger={["click"]} overlay={stateMenu}>
               <Button style={{ borderRadius: "4px" }} size="large">
                 <span className="filter_button_text">
-                  State : {selectedState}
+                  State :{" "}
+                  {!selectedState
+                    ? "All"
+                    : stateMaster.filter((f) => f.id === selectedState)[0].name}
                 </span>
                 <DownOutlined />
               </Button>
@@ -139,7 +151,9 @@ export default function FarmList() {
           <div className="action_filter_city">
             <Dropdown trigger={["click"]} overlay={menu}>
               <Button size="large" style={{ borderRadius: "4px" }}>
-                <span className="filter_button_text">Status : Active</span>
+                <span className="filter_button_text">
+                  Status : {Number(selectedStatus) ? "Active" : "In Active"}
+                </span>
                 <DownOutlined />
               </Button>
             </Dropdown>
@@ -156,7 +170,7 @@ export default function FarmList() {
             />
           </div>
           <div className="farmlist_create_new">
-            <NavLink to="create">
+            <NavLink to="/farm/create">
               <Button
                 style={{ borderRadius: "4px" }}
                 type="primary"
@@ -173,9 +187,13 @@ export default function FarmList() {
         <Table
           loading={isLoading}
           style={{ width: "100%" }}
+          pagination={{
+            total: totalPages,
+            pageSize: 10,
+            onChange: (page) => getFarmList(page),
+          }}
           columns={columns}
           dataSource={farmList}
-          onChange={handleTableChange}
           bordered
         />
       </div>

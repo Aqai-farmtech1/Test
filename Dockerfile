@@ -4,7 +4,6 @@ COPY package.json package-lock.json ./
 RUN npm install yarn
 COPY . ./
 RUN yarn install 
-
 ARG mode
 RUN if [ "x$mode" = "xdev" ] ; then yarn dev ; else yarn staging ; fi
 
