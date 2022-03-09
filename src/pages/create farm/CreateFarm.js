@@ -27,7 +27,6 @@ export default function CreateFarm() {
   const { setPageTitle } = usePageInfo();
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState([]);
-  const [productList, setProductList] = useState(productMaster);
   const navigate = useNavigate();
 
   // const handleFormChange = (value) => {
@@ -236,11 +235,16 @@ export default function CreateFarm() {
                             ]}
                           >
                             <Select
+                              onChange={() =>
+                                setSelectedProduct(
+                                  form.getFieldValue("products")
+                                )
+                              }
                               size="large"
                               className="dropdown_form"
                               placeholder="Select Product"
                             >
-                              {productList.map((el) => (
+                              {productMaster?.map((el) => (
                                 <Option
                                   disabled={selectedProduct?.some(
                                     (val) =>
@@ -276,7 +280,8 @@ export default function CreateFarm() {
                           {fields.length > 1 && (
                             <MinusCircleOutlined
                               style={{ marginLeft: "10px" }}
-                              onClick={() => {
+                              onClick={(va, i, j) => {
+                                console.log(va, i, j);
                                 setSelectedProduct(
                                   form.getFieldValue("products")
                                 );
