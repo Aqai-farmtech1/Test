@@ -30,7 +30,6 @@ export default function FarmGoatList() {
     if (!farmError) {
       const alteredFarmList = farmResponse.data.data.map((ell) => ({
         ...ell,
-        free_capacity: 0,
         sick: 0,
         mortality: 0,
         key: ell.id,
@@ -73,7 +72,7 @@ export default function FarmGoatList() {
     },
     {
       title: "Location",
-      dataIndex: "state",
+      dataIndex: "state_name",
     },
     {
       title: "Ready to Sale",
@@ -81,7 +80,7 @@ export default function FarmGoatList() {
     },
     {
       title: "Free Capacity",
-      dataIndex: "free_capacity",
+      dataIndex: "remaining_capacity",
     },
     {
       title: "Sick",

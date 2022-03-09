@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./createfarm.css";
+import "./editfarm.css";
 import BreadCrumb from "../../components/breadcrumb/BreadCrumb";
 import usePageInfo from "../../hooks/usePageInfo";
 import useMasters from "../../hooks/useMasters";
@@ -14,26 +14,22 @@ import {
   Button,
   message,
 } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import tryCatch from "../../helper/tryCatch.helper";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { createFarm } from "../../api/farm.api";
+import { createFarm, getFarm } from "../../api/farm.api";
 
 const { Option } = Select;
 
-export default function CreateFarm() {
+export default function EditFarm() {
   const [form] = Form.useForm();
   const { productMaster, stateMaster } = useMasters();
   const { setPageTitle } = usePageInfo();
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState([]);
-  const [productList, setProductList] = useState(productMaster);
+  const [farmDetails, setFarmDetails] = useState({});
   const navigate = useNavigate();
-
-  // const handleFormChange = (value) => {
-  //   const selectedProducts = value.products;
-  //   console.log(selectedProducts);
-  // };
+  const { farmid } = useParams();
 
   const handleFormSubmit = async (values) => {
     const {
@@ -77,15 +73,15 @@ export default function CreateFarm() {
 
     setIsLoading(true);
     message.loading({
-      content: "Creating Farm...",
-      key: "createfarm",
+      content: "Updating Farm Details...",
+      key: "editfarm",
     });
     const [farmResponse, farmError] = await tryCatch(createFarm(postData));
 
     if (!farmError) {
       message.success({
         content: "Farm created successfully!",
-        key: "createfarm",
+        key: "editfarm",
       });
       setIsLoading(false);
       navigate("/farm");
@@ -94,13 +90,63 @@ export default function CreateFarm() {
       const errors = farmError.response.data.error;
       for (let err in errors) {
         const errorMessage = errors[err][0];
-        message.error({ content: errorMessage, key: "createfarm" });
+        message.error({ content: errorMessage, key: "editfarm" });
       }
     }
   };
 
+  const getFarmDetails = async () => {
+    const [farmResponse, farmError] = await tryCatch(getFarm(farmid));
+
+    if (!farmError) {
+      console.log(farmResponse.data);
+      const {
+        primary_address,
+        city,
+        code,
+        country,
+        email,
+        farm_type,
+        latitude,
+        longitude,
+        name,
+        phone_no,
+        pincode,
+        state,
+        product_capacity,
+      } = farmResponse.data;
+
+      const products = product_capacity?.map((el) => ({
+        id: el.id,
+        product: el.product,
+        capacity: el.capacity,
+      }));
+
+      form.setFieldsValue({
+        primary_address,
+        city,
+        code,
+        country,
+        email,
+        farm_type,
+        latitude,
+        longitude,
+        name,
+        phone_no,
+        pincode,
+        state,
+        products,
+      });
+
+      setSelectedProduct(products);
+    } else {
+      console.log(farmError.response);
+    }
+  };
+
   useEffect(() => {
-    setPageTitle("Create Farm");
+    setPageTitle("Edit Farm");
+    getFarmDetails();
   }, []);
 
   return (
@@ -119,12 +165,11 @@ export default function CreateFarm() {
             className="create_farm_form_item"
             label="Farm Type"
             name="farm_type"
-            initialValue={"1"}
             rules={[{ required: true, message: "Farm Type is Required!" }]}
           >
             <Radio.Group size="large">
-              <Radio value="1">Own Farm</Radio>
-              <Radio value="2">Partner Farm</Radio>
+              <Radio value={1}>Own Farm</Radio>
+              <Radio value={2}>Partner Farm</Radio>
             </Radio.Group>
           </Form.Item>
           <Row gutter={20}>
@@ -212,12 +257,7 @@ export default function CreateFarm() {
           </Row>
           <Row>
             <Col span={24}>
-              <Form.List
-                initialValue={[
-                  { name: 0, key: 0, isListField: true, fieldKey: 0 },
-                ]}
-                name="products"
-              >
+              <Form.List name="products">
                 {(fields, { add, remove }) => (
                   <>
                     {fields.map(({ key, name, ...restField }) => (
@@ -236,15 +276,20 @@ export default function CreateFarm() {
                             ]}
                           >
                             <Select
+                              onChange={() =>
+                                setSelectedProduct(
+                                  form.getFieldValue("products")
+                                )
+                              }
                               size="large"
                               className="dropdown_form"
                               placeholder="Select Product"
                             >
-                              {productList.map((el) => (
+                              {productMaster.map((el) => (
                                 <Option
                                   disabled={selectedProduct?.some(
                                     (val) =>
-                                      Number(val.product) === Number(el.code)
+                                      Number(val?.product) === Number(el?.code)
                                   )}
                                   key={el.code}
                                   value={el.code}
@@ -292,6 +337,7 @@ export default function CreateFarm() {
                         type="primary"
                         onClick={() => {
                           setSelectedProduct(form.getFieldValue("products"));
+                          console.log(form.getFieldsValue("products"));
                           add();
                         }}
                         icon={<PlusOutlined />}
@@ -346,7 +392,7 @@ export default function CreateFarm() {
             <Col span={24}>
               <Form.Item
                 className="create_farm_form_item"
-                name="address1"
+                name="primary_address"
                 label="Address"
                 rules={[
                   { required: true, message: "Please enter Farm Address!" },

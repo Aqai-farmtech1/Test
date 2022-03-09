@@ -1,4 +1,5 @@
 import React, { createContext, useState } from "react";
+import { getAllFarmList } from "../api/farm.api";
 
 import {
   getStateList,
@@ -15,6 +16,7 @@ export default function MasterProvider(props) {
   const [designationMaster, setDesignationMaster] = useState([]);
   const [productMaster, setProductMaster] = useState([]);
   const [deviceTypeMaster, setDeviceTypeMaster] = useState([]);
+  const [farmMaster, setFarmMaster] = useState([]);
 
   const fetchState = async (token) => {
     const [stateMasterResponse, stateMasterError] = await tryCatch(
@@ -64,11 +66,22 @@ export default function MasterProvider(props) {
     }
   };
 
+  const fetchFarm = async (token) => {
+    const [farmResponse, farmError] = await tryCatch(getAllFarmList(token));
+
+    if (!farmError) {
+      setFarmMaster(farmResponse.data);
+    } else {
+      console.log(farmError.response);
+    }
+  };
+
   const fetchMasters = async (token) => {
     fetchState(token);
     fetchProduct(token);
     fetchDesignation(token);
     fetchDeviceType(token);
+    fetchFarm(token);
   };
 
   return (
@@ -78,6 +91,7 @@ export default function MasterProvider(props) {
         designationMaster,
         productMaster,
         deviceTypeMaster,
+        farmMaster,
         fetchMasters,
       }}
     >

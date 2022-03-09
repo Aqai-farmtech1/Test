@@ -15,6 +15,7 @@ export default function FarmDashboard({ farmDetails, isLoading }) {
       <Row style={{ width: "100%" }}>
         <Col span={6}>
           <ProductCard
+            isLoading={isLoading}
             productDetail={{
               capacity: farmDetails.goat_capacity?.length
                 ? farmDetails.goat_capacity[0].capacity
