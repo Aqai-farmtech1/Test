@@ -8,7 +8,7 @@ RUN yarn install
 FROM build-deps as dev
 RUN yarn run build
 
-FROM build-deps as staging
+FROM scratch as staging
 RUN yarn run staging
 
 FROM nginx:1.12-alpine
