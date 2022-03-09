@@ -6,7 +6,7 @@ COPY . ./
 RUN yarn install 
 
 ARG mode ["$MODE"="dev"]
-RUN yarn build 
+RUN yarn dev
 
 ARG mode ["$MODE"="staging"]
 RUN yarn staging 
