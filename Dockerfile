@@ -5,17 +5,10 @@ RUN npm install yarn
 COPY . ./
 RUN yarn install 
 
-FROM build-deps as dev
-RUN yarn dev
-
-FROM build-deps as staging
-RUN yarn staging
-
+ARG mode
+RUN if [ "x$mode" = "xdev" ] ; then yarn dev ; elsif [ "x$mode" = "xstaging" ] ; then yarn staging ; else yarn build ; fi
 
 FROM nginx:1.12-alpine
 COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
-
-
