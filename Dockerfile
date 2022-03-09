@@ -5,11 +5,9 @@ RUN npm install yarn
 COPY . ./
 RUN yarn install 
 
-FROM build-deps
-RUN yarn build 
 ARG ["$MODE"="dev"]
+RUN yarn build 
 
-FROM build-deps
 ARG ["$MODE"="staging"]
 RUN yarn staging 
 
