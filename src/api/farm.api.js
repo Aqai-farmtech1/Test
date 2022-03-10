@@ -29,8 +29,15 @@ export const getGoatFarms = (page, state, status) => {
   });
 };
 
+export const getAllFarmList = () =>
+  axios({
+    method: "GET",
+    url: "v1/farm/farm-list",
+  });
 
-export const getAllFarmList = () => axios({
-  method : "GET",
-  url : "v1/farm/farm-list"
-})
+export const updateFarm = (farmid, data) =>
+  axios({
+    method: "PUT",
+    url: `v1/farm/farm-update/${farmid}/`,
+    data,
+  });

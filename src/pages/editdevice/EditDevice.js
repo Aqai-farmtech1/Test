@@ -1,51 +1,57 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Select, Input, Button, Switch, message } from "antd";
-import "./adddevice.css";
+import "./editdevice.css";
 import useMasters from "../../hooks/useMasters";
 import tryCatch from "../../helper/tryCatch.helper";
 import { createDevice } from "../../api/device.api";
+import { useNavigate } from "react-router-dom";
 
 const { Option } = Select;
 
-export default function AddDevice({
+export default function EditDevice({
   activeToggle,
   setIsModalVisible,
   getDeviceList,
+  deviceData,
 }) {
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
   const [isCreatingDevice, setIsCreatingDevice] = useState(false);
-  const [isActive, setIsActive] = useState(true);
+  const [isActive, setIsActive] = useState(deviceData.status);
+  // const [deviceDetails , setDeviceDetails] =useState(deviceData);
   const { deviceTypeMaster, farmMaster } = useMasters();
 
   const handleFormSubmit = async (value) => {
-    message.loading({
-      content: "Creating Device...",
-      key: "create_device",
-    });
-    setIsCreatingDevice(true);
-    const [deviceResponse, deviceError] = await tryCatch(createDevice(value));
-
-    if (!deviceError) {
-      message.success({
-        content: "Device created successfully!",
-        key: "create_device",
-      });
-      form.resetFields();
-      setIsModalVisible(false);
-      setIsCreatingDevice(false);
-      getDeviceList();
-    } else {
-      setIsCreatingDevice(false);
-      const obj = deviceError.response.data.error;
-      for (const key in obj) {
-        message.error({
-          content: `${obj[key]}`,
-          key: "create_device",
-        });
-      }
-    }
+    // message.loading({
+    //   content: "Creating Device...",
+    //   key: "create_device",
+    // });
+    // setIsCreatingDevice(true);
+    // const [deviceResponse, deviceError] = await tryCatch(createDevice(value));
+    // if (!deviceError) {
+    //   message.success({
+    //     content: "Device created successfully!",
+    //     key: "create_device",
+    //   });
+    //   form.resetFields();
+    //   setIsModalVisible(false);
+    //   setIsCreatingDevice(false);
+    //   getDeviceList();
+    // } else {
+    //   setIsCreatingDevice(false);
+    //   const obj = deviceError.response.data.error;
+    //   for (const key in obj) {
+    //     message.error({
+    //       content: `${obj[key]}`,
+    //       key: "create_device",
+    //     });
+    //   }
+    // }
   };
+
+  // useEffect(() => {
+  //   form.setFieldsValue(deviceData);
+  // }, [deviceData]);
 
   return (
     <div className="add_device_main">

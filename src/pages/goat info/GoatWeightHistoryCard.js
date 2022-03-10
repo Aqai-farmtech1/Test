@@ -3,7 +3,7 @@ import { goatInfoImage, weightIcon24 } from "../../utils/constants";
 import GoatWeightDiffCard from "./GoatWeightDiffCard";
 
 export default function GoatWeightHistoryCard({ weightData }) {
-  const dateWeighed = new Date(weightData.date_weighed);
+  const dateWeighed = new Date(weightData.created_at);
   const weighedDate = dateWeighed.toLocaleDateString();
   const weighedTime = dateWeighed.toLocaleTimeString();
   return (
@@ -13,7 +13,7 @@ export default function GoatWeightHistoryCard({ weightData }) {
         <h2>{weighedTime}</h2>
       </div>
       <div className="goat_weight_history_card_image_wrapper">
-        <img src={goatInfoImage} alt="goat" />
+        <img src={weightData.image} alt="goat" />
       </div>
       <div className="goat_weight_history_card_content">
         <div className="goat_weight_history_card_content_weight">
