@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Button, Dropdown, Menu, Input, Table, Modal } from "antd";
 import { DownOutlined, UserOutlined, PlusOutlined } from "@ant-design/icons";
-import { NavLink } from "react-router-dom";
 import { editIcon } from "../../utils/constants";
 import "./devicelist.css";
 import AddDevice from "../adddevice/AddDevice";
 import tryCatch from "../../helper/tryCatch.helper";
-import { getAllDevice } from "../../api/device.api";
+import { getAllDeviceWithQuery } from "../../api/device.api";
 import usePageInfo from "../../hooks/usePageInfo";
-import { getAllFarmList } from "../../api/farm.api";
 import useMasters from "../../hooks/useMasters";
+import EditDevice from "../editdevice/EditDevice";
 
 const { Search } = Input;
 
@@ -24,31 +23,45 @@ export default function DeviceList() {
   const [selectedStatus, setSelectedStatus] = useState(1);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  const [editDeviceDetails, setEditDeviceDetails] = useState({});
 
   const handleSearch = () => {};
 
   const handleMenuClick = (value) => {
-    setSelectedFarm(Number(value.key));
+    const selectedValue = Number(value.key);
+    setSelectedFarm(selectedValue);
+    getDeviceList(selectedValue, selectedDeviceType, selectedStatus);
   };
 
   const handleDeviceTypeChange = (value) => {
-    setSelectedDeviceType(Number(value.key));
+    const selectedValue = Number(value.key);
+    setSelectedDeviceType(selectedValue);
+    getDeviceList(selectedFarm, selectedValue, selectedStatus);
   };
 
   const handleStatusMenuClick = (value) => {
-    setSelectedStatus(Number(value.key));
+    const selectedValue = Number(value.key);
+    setSelectedStatus(selectedValue);
+    getDeviceList(selectedFarm, selectedDeviceType, selectedValue);
   };
 
-  const getDeviceList = async () => {
+  const getDeviceList = async (
+    farmid = 0,
+    device = 0,
+    status = 1,
+    page = 1
+  ) => {
     setIsLoading(true);
-    const [deviceResponse, deviceError] = await tryCatch(getAllDevice());
+    const [deviceResponse, deviceError] = await tryCatch(
+      getAllDeviceWithQuery(farmid, device, status, page)
+    );
 
     if (!deviceError) {
-      const deviceDetails = deviceResponse.data.map((el) => ({
+      const deviceDetails = deviceResponse.data.data.map((el) => ({
         ...el,
         key: el.id,
       }));
-
+      setTotalPages(deviceResponse.data.count);
       setDeviceList(deviceDetails);
       setIsLoading(false);
     } else {
@@ -90,7 +103,10 @@ export default function DeviceList() {
             style={{ borderRadius: "4px" }}
             block
             type="primary"
-            onClick={() => setIsEditModalVisible(true)}
+            onClick={() => {
+              setEditDeviceDetails(columns);
+              setIsEditModalVisible(true);
+            }}
             ghost
           >
             <img className="button_icon" src={editIcon} alt="edit icon" />
@@ -197,6 +213,18 @@ export default function DeviceList() {
       </div>
       <div className="device_list_table_area">
         <Table
+          pagination={{
+            total: totalPages,
+            pageSize: 10,
+            onChange: (page) => {
+              getDeviceList(
+                selectedFarm,
+                selectedDeviceType,
+                selectedStatus,
+                page
+              );
+            },
+          }}
           loading={isLoading}
           style={{ width: "100%" }}
           columns={columns}
@@ -224,7 +252,11 @@ export default function DeviceList() {
         onCancel={() => setIsEditModalVisible(false)}
         footer={null}
       >
-        <AddDevice activeToggle={true} />
+        <EditDevice
+          deviceData={editDeviceDetails}
+          getDeviceList={getDeviceList}
+          activeToggle={true}
+        />
       </Modal>
     </div>
   );

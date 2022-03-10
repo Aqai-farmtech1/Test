@@ -50,7 +50,7 @@ export default function FarmInfo() {
       <BreadCrumb />
       <Tabs defaultActiveKey="1" onChange={() => {}}>
         <TabPane tab="Farm Dashboard" key="1">
-          <FarmDashboard farmDetails={farmDetail} />
+          <FarmDashboard isLoading={isLoading} farmDetails={farmDetail} />
         </TabPane>
         <TabPane tab="Farm Info" key="2">
           <FarmInformation farmDetails={farmDetail} isLoading={isLoading} />

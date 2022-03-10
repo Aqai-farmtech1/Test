@@ -18,3 +18,21 @@ export const getFarmDevice = (farmid) =>
     method: "GET",
     url: `v1/farm/farm-device/${farmid}/`,
   });
+
+export const getAllDeviceWithQuery = (farmid, deviceType, status, page) => {
+  const farmQuery = Number(farmid) ? `&farm=${farmid}` : "";
+  const deviceTypeQuery = Number(deviceType)
+    ? `&device-type=${deviceType}`
+    : "";
+
+  return axios({
+    method: "GET",
+    url: `v1/farm/device-list/?status=${status}&page=${page}${farmQuery}${deviceTypeQuery}`,
+  });
+};
+
+export const updateDevice = (deviceId) =>
+  axios({
+    method: "PUT",
+    url: `v1/farm/device/${deviceId}/`,
+  });

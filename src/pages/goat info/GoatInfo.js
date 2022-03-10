@@ -21,7 +21,6 @@ export default function GoatInfo() {
 
     if (!goatError) {
       setIsLoading(false);
-      console.log(goatResponse.data);
       setGoatData(goatResponse.data);
     } else {
       setIsLoading(false);
@@ -37,11 +36,11 @@ export default function GoatInfo() {
     <div className="farm_info_main">
       <BreadCrumb />
       <div className="farm_info_details_main">
-        <Row gutter={20} style={{ width: "100%" }}>
-          <Col style={{ display: "table-cell" }} span={8}>
+        <Row gutter={20} style={{ width: "100%", height: "70vh" }}>
+          <Col style={{ display: "table-cell", height: "100%" }} span={8}>
             <GoatBasicInfo isLoading={isLoading} goatData={goatData} />
           </Col>
-          <Col span={9}>
+          <Col span={9} style={{ height: "100%" }}>
             <div className="goat_weight_history">
               <GoatWeightHistory isLoading={isLoading} goatData={goatData} />
             </div>
