@@ -17,7 +17,7 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import tryCatch from "../../helper/tryCatch.helper";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { createFarm, getFarm } from "../../api/farm.api";
+import { getFarm, updateFarm } from "../../api/farm.api";
 
 const { Option } = Select;
 
@@ -32,69 +32,77 @@ export default function EditFarm() {
   const { farmid } = useParams();
 
   const handleFormSubmit = async (values) => {
-    console.log(farmDetails);
-    console.log(values);
-    // const {
-    //   address1,
-    //   city,
-    //   code,
-    //   country,
-    //   email,
-    //   farm_type,
-    //   latitude,
-    //   longitude,
-    //   name,
-    //   phone_no,
-    //   pincode,
-    //   state,
-    //   products,
-    // } = values;
+    const allowed_product = values.products?.map(
+      (el) => productMaster.find((f) => f.code === el.product)?.id
+    );
 
-    // const allowed_product = products.map((el) => el.product);
-    // const product_capacity = products.map((el) => ({
-    //   product: el["product"],
-    //   capacity: el["capacity"],
-    // }));
+    const product_capacity = values.products.map((el) => {
+      const productId = farmDetails.product_capacity.find(
+        (f) => f.product === el.product
+      )?.id;
+      return productId ? { ...el, id: productId } : { ...el };
+    });
+    const alteredData = {
+      ...values,
+      allowed_product,
+      product_capacity,
+    };
 
-    // const postData = {
-    //   farm_type,
-    //   name,
-    //   code,
-    //   latitude,
-    //   longitude,
-    //   allowed_product,
-    //   product_capacity,
-    //   phone_no,
-    //   email,
-    //   address1,
-    //   city,
-    //   state,
-    //   country,
-    //   pincode,
-    // };
+    const {
+      farm_type,
+      name,
+      code,
+      pincode,
+      latitude,
+      longitude,
+      country,
+      state,
+      city,
+      phone_no,
+      email,
+    } = alteredData;
 
-    // setIsLoading(true);
-    // message.loading({
-    //   content: "Updating Farm Details...",
-    //   key: "editfarm",
-    // });
-    // const [farmResponse, farmError] = await tryCatch(createFarm(postData));
+    const postData = {
+      farm_type,
+      allowed_product: alteredData.allowed_product,
+      name,
+      code,
+      address1: alteredData.primary_address,
+      pincode,
+      latitude,
+      longitude,
+      country,
+      state,
+      city,
+      phone_no,
+      email,
+      product_capacity: alteredData.product_capacity,
+    };
 
-    // if (!farmError) {
-    //   message.success({
-    //     content: "Farm created successfully!",
-    //     key: "editfarm",
-    //   });
-    //   setIsLoading(false);
-    //   navigate("/farm");
-    // } else {
-    //   setIsLoading(false);
-    //   const errors = farmError.response.data.error;
-    //   for (let err in errors) {
-    //     const errorMessage = errors[err][0];
-    //     message.error({ content: errorMessage, key: "editfarm" });
-    //   }
-    // }
+    setIsLoading(true);
+    message.loading({
+      content: "Updating Farm Details...",
+      key: "editfarm",
+    });
+    const [farmResponse, farmError] = await tryCatch(
+      updateFarm(farmid, postData)
+    );
+
+    if (!farmError) {
+      message.success({
+        content: "Details Updated successfully!",
+        key: "editfarm",
+      });
+      setIsLoading(false);
+      navigate("/farm");
+    } else {
+      setIsLoading(false);
+      const errors = farmError.response.data.error;
+      for (let err in errors) {
+        const errorMessage = errors[err][0];
+        message.error({ content: errorMessage, key: "editfarm" });
+      }
+    }
   };
 
   const getFarmDetails = async () => {

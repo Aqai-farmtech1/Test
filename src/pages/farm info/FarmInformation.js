@@ -56,7 +56,7 @@ export default function FarmInformation({ farmDetails, isLoading }) {
   };
 
   const getDetails = async () => {
-    const alteredGoatList = farmDetails.goat_capacity?.map((el) => ({
+    const alteredGoatList = farmDetails.product_capacity?.map((el) => ({
       ...el,
       key: el.id,
     }));
