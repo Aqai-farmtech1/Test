@@ -106,9 +106,18 @@ export default function EditFarm() {
   };
 
   const getFarmDetails = async () => {
+    message.loading({
+      content: "Fetching Farm Details!",
+      key: "farmFetch",
+    });
     const [farmResponse, farmError] = await tryCatch(getFarm(farmid));
 
     if (!farmError) {
+      message.success({
+        content: "Fetched Successfully!",
+        duration: "0.3",
+        key: "farmFetch",
+      });
       const {
         primary_address,
         city,
@@ -149,6 +158,11 @@ export default function EditFarm() {
       setFarmDetails(farmResponse.data);
       setSelectedProduct(products);
     } else {
+      const errors = farmResponse.response.data.error;
+      for (let err in errors) {
+        const errorMessage = errors[err][0];
+        message.error({ content: errorMessage, key: "getUser" });
+      }
       console.log(farmError.response);
     }
   };
