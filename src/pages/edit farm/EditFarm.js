@@ -13,6 +13,7 @@ import {
   InputNumber,
   Button,
   message,
+  Switch,
 } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import tryCatch from "../../helper/tryCatch.helper";
@@ -23,6 +24,7 @@ const { Option } = Select;
 
 export default function EditFarm() {
   const [form] = Form.useForm();
+  const [isActive, setIsActive] = useState(true);
   const { productMaster, stateMaster } = useMasters();
   const { setPageTitle } = usePageInfo();
   const [isLoading, setIsLoading] = useState(false);
@@ -30,6 +32,35 @@ export default function EditFarm() {
   const [farmDetails, setFarmDetails] = useState({});
   const navigate = useNavigate();
   const { farmid } = useParams();
+
+  const handleToggleChange = async (value) => {
+    const farmStatusData = {
+      status: value,
+    };
+    // message.loading({
+    //   content: "Updating Farm Status...",
+    //   key: "updateFarmStatus",
+    // });
+    // const [farmUpdateResponse, farmUpdateError] = await tryCatch(
+    //   updateFarm(farmid, farmStatusData)
+    // );
+
+    // if (!farmUpdateError) {
+    //   message.success({
+    //     content: "Updated Successfully!",
+    //     duration: "0.3",
+    //     key: "updateFarmStatus",
+    //   });
+    //   setIsActive(value);
+    // } else {
+    //   // console.log(farmUpdateResponse)
+    //   const errors = farmUpdateError.response.data.error;
+    //   for (let err in errors) {
+    //     const errorMessage = errors[err][0];
+    //     message.error({ content: errorMessage, key: "updateFarmStatus" });
+    //   }
+    // }
+  };
 
   const handleFormSubmit = async (values) => {
     const allowed_product = values.products?.map(
@@ -106,9 +137,18 @@ export default function EditFarm() {
   };
 
   const getFarmDetails = async () => {
+    message.loading({
+      content: "Fetching Farm Details!",
+      key: "farmFetch",
+    });
     const [farmResponse, farmError] = await tryCatch(getFarm(farmid));
 
     if (!farmError) {
+      message.success({
+        content: "Fetched Successfully!",
+        duration: "0.3",
+        key: "farmFetch",
+      });
       const {
         primary_address,
         city,
@@ -149,6 +189,11 @@ export default function EditFarm() {
       setFarmDetails(farmResponse.data);
       setSelectedProduct(products);
     } else {
+      const errors = farmResponse.response.data.error;
+      for (let err in errors) {
+        const errorMessage = errors[err][0];
+        message.error({ content: errorMessage, key: "getUser" });
+      }
       console.log(farmError.response);
     }
   };
@@ -163,7 +208,16 @@ export default function EditFarm() {
       <BreadCrumb />
       <div className="page_title_create_farm"></div>
       <div className="create_farm_form_area">
-        <div className="form_section_heading">Basic Info</div>
+        <div className="form_section_heading">
+          <div className="form_section_heading_title">Basic Info</div>
+          <Switch
+            checked={isActive}
+            checkedChildren="Active"
+            unCheckedChildren="InActive"
+            className="edit_user_toggle_button"
+            onChange={handleToggleChange}
+          />
+        </div>
         <Form
           form={form}
           style={{ width: "100%" }}

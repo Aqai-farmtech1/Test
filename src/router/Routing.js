@@ -18,22 +18,6 @@ import DeviceList from "../pages/device/DeviceList";
 import EditFarm from "../pages/edit farm/EditFarm";
 import PageNotFound from "../pages/error 404/PageNotFound";
 
-const loginRoutes = [
-  {
-    element: <Login />,
-    index: true,
-    path: "",
-  },
-  {
-    element: <ForgetPassword />,
-    path: "forgetpassword",
-  },
-  {
-    element: <CheckYourMail />,
-    path: "checkmail",
-  },
-];
-
 const AuthenticatedRoutes = [
   {
     element: <FarmList />,
@@ -82,17 +66,12 @@ const AuthenticatedRoutes = [
 export default function Routing() {
   return (
     <Routes>
-      <Route element={<LoginRoute />}>
-        <Route path="/login" element={<LoginLayout />}>
-          {loginRoutes.map((route, i) => (
-            <Route
-              key={i}
-              index={route.index}
-              path={route.path}
-              element={route.element}
-            />
-          ))}
+      <Route path="/login" element={<LoginLayout />}>
+        <Route element={<LoginRoute />}>
+          <Route index element={<Login />} />
         </Route>
+        <Route path="forgetpassword" element={<ForgetPassword />} />
+        <Route path="checkmail" element={<CheckYourMail />} />
       </Route>
 
       <Route element={<AuthenticatedRoute />}>

@@ -1,22 +1,52 @@
 import React, { useState } from "react";
-import { Form, Alert, Button, Input } from "antd";
+import { Form, Alert, Button, Input, message } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+import { mailResetPassword } from "../../api/reset.api";
 import "./forgetpassword.css";
+import { useNavigate } from "react-router-dom";
+import tryCatch from "../../helper/tryCatch.helper";
 
 export default function ForgetPassword() {
   const [errorMessage, setErrorMessage] = useState("");
+  const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const finishHandler = () => {};
+  const handleFormSubmit = async () => {
+    const email = form.getFieldValue("email");
+    message.loading({
+      content: "Processing...",
+      key: "forgetPassword",
+    });
+    const [mailResponse, mailError] = await tryCatch(
+      mailResetPassword({ email })
+    );
+
+    if (!mailError) {
+      message.success({
+        content: "please Check your Mail...",
+        key: "forgetPassword",
+      });
+      console.log(mailResponse.data);
+      navigate("/login/checkmail");
+    } else {
+      message.error({
+        content: "Something Went Wrong!",
+        key: "forgetPassword",
+      });
+      console.log(mailError.response);
+    }
+  };
 
   return (
     <div className="forget_password_container">
       <div className="forget_password_title">Forgot Password</div>
       <Form
+        form={form}
         name="forgot_password_farm_area"
         className="login-form"
         initialValues={{ remember: true }}
-        onFinish={finishHandler}
+        onFinish={handleFormSubmit}
       >
         <Form.Item
           className="username_input_form"

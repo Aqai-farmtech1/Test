@@ -1,5 +1,6 @@
 import { Button } from "antd";
 import React from "react";
+import { NavLink } from "react-router-dom";
 import { checkMail } from "../../utils/constants";
 
 export default function CheckYourMail() {
@@ -10,7 +11,9 @@ export default function CheckYourMail() {
       <div className="check_mail_description">
         We sent a password link to sample@gmail.com
       </div>
-      <Button type="secondary">Back To Login</Button>
+      <NavLink to={"/login"}>
+        <Button type="secondary">Back To Login</Button>
+      </NavLink>
     </div>
   );
 }
