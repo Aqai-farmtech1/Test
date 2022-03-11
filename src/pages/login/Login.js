@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, Input, Checkbox, Button, message } from "antd";
+import { Form, Input, Checkbox, Button, message, Alert } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "./login.css";
 import tryCatch from "../../helper/tryCatch.helper";
@@ -7,7 +7,7 @@ import tryCatch from "../../helper/tryCatch.helper";
 import { login } from "../../api/login.api";
 import useMasters from "../../hooks/useMasters";
 import { getStateList } from "../../api/master.api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState([]);
@@ -90,9 +90,9 @@ export default function Login() {
                 <Checkbox>Remember me</Checkbox>
               </Form.Item>
 
-              <a className="login-form-forgot" href="">
-                Forgot password?
-              </a>
+              <NavLink to="/login/forgetpassword">
+                <div className="login-form-forgot"> Forgot password? </div>
+              </NavLink>
             </Form.Item>
 
             <Form.Item>
@@ -106,10 +106,9 @@ export default function Login() {
                 {!isLoading ? "Log in" : ""}
               </Button>
             </Form.Item>
-            {/* {errorMessage?.length > 0 &&
-              errorMessage.map((el, index) => (
-                <Alert key={index} message={el} type="error" showIcon />
-              ))} */}
+            {errorMessage && (
+              <Alert message={errorMessage} type="error" showIcon />
+            )}
           </Form>
         </div>
       </div>

@@ -32,7 +32,7 @@ export const getGoatFarms = (page, state, status) => {
 export const getAllFarmList = () =>
   axios({
     method: "GET",
-    url: "v1/farm/farm-list",
+    url: "v1/farm/farm-list/",
   });
 
 export const updateFarm = (farmid, data) =>
