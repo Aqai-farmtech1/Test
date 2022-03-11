@@ -106,9 +106,6 @@ export default function Login() {
                 {!isLoading ? "Log in" : ""}
               </Button>
             </Form.Item>
-            {errorMessage && (
-              <Alert message={errorMessage} type="error" showIcon />
-            )}
           </Form>
         </div>
       </div>

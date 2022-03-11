@@ -18,7 +18,7 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import tryCatch from "../../helper/tryCatch.helper";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { getFarm, updateFarm } from "../../api/farm.api";
+import { getFarm, updateFarmStatus, updateFarm } from "../../api/farm.api";
 
 const { Option } = Select;
 
@@ -34,32 +34,29 @@ export default function EditFarm() {
   const { farmid } = useParams();
 
   const handleToggleChange = async (value) => {
-    const farmStatusData = {
-      status: value,
-    };
-    // message.loading({
-    //   content: "Updating Farm Status...",
-    //   key: "updateFarmStatus",
-    // });
-    // const [farmUpdateResponse, farmUpdateError] = await tryCatch(
-    //   updateFarm(farmid, farmStatusData)
-    // );
+    message.loading({
+      content: "Updating Farm Status...",
+      key: "updateFarmStatus",
+    });
+    const [farmUpdateResponse, farmUpdateError] = await tryCatch(
+      updateFarmStatus(farmid)
+    );
 
-    // if (!farmUpdateError) {
-    //   message.success({
-    //     content: "Updated Successfully!",
-    //     duration: "0.3",
-    //     key: "updateFarmStatus",
-    //   });
-    //   setIsActive(value);
-    // } else {
-    //   // console.log(farmUpdateResponse)
-    //   const errors = farmUpdateError.response.data.error;
-    //   for (let err in errors) {
-    //     const errorMessage = errors[err][0];
-    //     message.error({ content: errorMessage, key: "updateFarmStatus" });
-    //   }
-    // }
+    if (!farmUpdateError) {
+      message.success({
+        content: "Updated Successfully!",
+        duration: "0.3",
+        key: "updateFarmStatus",
+      });
+      setIsActive(value);
+    } else {
+      // console.log(farmUpdateResponse)
+      const errors = farmUpdateError.response.data.error;
+      for (let err in errors) {
+        const errorMessage = errors[err][0];
+        message.error({ content: errorMessage, key: "updateFarmStatus" });
+      }
+    }
   };
 
   const handleFormSubmit = async (values) => {
@@ -518,11 +515,10 @@ export default function EditFarm() {
                 className="create_farm_form_item"
                 name="country"
                 label="Country"
-                initialValue={"101"}
                 rules={[{ required: true, message: "Please select State!" }]}
               >
                 <Select disabled size="large" placeholder="Select State">
-                  <Option value="101">India</Option>
+                  <Option value={101}>India</Option>
                 </Select>
               </Form.Item>
             </Col>

@@ -25,14 +25,14 @@ export const getGoatFarms = (page, state, status) => {
   const stateQuery = Number(state) ? `&state=${state}` : "";
   return axios({
     method: "GET",
-    url: `v1/farm/farm-goat/?page=${page}${stateQuery}&status=${status}`,
+    url: `v1/farm/farm-goat-list/?page=${page}${stateQuery}&status=${status}`,
   });
 };
 
 export const getAllFarmList = () =>
   axios({
     method: "GET",
-    url: "v1/farm/farm-list/",
+    url: "v1/farm/filter-farm-list/",
   });
 
 export const updateFarm = (farmid, data) =>
@@ -40,4 +40,10 @@ export const updateFarm = (farmid, data) =>
     method: "PUT",
     url: `v1/farm/farm-update/${farmid}/`,
     data,
+  });
+
+export const updateFarmStatus = (farmid) =>
+  axios({
+    method: "PATCH",
+    url: `v1/farm/farm/${farmid}/`,
   });
