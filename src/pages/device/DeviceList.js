@@ -14,7 +14,7 @@ const { Search } = Input;
 
 export default function DeviceList() {
   const { setPageTitle } = usePageInfo();
-  const { farmMaster, deviceTypeMaster } = useMasters();
+  const { farmMaster, deviceTypeMaster, fetchFarm } = useMasters();
   const [isLoading, setIsLoading] = useState(false);
   const [selectedFarm, setSelectedFarm] = useState(0);
   const [selectedDeviceType, setSelectedDeviceType] = useState(0);
@@ -144,6 +144,7 @@ export default function DeviceList() {
 
   useEffect(() => {
     setPageTitle("Device List");
+    fetchFarm();
     getDeviceList();
   }, []);
 

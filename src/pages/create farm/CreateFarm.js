@@ -29,11 +29,6 @@ export default function CreateFarm() {
   const [selectedProduct, setSelectedProduct] = useState([]);
   const navigate = useNavigate();
 
-  // const handleFormChange = (value) => {
-  //   const selectedProducts = value.products;
-  //   console.log(selectedProducts);
-  // };
-
   const handleFormSubmit = async (values) => {
     const {
       address1,

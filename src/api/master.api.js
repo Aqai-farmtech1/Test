@@ -2,38 +2,26 @@ import axios from "axios";
 
 const USER_DEV_URL = process.env.REACT_APP_USER_DEV_URL;
 
-export const getStateList = (token) =>
+export const getStateList = () =>
   axios({
     method: "GET",
     url: `${USER_DEV_URL}v1/state/101/`,
-    headers: {
-      Authorization: `Token ${token}`,
-    },
   });
 
-export const getDesignationList = (token) =>
+export const getDesignationList = () =>
   axios({
     method: "GET",
     url: `${USER_DEV_URL}v1/designation/`,
-    headers: {
-      Authorization: `Token ${token}`,
-    },
   });
 
-export const getProductList = (token) =>
+export const getProductList = () =>
   axios({
     method: "GET",
     url: "v1/core/product/",
-    headers: {
-      Authorization: `Token ${token}`,
-    },
   });
 
-export const getDeviceTypeList = (token) =>
+export const getDeviceTypeList = () =>
   axios({
     method: "GET",
     url: "v1/core/device-type/",
-    headers: {
-      Authorization: `Token ${token}`,
-    },
   });
