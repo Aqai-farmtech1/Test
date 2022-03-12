@@ -17,6 +17,7 @@ export default function ForgetPassword() {
     message.loading({
       content: "Processing...",
       key: "forgetPassword",
+      duration: 0,
     });
     const [mailResponse, mailError] = await tryCatch(
       mailResetPassword({ email })

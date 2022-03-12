@@ -76,6 +76,7 @@ export default function CreateFarm() {
     message.loading({
       content: "Creating Farm...",
       key: "createfarm",
+      duration: 0,
     });
     const [farmResponse, farmError] = await tryCatch(createFarm(postData));
 
