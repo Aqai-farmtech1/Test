@@ -8,6 +8,7 @@ import Routing from "./router/Routing";
 import tryCatch from "./helper/tryCatch.helper";
 import { checkToken } from "./api/checktoken.api";
 import { useLocation, useNavigate } from "react-router-dom";
+import { setupAxiosInterceptor } from "./helper/axios.helper";
 
 function App() {
   const { fetchMasters } = useMaster();
@@ -19,7 +20,7 @@ function App() {
 
     if (token) {
       const [tokenResponse, tokenError] = await tryCatch(checkToken(token));
-
+      console.log(tokenResponse.data);
       if (!tokenError) {
         fetchMasters(token);
         navigate(pathname);
@@ -31,6 +32,7 @@ function App() {
   };
 
   useEffect(() => {
+    setupAxiosInterceptor(navigate);
     checkTokenValidity();
   }, []);
 

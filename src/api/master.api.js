@@ -32,7 +32,7 @@ export const getProductList = (token) =>
 export const getDeviceTypeList = (token) =>
   axios({
     method: "GET",
-    url: "v1/core/device-type",
+    url: "v1/core/device-type/",
     headers: {
       Authorization: `Token ${token}`,
     },
