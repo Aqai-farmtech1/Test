@@ -1,15 +1,15 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import LoginRoute from "../components/wrapper/LoginRoute";
+import LoginRoute from "./LoginRoute";
 import CheckYourMail from "../pages/forgetpassword/CheckYourMail";
 import ForgetPassword from "../pages/forgetpassword/ForgetPassword";
 import Login from "../pages/login/Login";
 import LoginLayout from "../components/layout/login layout/LoginLayout";
 import FarmList from "../pages/farm list/FarmList";
 import CreateFarm from "../pages/create farm/CreateFarm";
-import AuthenticatedRoute from "../components/wrapper/AuthenticatedRoute";
-import MainLayout from "../components/layout/MainLayout";
+import AuthenticatedRoute from "./AuthenticatedRoute";
+import MainLayout from "../components/layout/mainlayout/MainLayout";
 import FarmInfo from "../pages/farm info/FarmInfo";
 import GoatList from "../pages/goatlist/GoatList";
 import GoatInfo from "../pages/goat info/GoatInfo";

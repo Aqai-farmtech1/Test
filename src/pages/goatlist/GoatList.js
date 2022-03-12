@@ -8,6 +8,7 @@ import { viewIcon } from "../../utils/constants";
 import "./goatlist.css";
 import tryCatch from "../../helper/tryCatch.helper";
 import { getFarmGoat } from "../../api/goat.api";
+import useMasters from "../../hooks/useMasters";
 
 const { Search } = Input;
 
@@ -16,6 +17,7 @@ export default function GoatList() {
   const [goatList, setGoatList] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const { setPageTitle } = usePageInfo();
+  const { farmMaster } = useMasters();
   const { farmid } = useParams();
 
   const handleMenuClick = () => {};
@@ -111,7 +113,10 @@ export default function GoatList() {
 
   useEffect(() => {
     getGoatList();
-    setPageTitle("Goats");
+    const farmName = farmMaster?.find(
+      (el) => Number(el.id) === Number(farmid)
+    ).farm_name;
+    setPageTitle(farmName);
   }, []);
   return (
     <div className="goat_list_main">
