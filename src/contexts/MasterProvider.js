@@ -76,12 +76,12 @@ export default function MasterProvider(props) {
     }
   };
 
-  const fetchMasters = async (token) => {
-    fetchState(token);
-    fetchProduct(token);
-    fetchDesignation(token);
-    fetchDeviceType(token);
-    fetchFarm(token);
+  const fetchMasters = async () => {
+    fetchState();
+    fetchProduct();
+    fetchDesignation();
+    fetchDeviceType();
+    fetchFarm();
   };
 
   return (
@@ -92,6 +92,11 @@ export default function MasterProvider(props) {
         productMaster,
         deviceTypeMaster,
         farmMaster,
+        fetchFarm,
+        fetchDesignation,
+        fetchDeviceType,
+        fetchProduct,
+        fetchState,
         fetchMasters,
       }}
     >

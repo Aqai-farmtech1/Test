@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Select, Input, Button, Switch, message } from "antd";
 import "./adddevice.css";
 import useMasters from "../../hooks/useMasters";
@@ -16,7 +16,7 @@ export default function AddDevice({
   const [isLoading, setIsLoading] = useState(false);
   const [isCreatingDevice, setIsCreatingDevice] = useState(false);
   const [isActive, setIsActive] = useState(true);
-  const { deviceTypeMaster, farmMaster } = useMasters();
+  const { deviceTypeMaster, farmMaster, fetchFarm } = useMasters();
 
   const handleFormSubmit = async (value) => {
     message.loading({
@@ -46,6 +46,10 @@ export default function AddDevice({
       }
     }
   };
+
+  useEffect(() => {
+    fetchFarm();
+  }, []);
 
   return (
     <div className="add_device_main">

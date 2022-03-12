@@ -7,14 +7,13 @@ import {
   profileImage,
   notificationIcon,
   layoutSiderLogo,
-} from "../../utils/constants";
-import { getPathArray } from "../../utils/urlPathConversion";
-import PageTitle from "../pagetitle/PageTitle";
-import usePageInfo from "../../hooks/usePageInfo";
+} from "../../../utils/constants";
+import { getPathArray } from "../../../utils/urlPathConversion";
+import PageTitle from "../../pagetitle/PageTitle";
+import usePageInfo from "../../../hooks/usePageInfo";
 import { useNavigate } from "react-router-dom";
-import tryCatch from "../../helper/tryCatch.helper";
-import { logout } from "../../api/logout.api";
-// import useAuth from "../../hooks/useAuth";
+import tryCatch from "../../../helper/tryCatch.helper";
+import { logout } from "../../../api/logout.api";
 
 const { Header, Sider, Content } = Layout;
 
