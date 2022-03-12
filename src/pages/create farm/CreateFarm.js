@@ -51,7 +51,10 @@ export default function CreateFarm() {
       products,
     } = values;
 
-    const allowed_product = products.map((el) => el.product);
+    const allowed_product = productMaster
+      .filter((el) => products.some((s) => s.product === el.code))
+      .map((ell) => ell.id);
+
     const product_capacity = products.map((el) => ({
       product: el["product"],
       capacity: el["capacity"],
