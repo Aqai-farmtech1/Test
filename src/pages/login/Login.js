@@ -49,6 +49,7 @@ export default function Login() {
   return (
     <>
       <div className="login_farm">
+        <h1 className="login_farm_title">Farm Management</h1>
         <div className="login_title">Login</div>
         <div className="login_input_area">
           <Form

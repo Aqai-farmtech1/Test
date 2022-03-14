@@ -31,14 +31,21 @@ export const getAllDeviceWithQuery = (farmid, deviceType, status, page) => {
   });
 };
 
-export const updateDevice = (deviceId) =>
+export const updateDevice = (deviceId, data) =>
   axios({
     method: "PUT",
-    url: `v1/farm/device/${deviceId}/`,
+    url: `v1/farm/farm-device-update/${deviceId}/`,
+    data,
   });
 
 export const getDevice = (deviceId) =>
   axios({
     method: "GET",
+    url: `v1/farm/device/${deviceId}/`,
+  });
+
+export const updateDeviceStatus = (deviceId) =>
+  axios({
+    method: "PATCH",
     url: `v1/farm/device/${deviceId}/`,
   });

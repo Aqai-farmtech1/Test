@@ -72,26 +72,27 @@ export default function DeviceList() {
 
   const columns = [
     {
+      title: "Machine Type",
+      dataIndex: "device_type_name",
+    },
+    {
       title: "Machine Name",
       dataIndex: "device_name",
     },
+    // {
+    //   title: "Machine Id",
+    //   dataIndex: "device_id",
+    // },
     {
-      title: "Machine Id",
-      dataIndex: "device_id",
-    },
-    {
-      title: "Machine Type",
-      dataIndex: "device_type_name",
+      title: "Farm Name",
+      dataIndex: "farm_name",
     },
     {
       title: "Firmware Versions",
       dataIndex: "firmware_version",
       render: (value) => value || "-",
     },
-    {
-      title: "Farm Name",
-      dataIndex: "farm_name",
-    },
+
     {
       title: "Action",
       dataIndex: "action",
@@ -247,6 +248,7 @@ export default function DeviceList() {
         />
       </Modal>
       <Modal
+        destroyOnClose={true}
         width={478}
         title={["Edit Device"]}
         visible={isEditModalVisible}
@@ -254,6 +256,7 @@ export default function DeviceList() {
         footer={null}
       >
         <EditDevice
+          setIsEditModalVisible={setIsEditModalVisible}
           deviceData={editDeviceDetails}
           getDeviceList={getDeviceList}
           activeToggle={true}
