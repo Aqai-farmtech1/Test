@@ -48,7 +48,7 @@ export default function GoatBasicInfo({ goatData, isLoading }) {
               </div>
               <GoatWeightDiffCard
                 weightDifference={goatData.weight_difference}
-                shrinkage={false}
+                shrinkage={goatData.is_shrinkage}
               />
             </div>
           </>
