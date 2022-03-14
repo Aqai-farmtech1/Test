@@ -3,6 +3,12 @@
   height: 100vh;
 }
 
+.login_farm_title {
+  display: flex;
+  margin-bottom: 40px;
+  font-size: 48px;
+}
+
 .image_area {
   display: flex !important;
   height: 100vh;
