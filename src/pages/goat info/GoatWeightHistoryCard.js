@@ -30,7 +30,7 @@ export default function GoatWeightHistoryCard({ weightData }) {
           Farm : {weightData.farm_name}
         </div>
         <div className="goat_weight_history_card_content_rfid">
-          Device : {weightData.device_id}
+          Device : {weightData.device_name}
         </div>
       </div>
     </div>
