@@ -58,7 +58,7 @@ export default function CreateFarm() {
     const postData = {
       farm_type,
       name,
-      code,
+      code: code.toUpperCase(),
       latitude,
       longitude,
       allowed_product,
