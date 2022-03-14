@@ -132,7 +132,7 @@ export default function AddDevice({
           <Select size="large" placeholder="Select Farm">
             {farmMaster.map((el) => (
               <Option key={el.id} value={el.id}>
-                {el.farm_name}
+                {el.farm_name}- {el.code}
               </Option>
             ))}
           </Select>

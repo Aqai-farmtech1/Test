@@ -36,3 +36,9 @@ export const updateDevice = (deviceId) =>
     method: "PUT",
     url: `v1/farm/device/${deviceId}/`,
   });
+
+export const getDevice = (deviceId) =>
+  axios({
+    method: "GET",
+    url: `v1/farm/device/${deviceId}/`,
+  });

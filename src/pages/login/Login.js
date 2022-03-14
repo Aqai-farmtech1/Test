@@ -23,12 +23,21 @@ export default function Login() {
     );
 
     if (!loginError) {
-      const { token, fullname } = loginResponse.data;
-      localStorage.setItem("token", token);
-      setIsLoading(false);
-      message.success({ content: `Welcome ${fullname}!` });
-      fetchMasters(token);
-      navigate("/farm");
+      const { token, fullname, designation } = loginResponse.data;
+      if (designation === 3) {
+        message.error({
+          content: "You are not Authorized!",
+          duration: 1,
+        });
+        setIsLoading(false);
+        setErrorMessage("");
+      } else {
+        localStorage.setItem("token", token);
+        setIsLoading(false);
+        message.success({ content: `Welcome ${fullname}!` });
+        fetchMasters(token);
+        navigate("/farm");
+      }
     } else {
       const errorMessages = loginError.response.data;
       setErrorMessage(errorMessages);

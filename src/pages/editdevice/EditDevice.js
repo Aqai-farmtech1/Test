@@ -21,38 +21,9 @@ export default function EditDevice({
   // const [deviceDetails , setDeviceDetails] =useState(deviceData);
   const { deviceTypeMaster, farmMaster } = useMasters();
 
-  const handleFormSubmit = async (value) => {
-    // message.loading({
-    //   content: "Creating Device...",
-    //   key: "create_device",
-    // duration : 0
-    // });
-    // setIsCreatingDevice(true);
-    // const [deviceResponse, deviceError] = await tryCatch(createDevice(value));
-    // if (!deviceError) {
-    //   message.success({
-    //     content: "Device created successfully!",
-    //     key: "create_device",
-    //   });
-    //   form.resetFields();
-    //   setIsModalVisible(false);
-    //   setIsCreatingDevice(false);
-    //   getDeviceList();
-    // } else {
-    //   setIsCreatingDevice(false);
-    //   const obj = deviceError.response.data.error;
-    //   for (const key in obj) {
-    //     message.error({
-    //       content: `${obj[key]}`,
-    //       key: "create_device",
-    //     });
-    //   }
-    // }
-  };
+  const handleFormSubmit = async () => {};
 
-  // useEffect(() => {
-  //   form.setFieldsValue(deviceData);
-  // }, [deviceData]);
+  useEffect(() => {}, []);
 
   return (
     <div className="add_device_main">
@@ -73,7 +44,7 @@ export default function EditDevice({
         )}
         <Form.Item
           className="create_farm_form_item"
-          name="name"
+          name="device_name"
           label="Machine Name"
           rules={[
             { required: true, message: "Please enter Device Name!" },
@@ -91,43 +62,7 @@ export default function EditDevice({
         </Form.Item>
         <Form.Item
           className="create_farm_form_item"
-          name="device_type"
-          label="Machine Type"
-          rules={[{ required: true, message: "Please select Device Type!" }]}
-        >
-          <Select size="large" placeholder="Select Device Type">
-            {deviceTypeMaster.map((el) => (
-              <Option key={el.id} value={el.id}>
-                {el.name}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
-        <Form.Item
-          className="create_farm_form_item"
-          name="device_id"
-          label="Machine Id"
-          rules={[
-            { required: true, message: "Please enter Device Id" },
-            {
-              min: 3,
-              message: "Device Id is too short!",
-            },
-            {
-              max: 50,
-              message: "Device Id is too long!",
-            },
-          ]}
-        >
-          <Input
-            style={{ textTransform: "capitalize" }}
-            size="large"
-            placeholder="Enter Device Id"
-          />
-        </Form.Item>
-        <Form.Item
-          className="create_farm_form_item"
-          name="farm"
+          name="farm_name"
           label="Farm"
           rules={[{ required: true, message: "Please select Farm!" }]}
         >
@@ -138,23 +73,6 @@ export default function EditDevice({
               </Option>
             ))}
           </Select>
-        </Form.Item>
-        <Form.Item
-          className="create_farm_form_item"
-          name="frimware_version"
-          label="Frimware Version"
-          rules={[
-            {
-              min: 3,
-              message: "Frimware Version is too short!",
-            },
-            {
-              max: 50,
-              message: "Frimware Version is too long!",
-            },
-          ]}
-        >
-          <Input size="large" placeholder="Enter Device Frimware" />
         </Form.Item>
         <Form.Item
           className="create_farm_form_item"
