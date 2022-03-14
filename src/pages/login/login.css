@@ -139,3 +139,19 @@
 .ant-input-affix-wrapper-lg {
   border-radius: 6px;
 }
+
+.copyrights_text {
+  display: flex;
+  position: absolute;
+  width: max-content;
+  bottom: 20px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.45);
+}
