@@ -119,6 +119,7 @@ export default function Login() {
           </Form>
         </div>
       </div>
+      <div className="copyrights_text">Copyright ©2022 Aqgromalin.</div>
     </>
   );
 }
