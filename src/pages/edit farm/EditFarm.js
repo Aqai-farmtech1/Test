@@ -37,6 +37,7 @@ export default function EditFarm() {
     message.loading({
       content: "Updating Farm Status...",
       key: "updateFarmStatus",
+      duration: 0,
     });
     const [farmUpdateResponse, farmUpdateError] = await tryCatch(
       updateFarmStatus(farmid)
@@ -111,6 +112,7 @@ export default function EditFarm() {
     message.loading({
       content: "Updating Farm Details...",
       key: "editfarm",
+      duration: 0,
     });
     const [farmResponse, farmError] = await tryCatch(
       updateFarm(farmid, postData)
@@ -137,6 +139,7 @@ export default function EditFarm() {
     message.loading({
       content: "Fetching Farm Details!",
       key: "farmFetch",
+      duration: 0,
     });
     const [farmResponse, farmError] = await tryCatch(getFarm(farmid));
 

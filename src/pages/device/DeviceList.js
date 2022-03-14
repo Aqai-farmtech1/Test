@@ -84,7 +84,7 @@ export default function DeviceList() {
       dataIndex: "device_type_name",
     },
     {
-      title: "Frim Ware Versions",
+      title: "Firmware Versions",
       dataIndex: "firmware_version",
       render: (value) => value || "-",
     },
@@ -120,7 +120,7 @@ export default function DeviceList() {
   const statusMenu = (
     <Menu onClick={handleStatusMenuClick}>
       <Menu.Item key={1}>Active</Menu.Item>
-      <Menu.Item key={0}>In Acitve</Menu.Item>
+      <Menu.Item key={0}>In Active</Menu.Item>
     </Menu>
   );
 

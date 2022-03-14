@@ -25,6 +25,7 @@ export default function EditDevice({
     // message.loading({
     //   content: "Creating Device...",
     //   key: "create_device",
+    // duration : 0
     // });
     // setIsCreatingDevice(true);
     // const [deviceResponse, deviceError] = await tryCatch(createDevice(value));
