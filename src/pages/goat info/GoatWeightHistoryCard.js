@@ -23,7 +23,7 @@ export default function GoatWeightHistoryCard({ weightData }) {
           </div>
           <GoatWeightDiffCard
             weightDifference={weightData.weight_difference}
-            shrinkage={false}
+            shrinkage={weightData.is_shrinkage}
           />
         </div>
         <div className="goat_weight_history_card_content_farm">
