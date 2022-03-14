@@ -58,7 +58,7 @@ export default function CreateFarm() {
     const postData = {
       farm_type,
       name,
-      code,
+      code: code.toUpperCase(),
       latitude,
       longitude,
       allowed_product,
@@ -76,6 +76,7 @@ export default function CreateFarm() {
     message.loading({
       content: "Creating Farm...",
       key: "createfarm",
+      duration: 0,
     });
     const [farmResponse, farmError] = await tryCatch(createFarm(postData));
 

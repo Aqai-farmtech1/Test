@@ -3,14 +3,19 @@ import { Form, Select, Input, Button, Switch, message } from "antd";
 import "./editdevice.css";
 import useMasters from "../../hooks/useMasters";
 import tryCatch from "../../helper/tryCatch.helper";
-import { createDevice } from "../../api/device.api";
+import {
+  createDevice,
+  updateDevice,
+  updateDeviceStatus,
+} from "../../api/device.api";
 import { useNavigate } from "react-router-dom";
+import usePageInfo from "../../hooks/usePageInfo";
 
 const { Option } = Select;
 
 export default function EditDevice({
   activeToggle,
-  setIsModalVisible,
+  setIsEditModalVisible,
   getDeviceList,
   deviceData,
 }) {
@@ -18,40 +23,66 @@ export default function EditDevice({
   const [isLoading, setIsLoading] = useState(false);
   const [isCreatingDevice, setIsCreatingDevice] = useState(false);
   const [isActive, setIsActive] = useState(deviceData.status);
-  // const [deviceDetails , setDeviceDetails] =useState(deviceData);
-  const { deviceTypeMaster, farmMaster } = useMasters();
+  const [deviceDetails, setDeviceDetails] = useState(deviceData);
+  const [isFormDataTouched, setIsFormDataTouched] = useState(false);
+  const { farmMaster } = useMasters();
 
   const handleFormSubmit = async (value) => {
-    // message.loading({
-    //   content: "Creating Device...",
-    //   key: "create_device",
-    // });
-    // setIsCreatingDevice(true);
-    // const [deviceResponse, deviceError] = await tryCatch(createDevice(value));
-    // if (!deviceError) {
-    //   message.success({
-    //     content: "Device created successfully!",
-    //     key: "create_device",
-    //   });
-    //   form.resetFields();
-    //   setIsModalVisible(false);
-    //   setIsCreatingDevice(false);
-    //   getDeviceList();
-    // } else {
-    //   setIsCreatingDevice(false);
-    //   const obj = deviceError.response.data.error;
-    //   for (const key in obj) {
-    //     message.error({
-    //       content: `${obj[key]}`,
-    //       key: "create_device",
-    //     });
-    //   }
-    // }
+    setIsCreatingDevice(true);
+    message.loading({
+      content: "Updating Farm Details...",
+      key: "editdevice",
+      duration: 0,
+    });
+    const [deviceResponse, deviceError] = await tryCatch(
+      updateDevice(deviceData.id, {
+        farm: value.farm,
+        name: value.device_name,
+      })
+    );
+    if (!deviceError) {
+      message.success({
+        content: "Updating Device Details...",
+        key: "editdevice",
+      });
+      form.resetFields();
+      setIsEditModalVisible(false);
+      setIsCreatingDevice(false);
+      getDeviceList();
+    } else {
+      setIsCreatingDevice(false);
+      const errors = deviceError.response.data.error;
+      for (let err in errors) {
+        const errorMessage = errors[err][0];
+        message.error({ content: errorMessage, key: "editdevice" });
+      }
+    }
   };
 
-  // useEffect(() => {
-  //   form.setFieldsValue(deviceData);
-  // }, [deviceData]);
+  const handleToggleChange = async (value) => {
+    const [deviceStatusResponse, deviceStatusError] = await tryCatch(
+      updateDeviceStatus(deviceDetails.id)
+    );
+    if (!deviceStatusError) {
+      message.success({
+        content: "Updated Successfully!",
+        duration: "0.3",
+        key: "updateDeviceStatus",
+      });
+      getDeviceList();
+      setIsActive(value);
+    } else {
+      const errors = deviceStatusError.response.data.error;
+      for (let err in errors) {
+        const errorMessage = errors[err][0];
+        message.error({ content: errorMessage, key: "updateDeviceStatus" });
+      }
+    }
+  };
+
+  useEffect(() => {
+    form.setFieldsValue(deviceDetails);
+  }, [deviceData]);
 
   return (
     <div className="add_device_main">
@@ -60,6 +91,7 @@ export default function EditDevice({
         style={{ width: "100%" }}
         layout="vertical"
         onFinish={handleFormSubmit}
+        onChange={() => setIsFormDataTouched(true)}
       >
         {activeToggle && (
           <Switch
@@ -67,12 +99,12 @@ export default function EditDevice({
             checked={isActive}
             checkedChildren="Active"
             unCheckedChildren="In Active"
-            onChange={() => setIsActive(!isActive)}
+            onChange={handleToggleChange}
           />
         )}
         <Form.Item
           className="create_farm_form_item"
-          name="name"
+          name="device_name"
           label="Machine Name"
           rules={[
             { required: true, message: "Please enter Device Name!" },
@@ -90,96 +122,30 @@ export default function EditDevice({
         </Form.Item>
         <Form.Item
           className="create_farm_form_item"
-          name="device_type"
-          label="Machine Type"
-          rules={[{ required: true, message: "Please select Device Type!" }]}
-        >
-          <Select size="large" placeholder="Select Device Type">
-            {deviceTypeMaster.map((el) => (
-              <Option key={el.id} value={el.id}>
-                {el.name}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
-        <Form.Item
-          className="create_farm_form_item"
-          name="device_id"
-          label="Machine Id"
-          rules={[
-            { required: true, message: "Please enter Device Id" },
-            {
-              min: 3,
-              message: "Device Id is too short!",
-            },
-            {
-              max: 50,
-              message: "Device Id is too long!",
-            },
-          ]}
-        >
-          <Input
-            style={{ textTransform: "capitalize" }}
-            size="large"
-            placeholder="Enter Device Id"
-          />
-        </Form.Item>
-        <Form.Item
-          className="create_farm_form_item"
           name="farm"
           label="Farm"
           rules={[{ required: true, message: "Please select Farm!" }]}
         >
-          <Select size="large" placeholder="Select Farm">
+          <Select
+            onChange={() => setIsFormDataTouched(true)}
+            size="large"
+            placeholder="Select Farm"
+          >
             {farmMaster.map((el) => (
               <Option key={el.id} value={el.id}>
-                {el.farm_name}
+                {el.farm_name} - {el.code}
               </Option>
             ))}
           </Select>
-        </Form.Item>
-        <Form.Item
-          className="create_farm_form_item"
-          name="frimware_version"
-          label="Frimware Version"
-          rules={[
-            {
-              min: 3,
-              message: "Frimware Version is too short!",
-            },
-            {
-              max: 50,
-              message: "Frimware Version is too long!",
-            },
-          ]}
-        >
-          <Input size="large" placeholder="Enter Device Frimware" />
-        </Form.Item>
-        <Form.Item
-          className="create_farm_form_item"
-          name="password"
-          label="Password"
-          rules={[
-            { required: true, message: "Please enter Password!" },
-            {
-              min: 3,
-              message: "Password is too short!",
-            },
-            {
-              max: 50,
-              message: "Password is too long!",
-            },
-          ]}
-        >
-          <Input size="large" placeholder="Enter Device Password" />
         </Form.Item>
         <Button
           loading={isCreatingDevice}
           className="create_farm_form_item_buttons"
           type="primary"
           htmlType="submit"
+          disabled={!isFormDataTouched}
         >
-          Add Machine
+          Update
         </Button>
       </Form>
     </div>

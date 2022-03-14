@@ -72,26 +72,27 @@ export default function DeviceList() {
 
   const columns = [
     {
-      title: "Machine Name",
-      dataIndex: "device_name",
-    },
-    {
-      title: "Machine Id",
-      dataIndex: "device_id",
-    },
-    {
       title: "Machine Type",
       dataIndex: "device_type_name",
     },
     {
-      title: "Frim Ware Versions",
-      dataIndex: "firmware_version",
-      render: (value) => value || "-",
+      title: "Machine Name",
+      dataIndex: "device_name",
     },
+    // {
+    //   title: "Machine Id",
+    //   dataIndex: "device_id",
+    // },
     {
       title: "Farm Name",
       dataIndex: "farm_name",
     },
+    {
+      title: "Firmware Versions",
+      dataIndex: "firmware_version",
+      render: (value) => value || "-",
+    },
+
     {
       title: "Action",
       dataIndex: "action",
@@ -120,7 +121,7 @@ export default function DeviceList() {
   const statusMenu = (
     <Menu onClick={handleStatusMenuClick}>
       <Menu.Item key={1}>Active</Menu.Item>
-      <Menu.Item key={0}>In Acitve</Menu.Item>
+      <Menu.Item key={0}>In Active</Menu.Item>
     </Menu>
   );
 
@@ -247,6 +248,7 @@ export default function DeviceList() {
         />
       </Modal>
       <Modal
+        destroyOnClose={true}
         width={478}
         title={["Edit Device"]}
         visible={isEditModalVisible}
@@ -254,6 +256,7 @@ export default function DeviceList() {
         footer={null}
       >
         <EditDevice
+          setIsEditModalVisible={setIsEditModalVisible}
           deviceData={editDeviceDetails}
           getDeviceList={getDeviceList}
           activeToggle={true}

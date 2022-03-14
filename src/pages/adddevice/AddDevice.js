@@ -22,6 +22,7 @@ export default function AddDevice({
     message.loading({
       content: "Creating Device...",
       key: "create_device",
+      duration: 0,
     });
     setIsCreatingDevice(true);
     const [deviceResponse, deviceError] = await tryCatch(createDevice(value));
@@ -71,7 +72,7 @@ export default function AddDevice({
         <Form.Item
           className="create_farm_form_item"
           name="name"
-          label="Machine Name"
+          label="Device Name"
           rules={[
             { required: true, message: "Please enter Device Name!" },
             {
@@ -89,7 +90,7 @@ export default function AddDevice({
         <Form.Item
           className="create_farm_form_item"
           name="device_type"
-          label="Machine Type"
+          label="Device Type"
           rules={[{ required: true, message: "Please select Device Type!" }]}
         >
           <Select size="large" placeholder="Select Device Type">
@@ -100,7 +101,7 @@ export default function AddDevice({
             ))}
           </Select>
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           className="create_farm_form_item"
           name="device_id"
           label="Machine Id"
@@ -121,7 +122,7 @@ export default function AddDevice({
             size="large"
             placeholder="Enter Device Id"
           />
-        </Form.Item>
+        </Form.Item> */}
         <Form.Item
           className="create_farm_form_item"
           name="farm"
@@ -131,12 +132,12 @@ export default function AddDevice({
           <Select size="large" placeholder="Select Farm">
             {farmMaster.map((el) => (
               <Option key={el.id} value={el.id}>
-                {el.farm_name}
+                {el.farm_name}- {el.code}
               </Option>
             ))}
           </Select>
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           className="create_farm_form_item"
           name="frimware_version"
           label="Frimware Version"
@@ -152,8 +153,8 @@ export default function AddDevice({
           ]}
         >
           <Input size="large" placeholder="Enter Device Frimware" />
-        </Form.Item>
-        <Form.Item
+        </Form.Item> */}
+        {/* <Form.Item
           className="create_farm_form_item"
           name="password"
           label="Password"
@@ -170,7 +171,7 @@ export default function AddDevice({
           ]}
         >
           <Input size="large" placeholder="Enter Device Password" />
-        </Form.Item>
+        </Form.Item> */}
         <Button
           loading={isCreatingDevice}
           className="create_farm_form_item_buttons"

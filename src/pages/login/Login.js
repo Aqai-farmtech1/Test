@@ -23,12 +23,21 @@ export default function Login() {
     );
 
     if (!loginError) {
-      const { token, fullname } = loginResponse.data;
-      localStorage.setItem("token", token);
-      setIsLoading(false);
-      message.success({ content: `Welcome ${fullname}!` });
-      fetchMasters(token);
-      navigate("/farm");
+      const { token, fullname, designation } = loginResponse.data;
+      if (designation === 3) {
+        message.error({
+          content: "You are not Authorized!",
+          duration: 1,
+        });
+        setIsLoading(false);
+        setErrorMessage("");
+      } else {
+        localStorage.setItem("token", token);
+        setIsLoading(false);
+        message.success({ content: `Welcome ${fullname}!` });
+        fetchMasters(token);
+        navigate("/farm");
+      }
     } else {
       const errorMessages = loginError.response.data;
       setErrorMessage(errorMessages);
@@ -40,6 +49,7 @@ export default function Login() {
   return (
     <>
       <div className="login_farm">
+        <h1 className="login_farm_title">Farm Management</h1>
         <div className="login_title">Login</div>
         <div className="login_input_area">
           <Form
@@ -109,6 +119,7 @@ export default function Login() {
           </Form>
         </div>
       </div>
+      <div className="copyrights_text">Copyright ©2022 Aqgromalin.</div>
     </>
   );
 }
