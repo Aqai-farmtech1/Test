@@ -1,0 +1,70 @@
+.transaction_main {
+  display: flex;
+  width: 100%;
+}
+
+.ant-tabs-nav {
+  display: flex;
+  width: 100%;
+  background-color: white;
+  height: 78px;
+  padding-left: 30px;
+  padding-right: 30px;
+  border-radius: 10px;
+}
+.ant-tabs-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.ant-tabs {
+  display: flex;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.ant-tabs-tab {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-left: 60px;
+}
+
+.ant-tabs-tab:nth-child(2) {
+  margin-left: 0px;
+}
+
+.ant-tabs-tab:first-child {
+  margin-left: 0px;
+}
+
+.transaction_search_area {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.transaction_search {
+  display: flex;
+}
+
+.transaction_create_new {
+  display: flex;
+  margin-left: 16px;
+}
+
+.transaction_table {
+  display: flex;
+  width: 100%;
+  padding: 20px 16px;
+  background-color: white;
+  margin-top: 16px;
+  min-height: 75vh;
+  border-radius: 10px;
+}
+
+.button_icon {
+  margin-right: 4px;
+}

@@ -102,28 +102,6 @@ export default function AddDevice({
             ))}
           </Select>
         </Form.Item>
-        {/* <Form.Item
-          className="create_farm_form_item"
-          name="device_id"
-          label="Machine Id"
-          rules={[
-            { required: true, message: "Please enter Device Id" },
-            {
-              min: 3,
-              message: "Device Id is too short!",
-            },
-            {
-              max: 50,
-              message: "Device Id is too long!",
-            },
-          ]}
-        >
-          <Input
-            style={{ textTransform: "capitalize" }}
-            size="large"
-            placeholder="Enter Device Id"
-          />
-        </Form.Item> */}
         <Form.Item
           className="create_farm_form_item"
           name="farm"
@@ -138,41 +116,6 @@ export default function AddDevice({
             ))}
           </Select>
         </Form.Item>
-        {/* <Form.Item
-          className="create_farm_form_item"
-          name="frimware_version"
-          label="Frimware Version"
-          rules={[
-            {
-              min: 3,
-              message: "Frimware Version is too short!",
-            },
-            {
-              max: 50,
-              message: "Frimware Version is too long!",
-            },
-          ]}
-        >
-          <Input size="large" placeholder="Enter Device Frimware" />
-        </Form.Item> */}
-        {/* <Form.Item
-          className="create_farm_form_item"
-          name="password"
-          label="Password"
-          rules={[
-            { required: true, message: "Please enter Password!" },
-            {
-              min: 3,
-              message: "Password is too short!",
-            },
-            {
-              max: 50,
-              message: "Password is too long!",
-            },
-          ]}
-        >
-          <Input size="large" placeholder="Enter Device Password" />
-        </Form.Item> */}
         <Button
           loading={isCreatingDevice}
           className="create_farm_form_item_buttons"

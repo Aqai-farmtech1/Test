@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import LoginRoute from "./LoginRoute";
 import CheckYourMail from "../pages/forgetpassword/CheckYourMail";
@@ -17,6 +17,10 @@ import FarmGoatList from "../pages/farm list goat wise/FarmGoatList";
 import DeviceList from "../pages/device/DeviceList";
 import EditFarm from "../pages/edit farm/EditFarm";
 import PageNotFound from "../pages/error 404/PageNotFound";
+import TransactionList from "../pages/transactionlist/TransactionList";
+import CreateSalesOrder from "../pages/createsaleorder/CreateSalesOrder";
+import CreatePurchaseOrder from "../pages/createpurchaseorder/CreatePurchaseOrder";
+import CreateTransferOrder from "../pages/createtransfer/CreateTransfer";
 
 const AuthenticatedRoutes = [
   {
@@ -60,6 +64,22 @@ const AuthenticatedRoutes = [
   {
     element: <DeviceList />,
     path: "device",
+  },
+  {
+    element: <TransactionList />,
+    path: "transactions",
+  },
+  {
+    element: <CreateSalesOrder />,
+    path: "transactions/sales/create",
+  },
+  {
+    element: <CreatePurchaseOrder />,
+    path: "transactions/purchase/create",
+  },
+  {
+    element: <CreateTransferOrder />,
+    path: "transactions/transfer/create",
   },
 ];
 

@@ -394,6 +394,8 @@ export default function CreateFarm() {
                 rules={[{ required: true, message: "Please select State!" }]}
               >
                 <Select
+                  showSearch
+                  optionFilterProp="children"
                   className="dropdown_form"
                   size="large"
                   placeholder="Select State"

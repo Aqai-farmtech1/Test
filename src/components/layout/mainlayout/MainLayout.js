@@ -66,6 +66,12 @@ export default function MainLayout() {
     {
       key: "3",
       icon: <VideoCameraOutlined style={{ fontSize: "18px" }} />,
+      link: "/transactions",
+      title: "Transactions",
+    },
+    {
+      key: "4",
+      icon: <VideoCameraOutlined style={{ fontSize: "18px" }} />,
       link: "/device",
       title: "Devices",
     },
