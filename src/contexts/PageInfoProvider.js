@@ -3,11 +3,11 @@ export const PageInfoContext = createContext();
 
 export default function PageInfoProvider(props) {
   const [pageTitle, setPageTitle] = useState("");
-  const [formFields, setFormFields] = useState({});
+  const [breadCrumbPath, setBreadCrumbPath] = useState("");
 
   return (
     <PageInfoContext.Provider
-      value={{ pageTitle, setPageTitle, formFields, setFormFields }}
+      value={{ pageTitle, setPageTitle, breadCrumbPath, setBreadCrumbPath }}
     >
       {props.children}
     </PageInfoContext.Provider>

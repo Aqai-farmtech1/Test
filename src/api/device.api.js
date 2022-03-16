@@ -19,15 +19,22 @@ export const getFarmDevice = (farmid) =>
     url: `v1/farm/farm-device/${farmid}/`,
   });
 
-export const getAllDeviceWithQuery = (farmid, deviceType, status, page) => {
+export const getAllDeviceWithQuery = (
+  farmid,
+  deviceType,
+  status,
+  search,
+  page
+) => {
   const farmQuery = Number(farmid) ? `&farm=${farmid}` : "";
   const deviceTypeQuery = Number(deviceType)
     ? `&device-type=${deviceType}`
     : "";
+  const searchQuery = search ? `&search=${search}` : "";
 
   return axios({
     method: "GET",
-    url: `v1/farm/device-list/?status=${status}&page=${page}${farmQuery}${deviceTypeQuery}`,
+    url: `v1/farm/device-list/?status=${status}&page=${page}${farmQuery}${deviceTypeQuery}${searchQuery}`,
   });
 };
 

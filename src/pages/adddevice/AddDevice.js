@@ -4,13 +4,14 @@ import "./adddevice.css";
 import useMasters from "../../hooks/useMasters";
 import tryCatch from "../../helper/tryCatch.helper";
 import { createDevice } from "../../api/device.api";
+import usePageInfo from "../../hooks/usePageInfo";
 
 const { Option } = Select;
 
 export default function AddDevice({
   activeToggle,
   setIsModalVisible,
-  getDeviceList,
+  refreshDeviceList,
 }) {
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
@@ -35,7 +36,7 @@ export default function AddDevice({
       form.resetFields();
       setIsModalVisible(false);
       setIsCreatingDevice(false);
-      getDeviceList();
+      refreshDeviceList();
     } else {
       setIsCreatingDevice(false);
       const obj = deviceError.response.data.error;

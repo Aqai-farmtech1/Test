@@ -3,10 +3,12 @@ import { Breadcrumb } from "antd";
 import { NavLink, useLocation } from "react-router-dom";
 import "./breadcrumb.css";
 import { getPathArray, getPathName } from "../../utils/urlPathConversion";
+import usePageInfo from "../../hooks/usePageInfo";
 
 export default function BreadCrumb() {
   const location = useLocation();
   const { pathname, state } = location;
+  const { breadCrumbPath } = usePageInfo();
   const pathNameList = getPathArray(pathname);
 
   return (

@@ -9,5 +9,5 @@ export const getFarmGoat = (farmid, page) =>
 export const getGoatInfo = (goatid, farmid) =>
   axios({
     method: "GET",
-    url: `v1/goat/goat-weight_history/${goatid}/?farm=${farmid}`,
+    url: `v1/goat/goat-weight-history/${goatid}/?farm=${farmid}`,
   });

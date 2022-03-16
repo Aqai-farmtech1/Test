@@ -211,11 +211,11 @@
 .goat_weight_history_card_main {
   display: flex;
   align-items: center;
-  margin-top: 50px;
+  padding-top: 50px;
 }
 
 .goat_weight_history_card_main:nth-child(1) {
-  margin-top: 0px;
+  padding-top: 0px;
 }
 
 .goat_weight_history_card_date {
@@ -252,6 +252,7 @@
 
 .goat_weight_history_card_image_wrapper {
   display: flex;
+  position: relative;
   outline: solid;
   outline-width: 1px;
   outline-offset: 5px;
@@ -287,6 +288,7 @@
   line-height: 24px;
   letter-spacing: 0.15000000596046448px;
   text-align: left;
+  align-items: center;
 }
 
 .goat_info_weight_history_weight_info h1 {
