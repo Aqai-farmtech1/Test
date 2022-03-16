@@ -16,7 +16,7 @@ const { Option } = Select;
 export default function EditDevice({
   activeToggle,
   setIsEditModalVisible,
-  getDeviceList,
+  refreshDeviceList,
   deviceData,
 }) {
   const [form] = Form.useForm();
@@ -48,7 +48,7 @@ export default function EditDevice({
       form.resetFields();
       setIsEditModalVisible(false);
       setIsCreatingDevice(false);
-      getDeviceList();
+      refreshDeviceList();
     } else {
       setIsCreatingDevice(false);
       const errors = deviceError.response.data.error;
@@ -69,7 +69,7 @@ export default function EditDevice({
         duration: "0.3",
         key: "updateDeviceStatus",
       });
-      getDeviceList();
+      refreshDeviceList();
       setIsActive(value);
     } else {
       const errors = deviceStatusError.response.data.error;

@@ -6,11 +6,10 @@ import tryCatch from "../../helper/tryCatch.helper";
 // import useAuth from "../../hooks/useAuth";
 import { login } from "../../api/login.api";
 import useMasters from "../../hooks/useMasters";
-import { getStateList } from "../../api/master.api";
 import { useNavigate, NavLink } from "react-router-dom";
 
 export default function Login() {
-  const [errorMessage, setErrorMessage] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { fetchMasters } = useMasters();
@@ -25,12 +24,8 @@ export default function Login() {
     if (!loginError) {
       const { token, fullname, designation } = loginResponse.data;
       if (designation === 3) {
-        message.error({
-          content: "You are not Authorized!",
-          duration: 1,
-        });
         setIsLoading(false);
-        setErrorMessage("");
+        setErrorMessage("You are not Authorized!");
       } else {
         localStorage.setItem("token", token);
         setIsLoading(false);
@@ -39,9 +34,8 @@ export default function Login() {
         navigate("/farm");
       }
     } else {
-      const errorMessages = loginError.response.data;
+      const errorMessages = loginError.response.data.error.message;
       setErrorMessage(errorMessages);
-      console.log(errorMessage);
       setIsLoading(false);
     }
   };
@@ -116,6 +110,9 @@ export default function Login() {
                 {!isLoading ? "Log in" : ""}
               </Button>
             </Form.Item>
+            {errorMessage && (
+              <Alert message={errorMessage} type="error" showIcon />
+            )}
           </Form>
         </div>
       </div>

@@ -18,6 +18,7 @@ export default function DeviceList() {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedFarm, setSelectedFarm] = useState(0);
   const [selectedDeviceType, setSelectedDeviceType] = useState(0);
+  const [searchText, setSearchText] = useState("");
   const [totalPages, setTotalPages] = useState(0);
   const [deviceList, setDeviceList] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState(1);
@@ -25,35 +26,50 @@ export default function DeviceList() {
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [editDeviceDetails, setEditDeviceDetails] = useState({});
 
-  const handleSearch = () => {};
+  const handleSearch = (value) => {
+    const searchValue = value;
+    getDeviceList(
+      selectedFarm,
+      selectedDeviceType,
+      selectedStatus,
+      searchValue
+    );
+    setSearchText(searchValue);
+  };
 
   const handleMenuClick = (value) => {
     const selectedValue = Number(value.key);
     setSelectedFarm(selectedValue);
-    getDeviceList(selectedValue, selectedDeviceType, selectedStatus);
+    getDeviceList(
+      selectedValue,
+      selectedDeviceType,
+      selectedStatus,
+      searchText
+    );
   };
 
   const handleDeviceTypeChange = (value) => {
     const selectedValue = Number(value.key);
     setSelectedDeviceType(selectedValue);
-    getDeviceList(selectedFarm, selectedValue, selectedStatus);
+    getDeviceList(selectedFarm, selectedValue, selectedStatus, searchText);
   };
 
   const handleStatusMenuClick = (value) => {
     const selectedValue = Number(value.key);
     setSelectedStatus(selectedValue);
-    getDeviceList(selectedFarm, selectedDeviceType, selectedValue);
+    getDeviceList(selectedFarm, selectedDeviceType, selectedValue, searchText);
   };
 
   const getDeviceList = async (
     farmid = 0,
     device = 0,
     status = 1,
+    search = "",
     page = 1
   ) => {
     setIsLoading(true);
     const [deviceResponse, deviceError] = await tryCatch(
-      getAllDeviceWithQuery(farmid, device, status, page)
+      getAllDeviceWithQuery(farmid, device, status, search, page)
     );
 
     if (!deviceError) {
@@ -70,6 +86,10 @@ export default function DeviceList() {
     }
   };
 
+  const refreshDeviceList = () => {
+    getDeviceList(selectedFarm, selectedDeviceType, selectedStatus, searchText);
+  };
+
   const columns = [
     {
       title: "Machine Type",
@@ -79,10 +99,6 @@ export default function DeviceList() {
       title: "Machine Name",
       dataIndex: "device_name",
     },
-    // {
-    //   title: "Machine Id",
-    //   dataIndex: "device_id",
-    // },
     {
       title: "Farm Name",
       dataIndex: "farm_name",
@@ -187,7 +203,7 @@ export default function DeviceList() {
           <Dropdown trigger={["click"]} overlay={statusMenu}>
             <Button style={{ borderRadius: "4px" }} size="large">
               <span className="filter_button_text">
-                Status : {selectedStatus ? "Acitve" : "In Active"}
+                Status : {selectedStatus ? "Active" : "In Active"}
               </span>
               <DownOutlined />
             </Button>
@@ -195,7 +211,7 @@ export default function DeviceList() {
         </div>
         <div className="device_list_search_area">
           <Search
-            placeholder="Search by Device Id"
+            placeholder="Search by Device Name"
             allowClear
             onSearch={handleSearch}
             size="large"
@@ -223,6 +239,7 @@ export default function DeviceList() {
                 selectedFarm,
                 selectedDeviceType,
                 selectedStatus,
+                searchText,
                 page
               );
             },
@@ -242,7 +259,7 @@ export default function DeviceList() {
         footer={null}
       >
         <AddDevice
-          getDeviceList={getDeviceList}
+          refreshDeviceList={refreshDeviceList}
           setIsModalVisible={setIsModalVisible}
           activeToggle={false}
         />
@@ -258,7 +275,7 @@ export default function DeviceList() {
         <EditDevice
           setIsEditModalVisible={setIsEditModalVisible}
           deviceData={editDeviceDetails}
-          getDeviceList={getDeviceList}
+          refreshDeviceList={refreshDeviceList}
           activeToggle={true}
         />
       </Modal>
