@@ -21,6 +21,8 @@ import TransactionList from "../pages/transactionlist/TransactionList";
 import CreateSalesOrder from "../pages/createsaleorder/CreateSalesOrder";
 import CreatePurchaseOrder from "../pages/createpurchaseorder/CreatePurchaseOrder";
 import CreateTransferOrder from "../pages/createtransfer/CreateTransfer";
+import ProfilePage from "../pages/profile/ProfilePage";
+import ProfileUpdate from "../pages/profileupdate/ProfileUpdate";
 
 const AuthenticatedRoutes = [
   {
@@ -80,6 +82,14 @@ const AuthenticatedRoutes = [
   {
     element: <CreateTransferOrder />,
     path: "transactions/transfer/create",
+  },
+  {
+    element: <ProfilePage />,
+    path: "profile",
+  },
+  {
+    element: <ProfileUpdate />,
+    path: "profile/edit",
   },
 ];
 

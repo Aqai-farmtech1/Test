@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Dropdown, Layout, Menu, message } from "antd";
+import { Divider, Dropdown, Layout, Menu, message, Popover } from "antd";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { UserOutlined, VideoCameraOutlined } from "@ant-design/icons";
 import "./mainlayout.css";
@@ -78,12 +78,24 @@ export default function MainLayout() {
   ];
 
   const profileMenu = (
-    <Menu>
-      <Menu.Item key="1">Profile</Menu.Item>
-      <Menu.Item onClick={handleLogout} key="2">
-        Logout
-      </Menu.Item>
-    </Menu>
+    <ul className="profile_dropdown">
+      <li>
+        <div className="profile_dropdown_list_profile_settings">
+          <h1>Profile Settings</h1>
+          <NavLink to="/profile">
+            <h2>View Profile</h2>
+          </NavLink>
+        </div>
+        <Divider className="profile_dropdown_divider" />
+      </li>
+      <li>
+        <div className="profile_dropdown_list_content">Change Password</div>
+        <Divider className="profile_dropdown_divider" />
+      </li>
+      <li onClick={handleLogout}>
+        <div className="profile_dropdown_list_content">Logout</div>
+      </li>
+    </ul>
   );
 
   return (
@@ -119,7 +131,11 @@ export default function MainLayout() {
                 />
               </li>
               <li>
-                <Dropdown trigger={["click"]} overlay={profileMenu}>
+                <Popover
+                  placement="bottomRight"
+                  content={profileMenu}
+                  trigger="click"
+                >
                   <div className="image_wrapper">
                     <img
                       src={profileImage}
@@ -127,7 +143,7 @@ export default function MainLayout() {
                       alt="profile"
                     />
                   </div>
-                </Dropdown>
+                </Popover>
               </li>
             </ul>
           </div>
