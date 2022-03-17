@@ -146,3 +146,10 @@
   max-height: 260px;
   overflow: auto;
 }
+
+.table-row-light {
+  background-color: #ffffff;
+}
+.table-row-dark {
+  background-color: #fafafa;
+}

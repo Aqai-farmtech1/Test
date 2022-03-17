@@ -155,15 +155,6 @@ export default function CreatePurchaseOrder() {
       >
         <Row gutter={20}>
           <Col span={12}>
-            <Form.Item
-              className="create_farm_form_item"
-              name="vendor_name"
-              label="Vendor Name"
-            >
-              <Input size="large" placeholder="Enter Customer Name here" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
             <ConfigProvider renderEmpty={selectEmptyRender}>
               <Form.Item
                 className="create_farm_form_item"
@@ -200,6 +191,15 @@ export default function CreatePurchaseOrder() {
                 </Select>
               </Form.Item>
             </ConfigProvider>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              className="create_farm_form_item"
+              name="vendor_name"
+              label="Vendor Name"
+            >
+              <Input size="large" placeholder="Enter Customer Name here" />
+            </Form.Item>
           </Col>
         </Row>
         <Row gutter={20}>

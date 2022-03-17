@@ -231,6 +231,9 @@ export default function DeviceList() {
       </div>
       <div className="device_list_table_area">
         <Table
+          rowClassName={(record, index) =>
+            index % 2 === 0 ? "table-row-light" : "table-row-dark"
+          }
           pagination={{
             total: totalPages,
             pageSize: 10,

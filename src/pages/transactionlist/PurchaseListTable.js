@@ -37,9 +37,18 @@ export default function PurchaseListTable({
       dataIndex: "quantity",
     },
     {
+      title: "Total Weight(In Kg)",
+      dataIndex: "total_weight",
+      render: (value) => value || "-",
+    },
+    {
       title: "Price Per Kg",
       dataIndex: "price_per_kg",
       render: (value) => `₹ ${value}`,
+    },
+    {
+      title: "Status",
+      dataIndex: "order_status_name",
     },
     {
       title: "Action",
@@ -99,6 +108,9 @@ export default function PurchaseListTable({
   return (
     <>
       <Table
+        rowClassName={(record, index) =>
+          index % 2 === 0 ? "table-row-light" : "table-row-dark"
+        }
         bordered
         loading={isLoading}
         pagination={{
