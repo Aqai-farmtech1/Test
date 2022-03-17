@@ -7,8 +7,12 @@ export const createSalesOrder = (data) =>
     data,
   });
 
-export const getAllSales = (page, status) =>
-  axios({
+export const getAllSales = (page, orderStatus) => {
+  const orderStatusQuery = Number(orderStatus)
+    ? `&orderstatus=${orderStatus}`
+    : "";
+  return axios({
     method: "GET",
-    url: `v1/farm/sales-order/?page=${page}&status=${status}`,
+    url: `v1/farm/sales-order/?page=${page}${orderStatusQuery}`,
   });
+};

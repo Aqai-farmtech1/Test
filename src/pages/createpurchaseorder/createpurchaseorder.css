@@ -64,13 +64,13 @@
   width: 70% !important;
 }
 
-.create_customer {
+.create_vendor {
   display: flex;
   width: 100%;
   flex-direction: column;
 }
 
-.create_customer h1 {
+.create_vendor h1 {
   display: flex;
   margin: 0;
   font-family: Manrope;
@@ -82,7 +82,7 @@
   text-align: left;
 }
 
-.create_customer_form {
+.create_vendor_form {
   margin-top: 32px;
 }
 

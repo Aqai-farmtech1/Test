@@ -93,6 +93,21 @@ export default function CreateSalesOrder() {
     });
   };
 
+  const setCustomerDetail = async (value) => {
+    const [customerResponse, customerError] = await tryCatch(searchCustomer(0));
+
+    if (!customerError) {
+      setSearchPhoneLength(0);
+      setIsCustomerLoading(false);
+      setCustomerList(customerResponse.data);
+      form.setFieldsValue(value);
+    } else {
+      setIsCustomerLoading(false);
+      setSearchPhoneLength(0);
+      console.log(customerError.response);
+    }
+  };
+
   const getCustomerList = async (phone = 0) => {
     setIsCustomerLoading(true);
     const [customerResponse, customerError] = await tryCatch(
@@ -179,9 +194,9 @@ export default function CreateSalesOrder() {
                   {customerList.map((el) => (
                     <Option key={el.id} value={el.id}>
                       <span className="highlight_match">
-                        {el.phone_num.slice(0, searchPhoneLength)}
+                        {el.phone_num?.slice(0, searchPhoneLength)}
                       </span>
-                      {el.phone_num.slice(searchPhoneLength)} - {el.full_name}
+                      {el.phone_num?.slice(searchPhoneLength)} - {el.full_name}
                     </Option>
                   ))}
                 </Select>
@@ -310,7 +325,10 @@ export default function CreateSalesOrder() {
         visible={isModalVisible}
         footer={null}
       >
-        <CreateCustomer />
+        <CreateCustomer
+          setCustomerDetail={setCustomerDetail}
+          setIsModalVisible={setIsModalVisible}
+        />
       </Modal>
     </div>
   );

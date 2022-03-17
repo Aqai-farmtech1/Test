@@ -15,7 +15,7 @@ const { Search } = Input;
 const { TabPane } = Tabs;
 
 export default function TransactionList() {
-  const [selectedStatus, setSelectedStatus] = useState(1);
+  const [selectedStatus, setSelectedStatus] = useState(0);
   const [activeKey, setActiveKey] = useState("1");
   const [transactionData, setTransactionData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -37,7 +37,7 @@ export default function TransactionList() {
     setActiveKey(value);
     setTransactionName(tabName);
     setTransactionLink(link);
-    getTransactionList(value);
+    getTransactionList(value, 1, selectedStatus);
   };
 
   const handleSearch = () => {};
@@ -47,10 +47,10 @@ export default function TransactionList() {
     getTransactionList(activeKey, 1, value.key);
   };
 
-  const getSalesList = async (page = 1, status = 1) => {
+  const getSalesList = async (page = 1, orderStatus = 0) => {
     setIsLoading(true);
     const [salesResponse, salesError] = await tryCatch(
-      getAllSales(page, status)
+      getAllSales(page, orderStatus)
     );
 
     if (!salesError) {
@@ -62,10 +62,10 @@ export default function TransactionList() {
     }
   };
 
-  const getPurchaseList = async (page = 1, status = 1) => {
+  const getPurchaseList = async (page = 1, orderStatus = 0) => {
     setIsLoading(true);
     const [purchaseResponse, purchaseError] = await tryCatch(
-      getAllPurchaseList(page, status)
+      getAllPurchaseList(page, orderStatus)
     );
 
     if (!purchaseError) {
@@ -134,10 +134,21 @@ export default function TransactionList() {
     },
   };
 
+  const orderStatusStatic = {
+    0: "All",
+    1: "Initiated",
+    2: "In Transit",
+    3: "Completed",
+    4: "Cancelled",
+  };
+
   const menu = (
     <Menu onClick={handleMenuClick}>
-      <Menu.Item key={1}>Active</Menu.Item>
-      <Menu.Item key={0}>In Active</Menu.Item>
+      <Menu.Item key={0}>All</Menu.Item>
+      <Menu.Item key={1}>Initiated</Menu.Item>
+      <Menu.Item key={2}>In Transit</Menu.Item>
+      <Menu.Item key={3}>Completed</Menu.Item>
+      <Menu.Item key={4}>Cancelled</Menu.Item>
     </Menu>
   );
 
@@ -145,7 +156,7 @@ export default function TransactionList() {
     setTransactionName(activeName);
     setTransactionLink(activeLink);
     setActiveKey(currentTab);
-    getTransactionList(currentTab);
+    getTransactionList(currentTab, 1, selectedStatus);
     setPageTitle("Transactions List");
   }, [currentTab]);
 
@@ -161,7 +172,7 @@ export default function TransactionList() {
           <Dropdown trigger={["click"]} overlay={menu}>
             <Button size="large" style={{ borderRadius: "4px" }}>
               <span className="filter_button_text">
-                Status : {Number(selectedStatus) ? "Active" : "In Active"}
+                Status : {orderStatusStatic[selectedStatus]}
               </span>
               <DownOutlined />
             </Button>

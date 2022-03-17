@@ -91,6 +91,21 @@ export default function CreatePurchaseOrder() {
     });
   };
 
+  const setVendorDetail = async (value) => {
+    const [vendorResponse, vendorError] = await tryCatch(searchVendor(0));
+
+    if (!vendorError) {
+      setSearchPhoneLength(0);
+      setIsCustomerLoading(false);
+      setVendorList(vendorResponse.data);
+      form.setFieldsValue(value);
+    } else {
+      setIsCustomerLoading(false);
+      setSearchPhoneLength(0);
+      console.log(vendorError.response);
+    }
+  };
+
   const getCustomerList = async (phone = 0) => {
     setIsCustomerLoading(true);
     const [customerResponse, customerError] = await tryCatch(
@@ -308,7 +323,10 @@ export default function CreatePurchaseOrder() {
         visible={isModalVisible}
         footer={null}
       >
-        <CreateVendor />
+        <CreateVendor
+          setVendorDetail={setVendorDetail}
+          setIsModalVisible={setIsModalVisible}
+        />
       </Modal>
     </div>
   );

@@ -47,7 +47,27 @@ export default function SalesListTable({
       width: "6%",
       render: (value, columns) => (
         <div className="action_button_div">
-          <NavLink to={`/user/edit/${columns.key}`}>
+          <Button
+            className="user_list_buttons"
+            style={{ borderRadius: "4px" }}
+            block
+            type="primary"
+            ghost
+          >
+            <img className="button_icon" src={editIcon} alt="edit icon" />
+            Edit
+          </Button>
+          <Button
+            className="user_list_buttons"
+            style={{ borderRadius: "4px", marginLeft: 6 }}
+            block
+            type="primary"
+            ghost
+          >
+            <img className="button_icon" src={viewIcon} alt="view icon" />
+            View
+          </Button>
+          {/* <NavLink to={`/user/edit/${columns.key}`}>
             <Button
               className="user_list_buttons"
               style={{ borderRadius: "4px" }}
@@ -70,7 +90,7 @@ export default function SalesListTable({
               <img className="button_icon" src={viewIcon} alt="view icon" />
               View
             </Button>
-          </NavLink>
+          </NavLink> */}
         </div>
       ),
     },

@@ -8,3 +8,10 @@ export const searchCustomer = (phone) => {
     url: `v1/farm/customer-filter/${searchQuery}`,
   });
 };
+
+export const createCustomer = (data) =>
+  axios({
+    method: "POST",
+    url: "v1/core/customer/",
+    data,
+  });

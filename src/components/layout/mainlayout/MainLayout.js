@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { createRef, useEffect, useState } from "react";
 import { Divider, Dropdown, Layout, Menu, message, Popover } from "antd";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { UserOutlined, VideoCameraOutlined } from "@ant-design/icons";
@@ -134,7 +134,7 @@ export default function MainLayout() {
                 <Popover
                   placement="bottomRight"
                   content={profileMenu}
-                  trigger="click"
+                  trigger="hover"
                 >
                   <div className="image_wrapper">
                     <img
