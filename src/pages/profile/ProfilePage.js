@@ -54,7 +54,7 @@ export default function Profile() {
         ) : (
           <>
             <div className="view_user_title_section1">Basic Info</div>
-
+            <div className=""></div>
             <ViewUserContent title="Emp Name" value={userData.fullname} />
             <ViewUserContent title="Emp Code" value={userData.employee_id} />
             <ViewUserContent title="Email Id" value={userData.email} />

@@ -1,18 +1,48 @@
-import { Form, Row, Col, Button, Input, Select, Radio } from "antd";
+import { Form, Row, Col, Button, Input, Select, Radio, message } from "antd";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { createCustomer } from "../../api/customer.api";
+import tryCatch from "../../helper/tryCatch.helper";
 import useMasters from "../../hooks/useMasters";
 import "./createsalesorder.css";
 
 const { Option } = Select;
 
-export default function CreateCustomer() {
+export default function CreateCustomer({
+  setIsModalVisible,
+  setCustomerDetail,
+}) {
   const [isLoading, setIsLoading] = useState(false);
   const { stateMaster } = useMasters();
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
-  const handleFormSubmit = () => {};
+  const handleFormSubmit = async (values) => {
+    message.loading({
+      content: "Creating Customer...",
+      key: "createCustomer",
+      duration: 0,
+    });
+    const [customerResponse, customerError] = await tryCatch(
+      createCustomer(values)
+    );
+
+    if (!customerError) {
+      message.success({
+        content: "Customer Created Succussfully!",
+        key: "createCustomer",
+      });
+      const { full_name, id } = customerResponse.data;
+      setCustomerDetail({ customer_name: full_name, customer: id });
+      setIsModalVisible(false);
+    } else {
+      const errors = customerError.response.data.error;
+      for (let err in errors) {
+        const errorMessage = errors[err][0];
+        message.error({ content: errorMessage, key: "createCustomer" });
+      }
+    }
+  };
 
   return (
     <div className="create_customer">
@@ -30,7 +60,7 @@ export default function CreateCustomer() {
           initialValue={"1"}
           rules={[{ required: true, message: "Customer type is Required!" }]}
         >
-          <Radio.Group size="large" disabled>
+          <Radio.Group size="large">
             <Radio value="1">Individual</Radio>
             <Radio value="2">Organisation</Radio>
           </Radio.Group>
@@ -63,7 +93,7 @@ export default function CreateCustomer() {
           <Col span={12}>
             <Form.Item
               className="create_farm_form_item"
-              name="organisation_phone"
+              name="organization_phone"
               label="Mobile Number"
               rules={[
                 { required: true, message: "Please enter your Mobile Number!" },
@@ -129,7 +159,7 @@ export default function CreateCustomer() {
           <Col span={12}>
             <Form.Item
               className="create_farm_form_item"
-              name="city"
+              name="organization_city"
               label="City"
               rules={[{ required: true, message: "Please enter City!" }]}
             >
@@ -139,7 +169,7 @@ export default function CreateCustomer() {
           <Col span={12}>
             <Form.Item
               className="create_farm_form_item"
-              name="state"
+              name="organization_state"
               label="State"
               rules={[{ required: true, message: "Please select State!" }]}
             >
@@ -167,7 +197,7 @@ export default function CreateCustomer() {
           <Col span={12}>
             <Form.Item
               className="create_farm_form_item"
-              name="country"
+              name="organization_country"
               label="Country"
               initialValue={"101"}
               rules={[{ required: true, message: "Please select State!" }]}
