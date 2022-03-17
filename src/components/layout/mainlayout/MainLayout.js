@@ -7,6 +7,7 @@ import {
   profileImage,
   notificationIcon,
   layoutSiderLogo,
+  avtarSvg,
 } from "../../../utils/constants";
 import { getPathArray } from "../../../utils/urlPathConversion";
 import PageTitle from "../../pagetitle/PageTitle";
@@ -138,7 +139,7 @@ export default function MainLayout() {
                 >
                   <div className="image_wrapper">
                     <img
-                      src={profileImage}
+                      src={avtarSvg}
                       className="profile_image_header"
                       alt="profile"
                     />

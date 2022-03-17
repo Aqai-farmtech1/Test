@@ -138,6 +138,9 @@ export default function GoatList() {
       </div>
       <div className="goat_list_table_area">
         <Table
+          rowClassName={(record, index) =>
+            index % 2 === 0 ? "table-row-light" : "table-row-dark"
+          }
           loading={isLoading}
           pagination={{
             total: totalPages,
