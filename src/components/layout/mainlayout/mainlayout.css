@@ -15,6 +15,10 @@
   margin-bottom: 8px !important;
 }
 
+.ant-menu-item-active .ant-menu-item-selected {
+  color: #2d9cdb !important;
+}
+
 .menu_item_span {
   font-size: 12px;
   font-style: normal;
@@ -27,7 +31,6 @@
 .anticon anticon-user ant-menu-item-icon {
   line-height: 0px !important;
   display: flex !important  ;
-  /* margin: 8px 0px !important; */
 }
 
 .ant-menu-item {
@@ -38,6 +41,7 @@
   line-height: 0px !important;
   height: fit-content !important;
   margin-bottom: 16px !important;
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .ant-menu-item-selected {
@@ -129,5 +133,67 @@
 }
 
 .notification_icon:hover {
+  cursor: pointer;
+}
+
+.profile_dropdown {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  padding: 4px;
+  width: 236px;
+}
+
+.profile_dropdown_list_profile_settings {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile_dropdown_list_profile_settings h1 {
+  display: flex;
+  margin: 0;
+  font-family: Manrope;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0.15000000596046448px;
+  text-align: left;
+}
+
+.profile_dropdown_list_profile_settings h2 {
+  display: flex;
+  margin: 0;
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  text-align: left;
+  color: #2d9cdb;
+  margin-top: 4px;
+}
+
+.profile_dropdown_list_content {
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.10000000149011612px;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.ant-popover-inner {
+  border-radius: 10px;
+}
+
+.profile_dropdown_divider {
+  margin: 12px 0px !important;
+}
+
+.profile_dropdown_list_content:hover {
   cursor: pointer;
 }

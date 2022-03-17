@@ -1,0 +1,73 @@
+.edit_user_main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.edit_user_form_area {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  padding: 34px 200px;
+  width: 100%;
+  background-color: white;
+}
+
+.ant-form-vertical .ant-form-item-label {
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.create_farm_action_button_area {
+  margin-top: 10px;
+}
+
+.create_farm_form_item_buttons {
+  font-size: 14px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 22px !important;
+  letter-spacing: 0em !important;
+  text-align: center;
+  border-radius: 2px;
+  margin-right: 12px;
+}
+
+.edit_user_active_container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.edit_user_toggle_button {
+  background-color: "#0FA958";
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.edit_user_update_button {
+  padding-left: 36px !important;
+  padding-right: 36px !important;
+}
+
+.form_section_header {
+  display: flex;
+  font-family: Manrope;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-bottom: 30px;
+}

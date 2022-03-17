@@ -1,0 +1,74 @@
+.view_user_main {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 30px;
+  background-color: white;
+  border-radius: 10px;
+  position: relative;
+}
+
+.view_user_title_section1 {
+  display: flex;
+  font-family: Manrope;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-bottom: 42px;
+}
+
+.view_user_title_section2 {
+  display: flex;
+  font-family: Manrope;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-bottom: 42px;
+  margin-top: 10px;
+}
+
+.view_user_content {
+  display: flex;
+  margin-bottom: 19px;
+}
+
+.view_user_content_title {
+  display: flex;
+  min-width: 300px;
+  font-family: Manrope;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.view_user_content_text {
+  display: flex;
+  min-width: 200px;
+  font-family: Manrope;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.view_user_edit {
+  display: flex;
+  position: absolute;
+  top: 20px;
+  right: 30px;
+}
+
+.view_user_breadcrumb {
+  margin-bottom: 20px;
+}

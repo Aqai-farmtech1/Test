@@ -30,7 +30,7 @@ export default function CreateCustomer() {
           initialValue={"1"}
           rules={[{ required: true, message: "Customer type is Required!" }]}
         >
-          <Radio.Group size="large">
+          <Radio.Group size="large" disabled>
             <Radio value="1">Individual</Radio>
             <Radio value="2">Organisation</Radio>
           </Radio.Group>
@@ -107,10 +107,10 @@ export default function CreateCustomer() {
           <Col span={24}>
             <Form.Item
               className="create_farm_form_item"
-              name="address1"
+              name="organization_address"
               label="Address"
               rules={[
-                { required: true, message: "Please enter Farm Address!" },
+                { required: true, message: "Please enter Address!" },
                 {
                   min: 10,
                   message: "Address should be minimum 10 characters length!",
@@ -121,7 +121,7 @@ export default function CreateCustomer() {
                 },
               ]}
             >
-              <Input size="large" placeholder="Enter your Farm Full Address" />
+              <Input size="large" placeholder="Enter Full Address" />
             </Form.Item>
           </Col>
         </Row>
@@ -133,11 +133,7 @@ export default function CreateCustomer() {
               label="City"
               rules={[{ required: true, message: "Please enter City!" }]}
             >
-              <Input
-                size="large"
-                type="text"
-                placeholder="Enter your Farm city"
-              />
+              <Input size="large" type="text" placeholder="Enter  city" />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -195,11 +191,7 @@ export default function CreateCustomer() {
                 },
               ]}
             >
-              <Input
-                type="number"
-                size="large"
-                placeholder="Enter your Farm Code here"
-              />
+              <Input type="number" size="large" placeholder="Enter Pincode" />
             </Form.Item>
           </Col>
         </Row>
