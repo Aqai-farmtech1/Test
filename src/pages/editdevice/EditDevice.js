@@ -10,6 +10,7 @@ import {
 } from "../../api/device.api";
 import { useNavigate } from "react-router-dom";
 import usePageInfo from "../../hooks/usePageInfo";
+import { formNameInputRestriction } from "../../utils/formInputRestriction";
 
 const { Option } = Select;
 
@@ -20,7 +21,6 @@ export default function EditDevice({
   deviceData,
 }) {
   const [form] = Form.useForm();
-  const [isLoading, setIsLoading] = useState(false);
   const [isCreatingDevice, setIsCreatingDevice] = useState(false);
   const [isActive, setIsActive] = useState(deviceData.status);
   const [deviceDetails, setDeviceDetails] = useState(deviceData);
@@ -118,7 +118,11 @@ export default function EditDevice({
             },
           ]}
         >
-          <Input size="large" placeholder="Enter Device Name" />
+          <Input
+            onKeyDown={formNameInputRestriction}
+            size="large"
+            placeholder="Enter Device Name"
+          />
         </Form.Item>
         <Form.Item
           className="create_farm_form_item"

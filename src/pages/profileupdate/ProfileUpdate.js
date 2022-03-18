@@ -7,6 +7,11 @@ import usePageInfo from "../../hooks/usePageInfo";
 import useMasters from "../../hooks/useMasters";
 import tryCatch from "../../helper/tryCatch.helper";
 import { getUserProfile, updateProfile } from "../../api/user.api";
+import {
+  formNameInputRestriction,
+  formPhoneInputRestriction,
+  formPincodeInputRestriction,
+} from "../../utils/formInputRestriction";
 
 const { Option } = Select;
 
@@ -174,6 +179,7 @@ export default function ProfileUpdate() {
                 ]}
               >
                 <Input
+                  onKeyDown={formNameInputRestriction}
                   type="text"
                   style={{ textTransform: "capitalize" }}
                   size="large"
@@ -200,6 +206,7 @@ export default function ProfileUpdate() {
               >
                 <Input
                   type="text"
+                  onKeyDown={formNameInputRestriction}
                   style={{ textTransform: "uppercase" }}
                   size="large"
                   placeholder="Enter your Emp Code here"
@@ -243,6 +250,7 @@ export default function ProfileUpdate() {
                 ]}
               >
                 <Input
+                  onKeyDown={formPhoneInputRestriction}
                   type="number"
                   size="large"
                   placeholder="Enter your Mobile No"
@@ -266,6 +274,7 @@ export default function ProfileUpdate() {
                 ]}
               >
                 <Input
+                  onKeyDown={formPhoneInputRestriction}
                   size="large"
                   placeholder="Enter your Alternate Mobile No"
                 />
@@ -444,7 +453,11 @@ export default function ProfileUpdate() {
                   },
                 ]}
               >
-                <Input size="large" placeholder="Enter Farm Pincode" />
+                <Input
+                  onKeyDown={formPincodeInputRestriction}
+                  size="large"
+                  placeholder="Enter Farm Pincode"
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -453,7 +466,6 @@ export default function ProfileUpdate() {
               <Button
                 loading={isLoading}
                 disabled={!isFormDataChanged}
-                // disabled
                 className="create_farm_form_item_buttons edit_user_update_button"
                 type="primary"
                 htmlType="submit"

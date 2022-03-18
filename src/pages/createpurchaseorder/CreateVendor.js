@@ -4,6 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { createVendor } from "../../api/vendor.api";
 import tryCatch from "../../helper/tryCatch.helper";
 import useMasters from "../../hooks/useMasters";
+import {
+  formNameInputRestriction,
+  formPhoneInputRestriction,
+  formPincodeInputRestriction,
+} from "../../utils/formInputRestriction";
+import { toSentenceCase } from "../../utils/toSentenceCase";
 import "./createpurchaseorder.css";
 
 const { Option } = Select;
@@ -16,15 +22,24 @@ export default function CreateVendor({ setIsModalVisible, setVendorDetail }) {
   const navigate = useNavigate();
 
   const handleFormSubmit = async (values) => {
-    console.log(values);
+    const postData = {
+      ...values,
+      full_name: toSentenceCase(values.full_name),
+      organization_name: toSentenceCase(values.organization_name),
+      organization_email: values.organization_email || null,
+    };
     message.loading({
       content: "Creating Vendor...",
       key: "createVendor",
       duration: 0,
     });
-    const [vendorResponse, vendorError] = await tryCatch(createVendor(values));
+    setIsLoading(true);
+    const [vendorResponse, vendorError] = await tryCatch(
+      createVendor(postData)
+    );
 
     if (!vendorError) {
+      setIsLoading(false);
       message.success({
         content: "Vendor Created Succussfully!",
         key: "createVendor",
@@ -33,6 +48,7 @@ export default function CreateVendor({ setIsModalVisible, setVendorDetail }) {
       setVendorDetail({ vendor_name: full_name, vendor: id });
       setIsModalVisible(false);
     } else {
+      setIsLoading(false);
       const errors = vendorError.response.data.error;
       for (let err in errors) {
         const errorMessage = errors[err][0];
@@ -84,6 +100,7 @@ export default function CreateVendor({ setIsModalVisible, setVendorDetail }) {
               ]}
             >
               <Input
+                onKeyDown={formNameInputRestriction}
                 style={{ textTransform: "capitalize" }}
                 size="large"
                 placeholder="Enter Vendor Name here"
@@ -108,6 +125,8 @@ export default function CreateVendor({ setIsModalVisible, setVendorDetail }) {
               ]}
             >
               <Input
+                type={"number"}
+                onKeyDown={formPhoneInputRestriction}
                 className="farm_code_input"
                 size="large"
                 placeholder="Enter Vendor Mobile Number here"
@@ -142,10 +161,6 @@ export default function CreateVendor({ setIsModalVisible, setVendorDetail }) {
               name="organization_email"
               label="Email"
               rules={[
-                {
-                  required: true,
-                  message: "Please enter Email!",
-                },
                 {
                   type: "email",
                   message: "Please enter valid email!",
@@ -245,7 +260,12 @@ export default function CreateVendor({ setIsModalVisible, setVendorDetail }) {
                 },
               ]}
             >
-              <Input type="number" size="large" placeholder="Enter Pincode" />
+              <Input
+                onKeyDown={formPincodeInputRestriction}
+                type="number"
+                size="large"
+                placeholder="Enter Pincode"
+              />
             </Form.Item>
           </Col>
         </Row>

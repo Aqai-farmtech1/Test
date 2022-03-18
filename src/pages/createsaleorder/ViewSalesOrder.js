@@ -70,7 +70,7 @@ export default function ViewSalesOrder() {
         <h1>Product Info</h1>
         <ViewOrderListItem
           title={"Product"}
-          value={salesOrderData?.product_quantity?.product_name}
+          value={salesOrderData?.product_name}
         />
         <ViewOrderListItem
           title={"Batch Id"}
@@ -78,11 +78,11 @@ export default function ViewSalesOrder() {
         />
         <ViewOrderListItem
           title={"Quantity"}
-          value={salesOrderData?.product_quantity?.quantity}
+          value={salesOrderData?.quantity}
         />
         <ViewOrderListItem
           title={"Price Per Kg"}
-          value={`₹ ${salesOrderData?.product_quantity?.price_per_kg}`}
+          value={`₹ ${salesOrderData?.price_per_kg}`}
         />
         <h1>Customer Info</h1>
         <ViewOrderListItem title={"Name"} value={salesOrderData.customer} />
@@ -110,7 +110,7 @@ export default function ViewSalesOrder() {
         onCancel={() => setIsEditModalVisible(false)}
       >
         <EditSalesOrder
-          productCapacity={salesOrderData?.product_quantity?.quantity || 0}
+          productCapacity={salesOrderData?.quantity || 0}
           getSalesDetail={getSalesDetail}
           orderId={salesid}
           setIsEditModalVisible={setIsEditModalVisible}

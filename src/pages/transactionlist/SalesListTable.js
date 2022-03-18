@@ -16,8 +16,6 @@ export default function SalesListTable({
   const keyAddedData = data?.map((el) => ({
     ...el,
     key: el.id,
-    quantity: el.product_quantity.quantity,
-    price_per_kg: el.product_quantity.price_per_kg,
   }));
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [productCapacity, setProductCapacity] = useState(0);
@@ -60,7 +58,7 @@ export default function SalesListTable({
     {
       title: "Price Per Kg",
       dataIndex: "price_per_kg",
-      render: (value) => `₹ ${value}`,
+      render: (value) => (value ? `₹ ${value}` : "-"),
     },
     {
       title: "Status",

@@ -1,9 +1,13 @@
 import { Form, Row, Col, Button, Input, Select, Radio, message } from "antd";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { createCustomer } from "../../api/customer.api";
 import tryCatch from "../../helper/tryCatch.helper";
 import useMasters from "../../hooks/useMasters";
+import {
+  formNameInputRestriction,
+  formPhoneInputRestriction,
+  formPincodeInputRestriction,
+} from "../../utils/formInputRestriction";
 import { toSentenceCase } from "../../utils/toSentenceCase";
 import "./createsalesorder.css";
 
@@ -23,7 +27,9 @@ export default function CreateCustomer({
       ...values,
       full_name: toSentenceCase(values.full_name),
       organization_name: toSentenceCase(values.organization_name),
+      organization_email: values.organization_email || null,
     };
+    setIsLoading(true);
     message.loading({
       content: "Creating Customer...",
       key: "createCustomer",
@@ -34,6 +40,7 @@ export default function CreateCustomer({
     );
 
     if (!customerError) {
+      setIsLoading(false);
       message.success({
         content: "Customer Created Succussfully!",
         key: "createCustomer",
@@ -42,6 +49,7 @@ export default function CreateCustomer({
       setCustomerDetail({ customer_name: full_name, customer: id });
       setIsModalVisible(false);
     } else {
+      setIsLoading(false);
       const errors = customerError.response.data.error;
       for (let err in errors) {
         const errorMessage = errors[err][0];
@@ -93,6 +101,7 @@ export default function CreateCustomer({
               ]}
             >
               <Input
+                onKeyDown={formNameInputRestriction}
                 style={{ textTransform: "capitalize" }}
                 size="large"
                 placeholder="Enter Customer Name"
@@ -117,6 +126,7 @@ export default function CreateCustomer({
               ]}
             >
               <Input
+                onKeyDown={formPhoneInputRestriction}
                 className="farm_code_input"
                 size="large"
                 placeholder="Enter Customer Mobile Number"
@@ -139,6 +149,7 @@ export default function CreateCustomer({
                 ]}
               >
                 <Input
+                  onKeyDown={formNameInputRestriction}
                   style={{ textTransform: "capitalize" }}
                   size="large"
                   placeholder="Enter Farm Name"
@@ -156,7 +167,6 @@ export default function CreateCustomer({
                   type: "email",
                   message: "Please enter valid email!",
                 },
-                { required: true, message: "Please enter Email!" },
               ]}
             >
               <Input size="large" placeholder="Enter customer email id here" />
@@ -252,7 +262,12 @@ export default function CreateCustomer({
                 },
               ]}
             >
-              <Input type="number" size="large" placeholder="Enter Pincode" />
+              <Input
+                onKeyDown={formPincodeInputRestriction}
+                type="number"
+                size="large"
+                placeholder="Enter Pincode"
+              />
             </Form.Item>
           </Col>
         </Row>

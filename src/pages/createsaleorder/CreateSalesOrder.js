@@ -23,6 +23,7 @@ import usePageInfo from "../../hooks/usePageInfo";
 import useMasters from "../../hooks/useMasters";
 import { createSalesOrder } from "../../api/sales.api";
 import BreadCrumb from "../../components/breadcrumb/BreadCrumb";
+import { formNameInputRestriction } from "../../utils/formInputRestriction";
 const { Option } = Select;
 
 export default function CreateSalesOrder() {
@@ -41,11 +42,9 @@ export default function CreateSalesOrder() {
     const postData = {
       farm: value.farm,
       customer: value.customer,
-      sales_order_product: {
-        product: value.product,
-        quantity: value.quantity,
-        price_per_kg: value.price_per_kg,
-      },
+      product: value.product,
+      quantity: value.quantity,
+      price_per_kg: value.price_per_kg,
       sales_date: value.sales_date.format("YYYY-MM-DD"),
     };
 
@@ -205,7 +204,11 @@ export default function CreateSalesOrder() {
                 name="customer_name"
                 label="Customer Name"
               >
-                <Input size="large" placeholder="Enter Customer Name here" />
+                <Input
+                  onKeyDown={formNameInputRestriction}
+                  size="large"
+                  placeholder="Enter Customer Name here"
+                />
               </Form.Item>
             </Col>
           </Row>

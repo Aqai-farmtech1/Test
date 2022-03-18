@@ -14,6 +14,7 @@ export default function ForgetPassword() {
 
   const handleFormSubmit = async () => {
     const email = form.getFieldValue("email");
+    setIsLoading(true);
     message.loading({
       content: "Processing...",
       key: "forgetPassword",
@@ -24,6 +25,7 @@ export default function ForgetPassword() {
     );
 
     if (!mailError) {
+      setIsLoading(false);
       message.success({
         content: "please Check your Mail...",
         key: "forgetPassword",
@@ -31,6 +33,7 @@ export default function ForgetPassword() {
       console.log(mailResponse.data);
       navigate("/login/checkmail");
     } else {
+      setIsLoading(false);
       message.error({
         content: "Something Went Wrong!",
         key: "forgetPassword",

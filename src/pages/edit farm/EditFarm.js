@@ -20,6 +20,11 @@ import tryCatch from "../../helper/tryCatch.helper";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { getFarm, updateFarmStatus, updateFarm } from "../../api/farm.api";
 import { toSentenceCase } from "../../utils/toSentenceCase";
+import {
+  formNameInputRestriction,
+  formPhoneInputRestriction,
+  formPincodeInputRestriction,
+} from "../../utils/formInputRestriction";
 
 const { Option } = Select;
 
@@ -256,6 +261,7 @@ export default function EditFarm() {
                 ]}
               >
                 <Input
+                  onKeyDown={formNameInputRestriction}
                   style={{ textTransform: "capitalize" }}
                   size="large"
                   placeholder="Enter your Farm Name here"
@@ -280,6 +286,7 @@ export default function EditFarm() {
                 ]}
               >
                 <Input
+                  onKeyDown={formNameInputRestriction}
                   className="farm_code_input"
                   size="large"
                   placeholder="Enter your Farm Code here"
@@ -432,7 +439,11 @@ export default function EditFarm() {
                   },
                 ]}
               >
-                <Input size="large" placeholder="Enter your Mobile No " />
+                <Input
+                  onKeyDown={formPhoneInputRestriction}
+                  size="large"
+                  placeholder="Enter your Mobile No "
+                />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -542,6 +553,7 @@ export default function EditFarm() {
                 ]}
               >
                 <Input
+                  onKeyDown={formPincodeInputRestriction}
                   type="number"
                   size="large"
                   placeholder="Enter your Farm Code here"

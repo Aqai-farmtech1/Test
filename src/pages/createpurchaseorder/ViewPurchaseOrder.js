@@ -74,7 +74,7 @@ export default function ViewPurchaseOrder() {
         <h1>Product Info</h1>
         <ViewOrderListItem
           title={"Product"}
-          value={purchaseOrderData?.product_quantity?.product_name}
+          value={purchaseOrderData?.product_name}
         />
         <ViewOrderListItem
           title={"Batch Id"}
@@ -82,11 +82,11 @@ export default function ViewPurchaseOrder() {
         />
         <ViewOrderListItem
           title={"Quantity"}
-          value={purchaseOrderData?.product_quantity?.quantity}
+          value={purchaseOrderData?.quantity}
         />
         <ViewOrderListItem
           title={"Price Per Kg"}
-          value={`₹ ${purchaseOrderData?.product_quantity?.price_per_kg}`}
+          value={`₹ ${purchaseOrderData?.price_per_kg}`}
         />
         <h1>Customer Info</h1>
         <ViewOrderListItem title={"Name"} value={purchaseOrderData.vendor} />
@@ -114,7 +114,7 @@ export default function ViewPurchaseOrder() {
         onCancel={() => setIsEditModalVisible(false)}
       >
         <EditPurchaseOrder
-          productCapacity={purchaseOrderData?.product_quantity?.quantity || 0}
+          productCapacity={purchaseOrderData?.quantity || 0}
           orderId={purchaseid}
           setIsEditModalVisible={setIsEditModalVisible}
           getPurchaseDetail={getPurchaseDetail}
