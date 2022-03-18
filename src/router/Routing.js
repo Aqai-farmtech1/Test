@@ -23,6 +23,8 @@ import CreatePurchaseOrder from "../pages/createpurchaseorder/CreatePurchaseOrde
 import CreateTransferOrder from "../pages/createtransfer/CreateTransfer";
 import ProfilePage from "../pages/profile/ProfilePage";
 import ProfileUpdate from "../pages/profileupdate/ProfileUpdate";
+import ViewSalesOrder from "../pages/createsaleorder/ViewSalesOrder";
+import ViewPurchaseOrder from "../pages/createpurchaseorder/ViewPurchaseOrder";
 
 const AuthenticatedRoutes = [
   {
@@ -72,8 +74,24 @@ const AuthenticatedRoutes = [
     path: "transactions",
   },
   {
+    element: <TransactionList />,
+    path: "transactions/sales",
+  },
+  {
+    element: <TransactionList />,
+    path: "transactions/purchase",
+  },
+  {
     element: <CreateSalesOrder />,
     path: "transactions/sales/create",
+  },
+  {
+    element: <ViewSalesOrder />,
+    path: "transactions/sales/:salesid",
+  },
+  {
+    element: <ViewPurchaseOrder />,
+    path: "transactions/purchase/:purchaseid",
   },
   {
     element: <CreatePurchaseOrder />,

@@ -89,3 +89,26 @@
 .highlight_match {
   color: #2d9cdb;
 }
+
+.edit_purchase_main {
+  display: flex;
+  flex-direction: column;
+  width: 25vw;
+}
+
+.edit_purchase_main h1 {
+  display: flex;
+  font-family: Manrope;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+.update_po_button {
+  border-radius: 4px;
+}

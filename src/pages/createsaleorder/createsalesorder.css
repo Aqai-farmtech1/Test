@@ -89,3 +89,88 @@
 .highlight_match {
   color: #2d9cdb;
 }
+
+.edit_sales_main {
+  display: flex;
+  flex-direction: column;
+  width: 25vw;
+}
+
+.edit_sales_main h1 {
+  display: flex;
+  font-family: Manrope;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+.update_so_button {
+  border-radius: 4px;
+}
+
+.view_order_main {
+  display: flex;
+  width: 100%;
+  margin-top: 20px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px 30px;
+  position: relative;
+  flex-direction: column;
+}
+
+.view_order_main h1 {
+  display: flex;
+  font-family: Manrope;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin: 0;
+  margin-bottom: 27px;
+}
+
+.order_edit_button {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+}
+
+.view_order_list_item {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.view_order_list_item h1 {
+  display: flex;
+  margin: 0px;
+  font-family: Manrope;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.6);
+  min-width: 300px;
+}
+
+.view_order_list_item h2 {
+  display: flex;
+  margin: 0px;
+  font-family: Manrope;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+  min-width: 200px;
+}
