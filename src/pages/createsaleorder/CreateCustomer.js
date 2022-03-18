@@ -15,7 +15,6 @@ export default function CreateCustomer({
   const [isLoading, setIsLoading] = useState(false);
   const { stateMaster } = useMasters();
   const [form] = Form.useForm();
-  const navigate = useNavigate();
 
   const handleFormSubmit = async (values) => {
     message.loading({
@@ -238,9 +237,7 @@ export default function CreateCustomer({
             <Button
               className="create_farm_form_item_buttons"
               style={{ margin: "0 8px" }}
-              onClick={() => {
-                navigate("/farm");
-              }}
+              onClick={() => setIsModalVisible(false)}
             >
               Cancel
             </Button>

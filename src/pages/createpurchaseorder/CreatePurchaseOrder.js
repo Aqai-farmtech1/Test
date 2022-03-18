@@ -159,7 +159,7 @@ export default function CreatePurchaseOrder() {
               <Form.Item
                 className="create_farm_form_item"
                 name="vendor"
-                label="Mobile No"
+                label="Vendor Mobile No"
                 rules={[
                   {
                     required: true,
@@ -309,7 +309,13 @@ export default function CreatePurchaseOrder() {
               }}
               className="create_farm_form_item_buttons"
               onClick={() => {
-                navigate("/transactions");
+                navigate("/transactions", {
+                  state: {
+                    activeTab: "2",
+                    activeName: "Purchase",
+                    activeLink: "purchase",
+                  },
+                });
               }}
             >
               Cancel

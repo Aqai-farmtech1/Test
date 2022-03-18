@@ -15,12 +15,15 @@ import usePageInfo from "../../../hooks/usePageInfo";
 import { useNavigate } from "react-router-dom";
 import tryCatch from "../../../helper/tryCatch.helper";
 import { logout } from "../../../api/logout.api";
+import Modal from "antd/lib/modal/Modal";
+import ChangePassword from "../../../pages/changepassword/ChangePassword";
 
 const { Header, Sider, Content } = Layout;
 
 export default function MainLayout() {
   const token = localStorage.getItem("token");
   const [collapse, setCollapse] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState("1");
   const { pageTitle } = usePageInfo();
   const location = useLocation();
@@ -90,7 +93,12 @@ export default function MainLayout() {
         <Divider className="profile_dropdown_divider" />
       </li>
       <li>
-        <div className="profile_dropdown_list_content">Change Password</div>
+        <div
+          onClick={() => setIsModalVisible(true)}
+          className="profile_dropdown_list_content"
+        >
+          Change Password
+        </div>
         <Divider className="profile_dropdown_divider" />
       </li>
       <li onClick={handleLogout}>
@@ -151,6 +159,15 @@ export default function MainLayout() {
         </Header>
         <Content className="layout_content">
           <Outlet />
+          <Modal
+            onCancel={() => setIsModalVisible(false)}
+            visible={isModalVisible}
+            title={null}
+            footer={null}
+            destroyOnClose
+          >
+            <ChangePassword />
+          </Modal>
         </Content>
       </Layout>
     </Layout>

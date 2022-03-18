@@ -161,7 +161,7 @@ export default function CreateSalesOrder() {
               <Form.Item
                 className="create_farm_form_item"
                 name="customer"
-                label="Mobile No"
+                label="Customer Mobile No"
                 rules={[
                   {
                     required: true,
@@ -311,7 +311,13 @@ export default function CreateSalesOrder() {
               }}
               className="create_farm_form_item_buttons"
               onClick={() => {
-                navigate("/transactions");
+                navigate("/transactions", {
+                  state: {
+                    activeTab: "1",
+                    activeName: "Sales",
+                    activeLink: "sales",
+                  },
+                });
               }}
             >
               Cancel

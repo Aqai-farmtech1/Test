@@ -255,7 +255,6 @@ export default function DeviceList() {
         />
       </div>
       <Modal
-        width={478}
         title={["Add Device"]}
         visible={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
@@ -269,7 +268,6 @@ export default function DeviceList() {
       </Modal>
       <Modal
         destroyOnClose={true}
-        width={478}
         title={["Edit Device"]}
         visible={isEditModalVisible}
         onCancel={() => setIsEditModalVisible(false)}

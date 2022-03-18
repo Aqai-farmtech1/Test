@@ -234,9 +234,7 @@ export default function CreateVendor({ setIsModalVisible, setVendorDetail }) {
             <Button
               className="create_farm_form_item_buttons"
               style={{ margin: "0 8px" }}
-              onClick={() => {
-                navigate("/farm");
-              }}
+              onClick={() => setIsModalVisible(false)}
             >
               Cancel
             </Button>

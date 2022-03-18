@@ -1,5 +1,5 @@
 .add_device_main {
   display: flex;
-  width: 100%;
+  width: 25vw;
   flex-direction: column;
 }

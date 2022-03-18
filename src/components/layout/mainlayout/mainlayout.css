@@ -15,7 +15,11 @@
   margin-bottom: 8px !important;
 }
 
-.ant-menu-item-active .ant-menu-item-selected {
+.ant-menu-item-active {
+  color: #2d9cdb !important;
+}
+
+.ant-menu-item-selected {
   color: #2d9cdb !important;
 }
 

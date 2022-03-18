@@ -101,6 +101,7 @@ export default function Login() {
 
             <Form.Item>
               <Button
+                size="large"
                 loading={isLoading}
                 type="primary"
                 htmlType="submit"

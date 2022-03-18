@@ -9,6 +9,7 @@ import weightDiffUpArrow from "../assets/svg/weight_diff_up.svg";
 import weightDiffDownArrow from "../assets/svg/weight_diff_down.svg";
 import weightIcon24 from "../assets/svg/weight_icon_24x24.svg";
 import avtarSvg from "../assets/svg/avtar.svg";
+import profileImageIcon from "../assets/svg/profile-img-icon.svg";
 
 export {
   notificationIcon,
@@ -21,6 +22,7 @@ export {
   weightDiffUpArrow,
   weightIcon24,
   avtarSvg,
+  profileImageIcon,
 };
 
 //IMAGES

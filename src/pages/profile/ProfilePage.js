@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./profilepage.css";
 import ViewUserContent from "./ViewUserContent";
-import { editIconWhite } from "../../utils/constants";
+import {
+  avtarSvg,
+  editIconWhite,
+  profileImageIcon,
+} from "../../utils/constants";
 import { NavLink, useParams } from "react-router-dom";
-import { Button, Skeleton, Space } from "antd";
+import { Button, message, Skeleton, Space, Upload } from "antd";
 import usePageInfo from "../../hooks/usePageInfo";
 import BreadCrumb from "../../components/breadcrumb/BreadCrumb";
 import tryCatch from "../../helper/tryCatch.helper";
@@ -24,11 +28,28 @@ export default function Profile() {
       setIsLoading(false);
       setUserData(userResponse.data);
       setBreadCrumbPath(`/user/${userResponse.data.fullname}`);
+      console.log(userResponse.data);
     } else {
       setIsLoading(false);
       setBreadCrumbPath(`/user/${""}`);
       console.log(userError.response);
     }
+  };
+
+  const handleChange = (info) => {
+    console.log(info);
+  };
+
+  const beforeUpload = (file) => {
+    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+    if (!isJpgOrPng) {
+      message.error("You can only upload JPG/PNG file!");
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      message.error("Image must smaller than 2MB!");
+    }
+    return isJpgOrPng && isLt2M;
   };
 
   useEffect(() => {
@@ -54,7 +75,22 @@ export default function Profile() {
         ) : (
           <>
             <div className="view_user_title_section1">Basic Info</div>
-            <div className=""></div>
+            <div className="profile_image_wrapper_container">
+              <div className="profile_image_wrapper">
+                <img
+                  className="profile_image"
+                  src={userData.image || avtarSvg}
+                  alt="avtar"
+                />
+              </div>
+              <Upload beforeUpload={beforeUpload} onChange={handleChange}>
+                <img
+                  className="profile_image_icon"
+                  src={profileImageIcon}
+                  alt="img icon"
+                />
+              </Upload>
+            </div>
             <ViewUserContent title="Emp Name" value={userData.fullname} />
             <ViewUserContent title="Emp Code" value={userData.employee_id} />
             <ViewUserContent title="Email Id" value={userData.email} />

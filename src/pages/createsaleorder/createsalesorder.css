@@ -61,12 +61,12 @@
 }
 
 .ant-modal {
-  width: 70% !important;
+  width: max-content !important;
 }
 
 .create_customer {
   display: flex;
-  width: 100%;
+  width: 70vw;
   flex-direction: column;
 }
 
