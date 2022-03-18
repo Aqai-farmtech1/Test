@@ -19,6 +19,11 @@ import tryCatch from "../../helper/tryCatch.helper";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { createFarm } from "../../api/farm.api";
 import { toSentenceCase } from "../../utils/toSentenceCase";
+import {
+  formNameInputRestriction,
+  formPhoneInputRestriction,
+  formPincodeInputRestriction,
+} from "../../utils/formInputRestriction";
 
 const { Option } = Select;
 
@@ -145,6 +150,7 @@ export default function CreateFarm() {
                 ]}
               >
                 <Input
+                  onKeyDown={(e) => formNameInputRestriction(e)}
                   style={{ textTransform: "capitalize" }}
                   size="large"
                   placeholder="Enter your Farm Name here"
@@ -169,6 +175,7 @@ export default function CreateFarm() {
                 ]}
               >
                 <Input
+                  onKeyDown={(e) => formNameInputRestriction(e)}
                   className="farm_code_input"
                   size="large"
                   placeholder="Enter your Farm Code here"
@@ -320,13 +327,14 @@ export default function CreateFarm() {
                 rules={[
                   { required: true, message: "Please enter your Phone No!" },
                   {
-                    max: 10,
+                    max: 13,
                     min: 10,
                     message: "Invalid Phone No!",
                   },
                 ]}
               >
                 <Input
+                  onKeyDown={(e) => formPhoneInputRestriction(e)}
                   type={"number"}
                   size="large"
                   placeholder="Enter your Mobile No "
@@ -443,6 +451,7 @@ export default function CreateFarm() {
                 ]}
               >
                 <Input
+                  onKeyDown={(e) => formPincodeInputRestriction(e)}
                   type="number"
                   size="large"
                   placeholder="Enter your Farm Code here"

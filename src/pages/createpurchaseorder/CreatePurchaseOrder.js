@@ -1,20 +1,17 @@
 import React, { createRef, useEffect, useState } from "react";
 import "./createpurchaseorder.css";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Form,
-  Radio,
   Row,
   Col,
   Input,
   Button,
   Select,
   DatePicker,
-  Empty,
   ConfigProvider,
   Modal,
   message,
-  InputNumber,
 } from "antd";
 import tryCatch from "../../helper/tryCatch.helper";
 import { searchVendor } from "../../api/vendor.api";
@@ -23,6 +20,7 @@ import useMasters from "../../hooks/useMasters";
 import { createPurchase } from "../../api/purchase.api";
 import CreateVendor from "./CreateVendor";
 import BreadCrumb from "../../components/breadcrumb/BreadCrumb";
+import { formNameInputRestriction } from "../../utils/formInputRestriction";
 const { Option } = Select;
 
 export default function CreatePurchaseOrder() {
@@ -41,11 +39,9 @@ export default function CreatePurchaseOrder() {
     const postData = {
       farm: value.farm,
       vendor: value.vendor,
-      purchase_order_product: {
-        product: value.product,
-        quantity: value.quantity,
-        price_per_kg: value.price_per_kg,
-      },
+      product: value.product,
+      quantity: value.quantity,
+      price_per_kg: value.price_per_kg,
       purchase_date: value.purchase_date.format("YYYY-MM-DD"),
     };
 
@@ -202,7 +198,11 @@ export default function CreatePurchaseOrder() {
                 name="vendor_name"
                 label="Vendor Name"
               >
-                <Input size="large" placeholder="Enter Vendor Name here" />
+                <Input
+                  onKeyDown={formNameInputRestriction}
+                  size="large"
+                  placeholder="Enter Vendor Name here"
+                />
               </Form.Item>
             </Col>
           </Row>

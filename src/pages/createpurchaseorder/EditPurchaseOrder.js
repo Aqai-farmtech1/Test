@@ -19,6 +19,7 @@ export default function EditPurchaseOrder({
   });
 
   const handleFormSubmit = async (value) => {
+    setIsLoading(true);
     message.loading({
       content: "Updating Order Quantity...",
       key: "updateOrder",
@@ -29,6 +30,7 @@ export default function EditPurchaseOrder({
     );
 
     if (!orderUpdateError) {
+      setIsLoading(false);
       message.success({
         content: "Order Quantity Updated Successfully!",
         key: "updateOrder",
@@ -38,6 +40,7 @@ export default function EditPurchaseOrder({
       getPurchaseDetail && getPurchaseDetail();
       setIsEditModalVisible(false);
     } else {
+      setIsLoading(false);
       const errors = orderUpdateError.response.data.error;
       for (let err in errors) {
         const errorMessage = errors[err][0];

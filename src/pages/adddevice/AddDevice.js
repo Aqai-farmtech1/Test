@@ -5,6 +5,7 @@ import useMasters from "../../hooks/useMasters";
 import tryCatch from "../../helper/tryCatch.helper";
 import { createDevice } from "../../api/device.api";
 import usePageInfo from "../../hooks/usePageInfo";
+import { formNameInputRestriction } from "../../utils/formInputRestriction";
 
 const { Option } = Select;
 
@@ -86,7 +87,11 @@ export default function AddDevice({
             },
           ]}
         >
-          <Input size="large" placeholder="Enter Device Name" />
+          <Input
+            onKeyDown={formNameInputRestriction}
+            size="large"
+            placeholder="Enter Device Name"
+          />
         </Form.Item>
         <Form.Item
           className="create_farm_form_item"
