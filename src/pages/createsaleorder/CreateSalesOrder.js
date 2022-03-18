@@ -271,7 +271,7 @@ export default function CreateSalesOrder() {
               <Input
                 className="farm_code_input"
                 size="large"
-                placeholder="Enter your Farm Code here"
+                placeholder="Enter Product Capacity"
               />
             </Form.Item>
           </Col>

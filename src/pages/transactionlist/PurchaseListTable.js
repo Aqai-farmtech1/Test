@@ -1,9 +1,11 @@
 import { Button, Table } from "antd";
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./transactionlist.css";
 import { editIcon, viewIcon } from "../../utils/constants";
 import usePageInfo from "../../hooks/usePageInfo";
+import Modal from "antd/lib/modal/Modal";
+import EditPurchaseOrder from "../createpurchaseorder/EditPurchaseOrder";
 
 export default function PurchaseListTable({
   transactionData,
@@ -18,11 +20,18 @@ export default function PurchaseListTable({
     quantity: el.product_quantity.quantity,
     price_per_kg: el.product_quantity.price_per_kg,
   }));
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  const [productCapacity, setProductCapacity] = useState(0);
+  const [orderId, setOrderId] = useState(0);
 
   const columns = [
     {
       title: "P.O Number",
       dataIndex: "purchase_order_id",
+    },
+    {
+      title: "Batch Id",
+      dataIndex: "batch_id",
     },
     {
       title: "Farm",
@@ -62,33 +71,16 @@ export default function PurchaseListTable({
             block
             type="primary"
             ghost
+            onClick={() => {
+              setIsEditModalVisible(true);
+              setOrderId(columns.key);
+              setProductCapacity(columns.quantity);
+            }}
           >
             <img className="button_icon" src={editIcon} alt="edit icon" />
             Edit
           </Button>
-          <Button
-            className="user_list_buttons"
-            style={{ borderRadius: "4px", marginLeft: 6 }}
-            block
-            type="primary"
-            ghost
-          >
-            <img className="button_icon" src={viewIcon} alt="view icon" />
-            View
-          </Button>
-          {/* <NavLink to={`/user/edit/${columns.key}`}>
-            <Button
-              className="user_list_buttons"
-              style={{ borderRadius: "4px" }}
-              block
-              type="primary"
-              ghost
-            >
-              <img className="button_icon" src={editIcon} alt="edit icon" />
-              Edit
-            </Button>
-          </NavLink>
-          <NavLink to={`/user/view/${columns.key}`}>
+          <NavLink to={`/transactions/purchase/${columns.key}`}>
             <Button
               className="user_list_buttons"
               style={{ borderRadius: "4px", marginLeft: 6 }}
@@ -99,7 +91,7 @@ export default function PurchaseListTable({
               <img className="button_icon" src={viewIcon} alt="view icon" />
               View
             </Button>
-          </NavLink> */}
+          </NavLink>
         </div>
       ),
     },
@@ -122,6 +114,20 @@ export default function PurchaseListTable({
         columns={columns}
         dataSource={keyAddedData}
       />
+      <Modal
+        visible={isEditModalVisible}
+        title={null}
+        footer={null}
+        onCancel={() => setIsEditModalVisible(false)}
+      >
+        <EditPurchaseOrder
+          productCapacity={productCapacity}
+          orderId={orderId}
+          setIsEditModalVisible={setIsEditModalVisible}
+          getTransactionList={getTransactionList}
+          selectedStatus={selectedStatus}
+        />
+      </Modal>
     </>
   );
 }
