@@ -136,8 +136,8 @@ export default function TransactionList() {
 
   const orderStatusStatic = {
     0: "All",
-    1: "Initiated",
-    2: "In Transit",
+    1: "Created",
+    2: "Weighing",
     3: "Completed",
     4: "Cancelled",
   };
@@ -145,8 +145,8 @@ export default function TransactionList() {
   const menu = (
     <Menu onClick={handleMenuClick}>
       <Menu.Item key={0}>All</Menu.Item>
-      <Menu.Item key={1}>Initiated</Menu.Item>
-      <Menu.Item key={2}>In Transit</Menu.Item>
+      <Menu.Item key={1}>Created</Menu.Item>
+      <Menu.Item key={2}>Weighing</Menu.Item>
       <Menu.Item key={3}>Completed</Menu.Item>
       <Menu.Item key={4}>Cancelled</Menu.Item>
     </Menu>

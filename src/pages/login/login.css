@@ -53,13 +53,13 @@
 }
 
 .username_input_form {
-  width: 400px !important;
+  width: 498px !important;
   height: 40px !important;
   margin-bottom: 30px !important;
 }
 .password_input_form {
   margin-bottom: 30px !important;
-  height: 40px !important;
+  height: 48px !important;
 }
 
 /* .ant-form-item {

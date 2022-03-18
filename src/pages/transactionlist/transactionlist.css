@@ -30,14 +30,14 @@
   line-height: 24px;
   letter-spacing: 0em;
   text-align: left;
-  margin-left: 60px;
-}
-
-.ant-tabs-tab:nth-child(2) {
-  margin-left: 0px;
+  margin-right: 60px;
 }
 
 .ant-tabs-tab:first-child {
+  margin-right: 0px;
+}
+
+.ant-tabs-tab:nth-child(2) {
   margin-left: 0px;
 }
 

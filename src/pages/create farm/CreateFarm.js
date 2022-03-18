@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import tryCatch from "../../helper/tryCatch.helper";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { createFarm } from "../../api/farm.api";
+import { toSentenceCase } from "../../utils/toSentenceCase";
 
 const { Option } = Select;
 
@@ -57,7 +58,7 @@ export default function CreateFarm() {
 
     const postData = {
       farm_type,
-      name,
+      name: toSentenceCase(name),
       code: code.toUpperCase(),
       latitude,
       longitude,
