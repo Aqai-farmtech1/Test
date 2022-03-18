@@ -19,6 +19,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import tryCatch from "../../helper/tryCatch.helper";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { getFarm, updateFarmStatus, updateFarm } from "../../api/farm.api";
+import { toSentenceCase } from "../../utils/toSentenceCase";
 
 const { Option } = Select;
 
@@ -94,8 +95,8 @@ export default function EditFarm() {
     const postData = {
       farm_type,
       allowed_product: alteredData.allowed_product,
-      name,
-      code,
+      name: toSentenceCase(name),
+      code: code.toUpperCase(),
       address1: alteredData.primary_address,
       pincode,
       latitude,
@@ -107,7 +108,6 @@ export default function EditFarm() {
       email,
       product_capacity: alteredData.product_capacity,
     };
-
     setIsLoading(true);
     message.loading({
       content: "Updating Farm Details...",
@@ -162,6 +162,7 @@ export default function EditFarm() {
         phone_no,
         pincode,
         state,
+        status,
         product_capacity,
       } = farmResponse.data;
 
@@ -186,6 +187,7 @@ export default function EditFarm() {
         state,
         products,
       });
+      setIsActive(status);
       setFarmDetails(farmResponse.data);
       setSelectedProduct(products);
     } else {

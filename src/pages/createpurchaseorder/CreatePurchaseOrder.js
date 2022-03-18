@@ -14,6 +14,7 @@ import {
   ConfigProvider,
   Modal,
   message,
+  InputNumber,
 } from "antd";
 import tryCatch from "../../helper/tryCatch.helper";
 import { searchVendor } from "../../api/vendor.api";
@@ -21,6 +22,7 @@ import usePageInfo from "../../hooks/usePageInfo";
 import useMasters from "../../hooks/useMasters";
 import { createPurchase } from "../../api/purchase.api";
 import CreateVendor from "./CreateVendor";
+import BreadCrumb from "../../components/breadcrumb/BreadCrumb";
 const { Option } = Select;
 
 export default function CreatePurchaseOrder() {
@@ -145,195 +147,210 @@ export default function CreatePurchaseOrder() {
   }, []);
 
   return (
-    <div className="order_create_main">
-      <h1>Purchase Order</h1>
-      <Form
-        form={form}
-        style={{ width: "100%" }}
-        layout="vertical"
-        onFinish={handleFormSubmit}
-      >
-        <Row gutter={20}>
-          <Col span={12}>
-            <ConfigProvider renderEmpty={selectEmptyRender}>
+    <>
+      <BreadCrumb />
+      <div className="order_create_main">
+        <h1>Purchase Order</h1>
+        <Form
+          form={form}
+          style={{ width: "100%" }}
+          layout="vertical"
+          onFinish={handleFormSubmit}
+        >
+          <Row gutter={20}>
+            <Col span={12}>
+              <ConfigProvider renderEmpty={selectEmptyRender}>
+                <Form.Item
+                  className="create_farm_form_item"
+                  name="vendor"
+                  label="Vendor Mobile No"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please enter Vendor Mobile No.",
+                    },
+                  ]}
+                >
+                  <Select
+                    loading={isCustomerLoading}
+                    ref={mobileRef}
+                    defaultActiveFirstOption={false}
+                    showArrow={false}
+                    filterOption={false}
+                    size="large"
+                    onChange={handleCustomerChange}
+                    className="dropdown_form"
+                    showSearch
+                    placeholder="Enter Vendor Mobile No. here"
+                    onSearch={handleSearch}
+                  >
+                    {vendorList.map((el) => (
+                      <Option key={el.id} value={el.id}>
+                        <span className="highlight_match">
+                          {el.phone_num.slice(0, searchPhoneLength)}
+                        </span>
+                        {el.phone_num.slice(searchPhoneLength)} - {el.full_name}
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </ConfigProvider>
+            </Col>
+            <Col span={12}>
               <Form.Item
                 className="create_farm_form_item"
-                name="vendor"
-                label="Vendor Mobile No"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please enter customer Mobile No.",
-                  },
-                ]}
+                name="vendor_name"
+                label="Vendor Name"
+              >
+                <Input size="large" placeholder="Enter Vendor Name here" />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={20}>
+            <Col span={12}>
+              <Form.Item
+                className="create_farm_form_item"
+                name="farm"
+                label="Farm"
+                rules={[{ required: true, message: "Please select Farm." }]}
               >
                 <Select
-                  loading={isCustomerLoading}
-                  ref={mobileRef}
-                  defaultActiveFirstOption={false}
-                  showArrow={false}
-                  filterOption={false}
-                  size="large"
-                  onChange={handleCustomerChange}
-                  className="dropdown_form"
                   showSearch
-                  placeholder="Enter Customer Mobile No. here"
-                  onSearch={handleSearch}
+                  optionFilterProp="children"
+                  size="large"
+                  placeholder="Select a Farm"
                 >
-                  {vendorList.map((el) => (
+                  {farmMaster?.map((el) => (
                     <Option key={el.id} value={el.id}>
-                      <span className="highlight_match">
-                        {el.phone_num.slice(0, searchPhoneLength)}
-                      </span>
-                      {el.phone_num.slice(searchPhoneLength)} - {el.full_name}
+                      {el.farm_name} - {el.code}
                     </Option>
                   ))}
                 </Select>
               </Form.Item>
-            </ConfigProvider>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              className="create_farm_form_item"
-              name="vendor_name"
-              label="Vendor Name"
-            >
-              <Input size="large" placeholder="Enter Customer Name here" />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={20}>
-          <Col span={12}>
-            <Form.Item
-              className="create_farm_form_item"
-              name="farm"
-              label="Farm"
-              rules={[{ required: true, message: "Please select Farm." }]}
-            >
-              <Select
-                showSearch
-                optionFilterProp="children"
-                size="large"
-                placeholder="Select a Farm"
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                className="create_farm_form_item"
+                name="purchase_date"
+                label="Purchase Date"
+                rules={[
+                  { required: true, message: "Please select purchase date." },
+                ]}
               >
-                {farmMaster?.map((el) => (
-                  <Option key={el.id} value={el.id}>
-                    {el.farm_name} - {el.code}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              className="create_farm_form_item"
-              name="purchase_date"
-              label="Purchase Date"
-              rules={[{ required: true, message: "Please select sales date." }]}
-            >
-              <DatePicker size="large" style={{ width: "100%" }} />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={20}>
-          <Col span={12}>
-            <Form.Item
-              className="create_farm_form_item"
-              name="product"
-              label="Product"
-              rules={[{ required: true, message: "Please select Product!" }]}
-            >
-              <Select
-                showSearch
-                optionFilterProp="children"
-                size="large"
-                placeholder="Select a Product"
+                <DatePicker
+                  format={"DD/MM/YYYY"}
+                  size="large"
+                  style={{ width: "100%" }}
+                  placeholder="Select Purchase Date"
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={20}>
+            <Col span={12}>
+              <Form.Item
+                className="create_farm_form_item"
+                name="product"
+                label="Product"
+                rules={[{ required: true, message: "Please select Product!" }]}
               >
-                {productMaster?.map((el) => (
-                  <Option key={el.code} value={el.code}>
-                    {el.name}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={7}>
-            <Form.Item
-              className="create_farm_form_item"
-              name="quantity"
-              label="Quantity"
-              rules={[
-                { required: true, message: "Please enter product quantity!" },
-              ]}
-            >
-              <Input
-                className="farm_code_input"
-                size="large"
-                placeholder="Enter your Farm Code here"
-              />
-            </Form.Item>
-          </Col>
-          <Col span={5}>
-            <Form.Item
-              className="create_farm_form_item"
-              name="price_per_kg"
-              label="Price Per Kg"
-              rules={[{ required: true, message: "Please enter price per kg" }]}
-            >
-              <Input
-                prefix="₹"
-                className="farm_code_input"
-                size="large"
-                placeholder="Enter your Farm Code here"
-              />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row className="create_farm_action_button_area">
-          <Col span={24} style={{ textAlign: "left" }}>
-            <Button
-              loading={isLoading}
-              style={{ padding: "9px 38px", height: "auto" }}
-              className="create_farm_form_item_buttons"
-              type="primary"
-              htmlType="submit"
-            >
-              Create
-            </Button>
-            <Button
-              style={{
-                paddingTop: "9px",
-                paddingBottom: "9px",
-                height: "auto",
-                margin: "0 12px",
-              }}
-              className="create_farm_form_item_buttons"
-              onClick={() => {
-                navigate("/transactions", {
-                  state: {
-                    activeTab: "2",
-                    activeName: "Purchase",
-                    activeLink: "purchase",
-                  },
-                });
-              }}
-            >
-              Cancel
-            </Button>
-          </Col>
-        </Row>
-      </Form>
-      <Modal
-        title={null}
-        onCancel={() => setIsModalVisible(false)}
-        visible={isModalVisible}
-        footer={null}
-      >
-        <CreateVendor
-          setVendorDetail={setVendorDetail}
-          setIsModalVisible={setIsModalVisible}
-        />
-      </Modal>
-    </div>
+                <Select
+                  showSearch
+                  optionFilterProp="children"
+                  size="large"
+                  placeholder="Select a Product"
+                >
+                  {productMaster?.map((el) => (
+                    <Option key={el.code} value={el.code}>
+                      {el.name}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={7}>
+              <Form.Item
+                className="create_farm_form_item"
+                name="quantity"
+                label="Quantity"
+                rules={[
+                  { required: true, message: "Please enter product quantity!" },
+                ]}
+              >
+                <Input
+                  type="number"
+                  className="farm_code_input"
+                  size="large"
+                  placeholder="Enter Product Quantity."
+                />
+              </Form.Item>
+            </Col>
+            <Col span={5}>
+              <Form.Item
+                className="create_farm_form_item"
+                name="price_per_kg"
+                label="Price Per Kg"
+                rules={[
+                  { required: true, message: "Please enter price per kg" },
+                ]}
+              >
+                <Input
+                  type="number"
+                  prefix="₹"
+                  className="farm_code_input"
+                  size="large"
+                  placeholder="Enter Product Price perKg"
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row className="create_farm_action_button_area">
+            <Col span={24} style={{ textAlign: "left" }}>
+              <Button
+                loading={isLoading}
+                style={{ padding: "9px 38px", height: "auto" }}
+                className="create_farm_form_item_buttons"
+                type="primary"
+                htmlType="submit"
+              >
+                Create
+              </Button>
+              <Button
+                style={{
+                  paddingTop: "9px",
+                  paddingBottom: "9px",
+                  height: "auto",
+                  margin: "0 12px",
+                }}
+                className="create_farm_form_item_buttons"
+                onClick={() => {
+                  navigate("/transactions", {
+                    state: {
+                      activeTab: "2",
+                      activeName: "Purchase",
+                      activeLink: "purchase",
+                    },
+                  });
+                }}
+              >
+                Cancel
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+        <Modal
+          destroyOnClose
+          title={null}
+          onCancel={() => setIsModalVisible(false)}
+          visible={isModalVisible}
+          footer={null}
+        >
+          <CreateVendor
+            setVendorDetail={setVendorDetail}
+            setIsModalVisible={setIsModalVisible}
+          />
+        </Modal>
+      </div>
+    </>
   );
 }

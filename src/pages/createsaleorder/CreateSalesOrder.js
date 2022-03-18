@@ -14,6 +14,7 @@ import {
   ConfigProvider,
   Modal,
   message,
+  InputNumber,
 } from "antd";
 import CreateCustomer from "./CreateCustomer";
 import tryCatch from "../../helper/tryCatch.helper";
@@ -21,6 +22,7 @@ import { searchCustomer } from "../../api/customer.api";
 import usePageInfo from "../../hooks/usePageInfo";
 import useMasters from "../../hooks/useMasters";
 import { createSalesOrder } from "../../api/sales.api";
+import BreadCrumb from "../../components/breadcrumb/BreadCrumb";
 const { Option } = Select;
 
 export default function CreateSalesOrder() {
@@ -147,195 +149,211 @@ export default function CreateSalesOrder() {
   }, []);
 
   return (
-    <div className="order_create_main">
-      <h1>Sales Order</h1>
-      <Form
-        form={form}
-        style={{ width: "100%" }}
-        layout="vertical"
-        onFinish={handleFormSubmit}
-      >
-        <Row gutter={20}>
-          <Col span={12}>
-            <ConfigProvider renderEmpty={selectEmptyRender}>
+    <>
+      <BreadCrumb />
+      <div className="order_create_main">
+        <h1>Sales Order</h1>
+        <Form
+          form={form}
+          style={{ width: "100%" }}
+          layout="vertical"
+          onFinish={handleFormSubmit}
+        >
+          <Row gutter={20}>
+            <Col span={12}>
+              <ConfigProvider renderEmpty={selectEmptyRender}>
+                <Form.Item
+                  className="create_farm_form_item"
+                  name="customer"
+                  label="Customer Mobile No"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please enter customer Mobile No.",
+                    },
+                  ]}
+                >
+                  <Select
+                    loading={isCustomerLoading}
+                    ref={mobileRef}
+                    defaultActiveFirstOption={false}
+                    showArrow={false}
+                    filterOption={false}
+                    size="large"
+                    onChange={handleCustomerChange}
+                    className="dropdown_form"
+                    showSearch
+                    placeholder="Enter Customer Mobile No. here"
+                    onSearch={handleSearch}
+                  >
+                    {customerList.map((el) => (
+                      <Option key={el.id} value={el.id}>
+                        <span className="highlight_match">
+                          {el.phone_num?.slice(0, searchPhoneLength)}
+                        </span>
+                        {el.phone_num?.slice(searchPhoneLength)} -{" "}
+                        {el.full_name}
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </ConfigProvider>
+            </Col>
+            <Col span={12}>
               <Form.Item
                 className="create_farm_form_item"
-                name="customer"
-                label="Customer Mobile No"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please enter customer Mobile No.",
-                  },
-                ]}
+                name="customer_name"
+                label="Customer Name"
+              >
+                <Input size="large" placeholder="Enter Customer Name here" />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={20}>
+            <Col span={12}>
+              <Form.Item
+                className="create_farm_form_item"
+                name="farm"
+                label="Farm"
+                rules={[{ required: true, message: "Please select Farm." }]}
               >
                 <Select
-                  loading={isCustomerLoading}
-                  ref={mobileRef}
-                  defaultActiveFirstOption={false}
-                  showArrow={false}
-                  filterOption={false}
-                  size="large"
-                  onChange={handleCustomerChange}
-                  className="dropdown_form"
                   showSearch
-                  placeholder="Enter Customer Mobile No. here"
-                  onSearch={handleSearch}
+                  optionFilterProp="children"
+                  size="large"
+                  placeholder="Select a Farm"
                 >
-                  {customerList.map((el) => (
+                  {farmMaster?.map((el) => (
                     <Option key={el.id} value={el.id}>
-                      <span className="highlight_match">
-                        {el.phone_num?.slice(0, searchPhoneLength)}
-                      </span>
-                      {el.phone_num?.slice(searchPhoneLength)} - {el.full_name}
+                      {el.farm_name} - {el.code}
                     </Option>
                   ))}
                 </Select>
               </Form.Item>
-            </ConfigProvider>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              className="create_farm_form_item"
-              name="customer_name"
-              label="Customer Name"
-            >
-              <Input size="large" placeholder="Enter Customer Name here" />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={20}>
-          <Col span={12}>
-            <Form.Item
-              className="create_farm_form_item"
-              name="farm"
-              label="Farm"
-              rules={[{ required: true, message: "Please select Farm." }]}
-            >
-              <Select
-                showSearch
-                optionFilterProp="children"
-                size="large"
-                placeholder="Select a Farm"
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                className="create_farm_form_item"
+                name="sales_date"
+                label="Sales Date"
+                rules={[
+                  { required: true, message: "Please select sales date." },
+                ]}
               >
-                {farmMaster?.map((el) => (
-                  <Option key={el.id} value={el.id}>
-                    {el.farm_name} - {el.code}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              className="create_farm_form_item"
-              name="sales_date"
-              label="Sales Date"
-              rules={[{ required: true, message: "Please select sales date." }]}
-            >
-              <DatePicker size="large" style={{ width: "100%" }} />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={20}>
-          <Col span={12}>
-            <Form.Item
-              className="create_farm_form_item"
-              name="product"
-              label="Product"
-              rules={[{ required: true, message: "Please select Product!" }]}
-            >
-              <Select
-                showSearch
-                optionFilterProp="children"
-                size="large"
-                placeholder="Select a Product"
+                <DatePicker
+                  format={"DD/MM/YYYY"}
+                  size="large"
+                  style={{ width: "100%" }}
+                  placeholder="Select Sales Date."
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={20}>
+            <Col span={12}>
+              <Form.Item
+                className="create_farm_form_item"
+                name="product"
+                label="Product"
+                rules={[{ required: true, message: "Please select Product!" }]}
               >
-                {productMaster?.map((el) => (
-                  <Option key={el.code} value={el.code}>
-                    {el.name}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={7}>
-            <Form.Item
-              className="create_farm_form_item"
-              name="quantity"
-              label="Quantity"
-              rules={[
-                { required: true, message: "Please enter product quantity!" },
-              ]}
-            >
-              <Input
-                className="farm_code_input"
-                size="large"
-                placeholder="Enter Product Capacity"
-              />
-            </Form.Item>
-          </Col>
-          <Col span={5}>
-            <Form.Item
-              className="create_farm_form_item"
-              name="price_per_kg"
-              label="Price Per Kg"
-              rules={[{ required: true, message: "Please enter price per kg" }]}
-            >
-              <Input
-                prefix="₹"
-                className="farm_code_input"
-                size="large"
-                placeholder="Enter your Farm Code here"
-              />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row className="create_farm_action_button_area">
-          <Col span={24} style={{ textAlign: "left" }}>
-            <Button
-              loading={isLoading}
-              style={{ padding: "9px 38px", height: "auto" }}
-              className="create_farm_form_item_buttons"
-              type="primary"
-              htmlType="submit"
-            >
-              Create
-            </Button>
-            <Button
-              style={{
-                paddingTop: "9px",
-                paddingBottom: "9px",
-                height: "auto",
-                margin: "0 12px",
-              }}
-              className="create_farm_form_item_buttons"
-              onClick={() => {
-                navigate("/transactions", {
-                  state: {
-                    activeTab: "1",
-                    activeName: "Sales",
-                    activeLink: "sales",
-                  },
-                });
-              }}
-            >
-              Cancel
-            </Button>
-          </Col>
-        </Row>
-      </Form>
-      <Modal
-        title={null}
-        onCancel={() => setIsModalVisible(false)}
-        visible={isModalVisible}
-        footer={null}
-      >
-        <CreateCustomer
-          setCustomerDetail={setCustomerDetail}
-          setIsModalVisible={setIsModalVisible}
-        />
-      </Modal>
-    </div>
+                <Select
+                  showSearch
+                  optionFilterProp="children"
+                  size="large"
+                  placeholder="Select a Product"
+                >
+                  {productMaster?.map((el) => (
+                    <Option key={el.code} value={el.code}>
+                      {el.name}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={7}>
+              <Form.Item
+                className="create_farm_form_item"
+                name="quantity"
+                label="Quantity"
+                rules={[
+                  { required: true, message: "Please enter product quantity!" },
+                ]}
+              >
+                <Input
+                  type="number"
+                  className="farm_code_input"
+                  size="large"
+                  placeholder="Enter Product Quantity"
+                />
+              </Form.Item>
+            </Col>
+            <Col span={5}>
+              <Form.Item
+                className="create_farm_form_item"
+                name="price_per_kg"
+                label="Price Per Kg"
+                rules={[
+                  { required: true, message: "Please enter price per kg" },
+                ]}
+              >
+                <Input
+                  type="number"
+                  prefix="₹"
+                  className="farm_code_input"
+                  size="large"
+                  placeholder="Enter Product Price per Kg"
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row className="create_farm_action_button_area">
+            <Col span={24} style={{ textAlign: "left" }}>
+              <Button
+                loading={isLoading}
+                style={{ padding: "9px 38px", height: "auto" }}
+                className="create_farm_form_item_buttons"
+                type="primary"
+                htmlType="submit"
+              >
+                Create
+              </Button>
+              <Button
+                style={{
+                  paddingTop: "9px",
+                  paddingBottom: "9px",
+                  height: "auto",
+                  margin: "0 12px",
+                }}
+                className="create_farm_form_item_buttons"
+                onClick={() => {
+                  navigate("/transactions", {
+                    state: {
+                      activeTab: "1",
+                      activeName: "Sales",
+                      activeLink: "sales",
+                    },
+                  });
+                }}
+              >
+                Cancel
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+        <Modal
+          destroyOnClose
+          title={null}
+          onCancel={() => setIsModalVisible(false)}
+          visible={isModalVisible}
+          footer={null}
+        >
+          <CreateCustomer
+            setCustomerDetail={setCustomerDetail}
+            setIsModalVisible={setIsModalVisible}
+          />
+        </Modal>
+      </div>
+    </>
   );
 }
