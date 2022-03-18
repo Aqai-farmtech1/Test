@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { createCustomer } from "../../api/customer.api";
 import tryCatch from "../../helper/tryCatch.helper";
 import useMasters from "../../hooks/useMasters";
+import { toSentenceCase } from "../../utils/toSentenceCase";
 import "./createsalesorder.css";
 
 const { Option } = Select;
@@ -15,15 +16,21 @@ export default function CreateCustomer({
   const [isLoading, setIsLoading] = useState(false);
   const { stateMaster } = useMasters();
   const [form] = Form.useForm();
+  const [selectedCustomerType, setSelectedCustomertype] = useState("1");
 
   const handleFormSubmit = async (values) => {
+    const postData = {
+      ...values,
+      full_name: toSentenceCase(values.full_name),
+      organization_name: toSentenceCase(values.organization_name),
+    };
     message.loading({
       content: "Creating Customer...",
       key: "createCustomer",
       duration: 0,
     });
     const [customerResponse, customerError] = await tryCatch(
-      createCustomer(values)
+      createCustomer(postData)
     );
 
     if (!customerError) {
@@ -59,7 +66,10 @@ export default function CreateCustomer({
           initialValue={"1"}
           rules={[{ required: true, message: "Customer type is Required!" }]}
         >
-          <Radio.Group size="large">
+          <Radio.Group
+            onChange={(e) => setSelectedCustomertype(e.target.value)}
+            size="large"
+          >
             <Radio value="1">Individual</Radio>
             <Radio value="2">Organisation</Radio>
           </Radio.Group>
@@ -85,7 +95,7 @@ export default function CreateCustomer({
               <Input
                 style={{ textTransform: "capitalize" }}
                 size="large"
-                placeholder="Enter Customer Name here"
+                placeholder="Enter Customer Name"
               />
             </Form.Item>
           </Col>
@@ -109,12 +119,33 @@ export default function CreateCustomer({
               <Input
                 className="farm_code_input"
                 size="large"
-                placeholder="Enter Customer Mobile Number here"
+                placeholder="Enter Customer Mobile Number"
               />
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={20}>
+          {selectedCustomerType === "2" && (
+            <Col span={12}>
+              <Form.Item
+                className="create_farm_form_item"
+                name="organization_name"
+                label="Farm Name"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please enter Farm Name!",
+                  },
+                ]}
+              >
+                <Input
+                  style={{ textTransform: "capitalize" }}
+                  size="large"
+                  placeholder="Enter Farm Name"
+                />
+              </Form.Item>
+            </Col>
+          )}
           <Col span={12}>
             <Form.Item
               className="create_farm_form_item"
@@ -125,6 +156,7 @@ export default function CreateCustomer({
                   type: "email",
                   message: "Please enter valid email!",
                 },
+                { required: true, message: "Please enter Email!" },
               ]}
             >
               <Input size="large" placeholder="Enter customer email id here" />

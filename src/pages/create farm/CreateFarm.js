@@ -275,7 +275,7 @@ export default function CreateFarm() {
                               },
                             ]}
                           >
-                            <InputNumber size="large" min={1} />
+                            <Input type="number" size="large" min={1} />
                           </Form.Item>
                           {fields.length > 1 && (
                             <MinusCircleOutlined
@@ -326,7 +326,11 @@ export default function CreateFarm() {
                   },
                 ]}
               >
-                <Input size="large" placeholder="Enter your Mobile No " />
+                <Input
+                  type={"number"}
+                  size="large"
+                  placeholder="Enter your Mobile No "
+                />
               </Form.Item>
             </Col>
             <Col span={12}>

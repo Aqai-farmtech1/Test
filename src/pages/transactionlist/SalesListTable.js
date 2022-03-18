@@ -1,4 +1,4 @@
-import { Button, Modal, Table } from "antd";
+import { Button, Modal, Table, Tag } from "antd";
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./transactionlist.css";
@@ -23,6 +23,13 @@ export default function SalesListTable({
   const [productCapacity, setProductCapacity] = useState(0);
   const [orderId, setOrderId] = useState(0);
 
+  const statusTags = {
+    1: "warning",
+    2: "processing",
+    3: "success",
+    4: "default",
+  };
+
   const columns = [
     {
       title: "S.O Number",
@@ -31,6 +38,7 @@ export default function SalesListTable({
     {
       title: "Batch Id",
       dataIndex: "batch_id",
+      render: (value) => value || "-",
     },
     {
       title: "Farm",
@@ -57,6 +65,9 @@ export default function SalesListTable({
     {
       title: "Status",
       dataIndex: "order_status_name",
+      render: (value, columns) => (
+        <Tag color={statusTags[columns.order_status]}>{value}</Tag>
+      ),
     },
     {
       title: "Action",

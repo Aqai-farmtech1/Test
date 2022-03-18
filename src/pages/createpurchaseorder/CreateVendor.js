@@ -10,6 +10,7 @@ const { Option } = Select;
 
 export default function CreateVendor({ setIsModalVisible, setVendorDetail }) {
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedCustomerType, setSelectedCustomertype] = useState("1");
   const { stateMaster } = useMasters();
   const [form] = Form.useForm();
   const navigate = useNavigate();
@@ -56,7 +57,10 @@ export default function CreateVendor({ setIsModalVisible, setVendorDetail }) {
           initialValue={"1"}
           rules={[{ required: true, message: "Vendor type is Required!" }]}
         >
-          <Radio.Group size="large">
+          <Radio.Group
+            onChange={(e) => setSelectedCustomertype(e.target.value)}
+            size="large"
+          >
             <Radio value="1">Individual</Radio>
             <Radio value="2">Organisation</Radio>
           </Radio.Group>
@@ -112,12 +116,36 @@ export default function CreateVendor({ setIsModalVisible, setVendorDetail }) {
           </Col>
         </Row>
         <Row gutter={20}>
+          {selectedCustomerType === "2" && (
+            <Col span={12}>
+              <Form.Item
+                className="create_farm_form_item"
+                name="organization_name"
+                label="Farm Name"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please enter Farm Name!",
+                  },
+                ]}
+              >
+                <Input
+                  size="large"
+                  placeholder="Enter customer email id here"
+                />
+              </Form.Item>
+            </Col>
+          )}
           <Col span={12}>
             <Form.Item
               className="create_farm_form_item"
               name="organization_email"
               label="Email"
               rules={[
+                {
+                  required: true,
+                  message: "Please enter Email!",
+                },
                 {
                   type: "email",
                   message: "Please enter valid email!",

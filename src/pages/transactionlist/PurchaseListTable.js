@@ -1,4 +1,4 @@
-import { Button, Table } from "antd";
+import { Button, Table, Tag } from "antd";
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./transactionlist.css";
@@ -24,6 +24,13 @@ export default function PurchaseListTable({
   const [productCapacity, setProductCapacity] = useState(0);
   const [orderId, setOrderId] = useState(0);
 
+  const statusTags = {
+    1: "warning",
+    2: "processing",
+    3: "success",
+    4: "default",
+  };
+
   const columns = [
     {
       title: "P.O Number",
@@ -32,6 +39,7 @@ export default function PurchaseListTable({
     {
       title: "Batch Id",
       dataIndex: "batch_id",
+      render: (value) => value || "-",
     },
     {
       title: "Farm",
@@ -58,6 +66,9 @@ export default function PurchaseListTable({
     {
       title: "Status",
       dataIndex: "order_status_name",
+      render: (value, columns) => (
+        <Tag color={statusTags[columns.order_status]}>{value}</Tag>
+      ),
     },
     {
       title: "Action",
