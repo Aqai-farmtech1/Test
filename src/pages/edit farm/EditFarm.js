@@ -406,6 +406,9 @@ export default function EditFarm() {
                     ))}
                     <Form.Item>
                       <Button
+                        disabled={
+                          productMaster.length === selectedProduct.length
+                        }
                         type="primary"
                         onClick={() => {
                           setSelectedProduct(form.getFieldValue("products"));

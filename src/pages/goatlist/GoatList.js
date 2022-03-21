@@ -80,7 +80,7 @@ export default function GoatList() {
       width: "8%",
       render: (value, columns) => (
         <div className="action_button_div">
-          <NavLink to={`${columns.key}`}>
+          <NavLink to={`/goat/${farmid}/${columns.key}`}>
             <Button
               className="user_list_buttons"
               style={{ borderRadius: "4px" }}
@@ -115,7 +115,7 @@ export default function GoatList() {
     getGoatList();
     const farmName = farmMaster?.find(
       (el) => Number(el.id) === Number(farmid)
-    ).farm_name;
+    )?.farm_name;
     setPageTitle(farmName);
   }, []);
   return (

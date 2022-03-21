@@ -17,7 +17,18 @@ export const formPincodeInputRestriction = (e) => {
 export const formPhoneInputRestriction = (e) => {
   const pressedKey = e.key;
   const curValueLength = e?.target?.value?.length;
-  if (!(pressedKey === "Backspace") && curValueLength > 12) {
+  if (!(pressedKey === "Backspace") && curValueLength > 9) {
+    e.preventDefault();
+  }
+};
+
+export const formEmailInputRestriction = (e) => {
+  const value = e.target.value;
+  const pressedKey = e.key;
+  const emailPattern = new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/);
+  const isEmail = emailPattern.test(value);
+  console.log(isEmail);
+  if (!(pressedKey === "Backspace") && !isEmail) {
     e.preventDefault();
   }
 };
