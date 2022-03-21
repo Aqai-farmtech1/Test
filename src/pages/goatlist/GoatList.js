@@ -34,6 +34,7 @@ export default function GoatList() {
       }));
       setTotalPages(goatResponse.data.count);
       setIsLoading(false);
+      // setPageTitle(alteredData[0]?.farm_name);
       setGoatList(alteredData);
     } else {
       setIsLoading(false);

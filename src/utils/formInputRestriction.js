@@ -21,14 +21,3 @@ export const formPhoneInputRestriction = (e) => {
     e.preventDefault();
   }
 };
-
-export const formEmailInputRestriction = (e) => {
-  const value = e.target.value;
-  const pressedKey = e.key;
-  const emailPattern = new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/);
-  const isEmail = emailPattern.test(value);
-  console.log(isEmail);
-  if (!(pressedKey === "Backspace") && !isEmail) {
-    e.preventDefault();
-  }
-};

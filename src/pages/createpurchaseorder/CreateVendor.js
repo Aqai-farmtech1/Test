@@ -125,6 +125,7 @@ export default function CreateVendor({ setIsModalVisible, setVendorDetail }) {
               ]}
             >
               <Input
+                addonBefore="+91"
                 type={"number"}
                 onKeyDown={formPhoneInputRestriction}
                 className="farm_code_input"
