@@ -305,6 +305,12 @@ export default function EditFarm() {
                     required: true,
                     message: "Please enter Farm Latitude!",
                   },
+                  {
+                    pattern: new RegExp(
+                      /^-?([1-8]?[1-9]|[1-9]0)\.{1}\d{1,15}/g
+                    ),
+                    message: "Invalid Latitude!",
+                  },
                 ]}
               >
                 <Input size="large" placeholder="Enter Farm Lattitude Here" />
@@ -317,6 +323,12 @@ export default function EditFarm() {
                 label="Longitude"
                 rules={[
                   { required: true, message: "Please enter Farm Longitude!" },
+                  {
+                    pattern: new RegExp(
+                      /^-?([1]?[1-7][1-9]|[1]?[1-8][0]|[1-9]?[0-9])\.{1}\d{1,6}$/
+                    ),
+                    message: "Invalid Longitude!",
+                  },
                 ]}
               >
                 <Input
