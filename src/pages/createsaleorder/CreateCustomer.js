@@ -126,6 +126,7 @@ export default function CreateCustomer({
               ]}
             >
               <Input
+                addonBefore="+91"
                 onKeyDown={formPhoneInputRestriction}
                 className="farm_code_input"
                 size="large"

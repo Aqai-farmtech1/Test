@@ -20,7 +20,6 @@ import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { createFarm } from "../../api/farm.api";
 import { toSentenceCase } from "../../utils/toSentenceCase";
 import {
-  formEmailInputRestriction,
   formNameInputRestriction,
   formPhoneInputRestriction,
   formPincodeInputRestriction,
@@ -214,7 +213,9 @@ export default function CreateFarm() {
                 rules={[
                   { required: true, message: "Please enter Farm Longitude!" },
                   {
-                    pattern: new RegExp(/^-?(([-+]?)([\d]{1,3})((\.)(\d+))?)/g),
+                    pattern: new RegExp(
+                      /^-?([1]?[1-7][1-9]|[1]?[1-8][0]|[1-9]?[0-9])\.{1}\d{1,6}$/
+                    ),
                     message: "Invalid Longitude!",
                   },
                 ]}
@@ -299,7 +300,6 @@ export default function CreateFarm() {
                             <MinusCircleOutlined
                               style={{ marginLeft: "10px" }}
                               onClick={(va, i, j) => {
-                                console.log(va, i, j);
                                 setSelectedProduct(
                                   form.getFieldValue("products")
                                 );
@@ -313,7 +313,8 @@ export default function CreateFarm() {
                     <Form.Item>
                       <Button
                         disabled={
-                          productMaster.length === selectedProduct.length
+                          productMaster.length === selectedProduct.length ||
+                          !selectedProduct.length
                         }
                         type="primary"
                         onClick={() => {
@@ -348,6 +349,7 @@ export default function CreateFarm() {
                 ]}
               >
                 <Input
+                  addonBefore="+91"
                   onKeyDown={(e) => formPhoneInputRestriction(e)}
                   type={"number"}
                   size="large"

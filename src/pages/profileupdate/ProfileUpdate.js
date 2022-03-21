@@ -250,6 +250,7 @@ export default function ProfileUpdate() {
                 ]}
               >
                 <Input
+                  addonBefore="+91"
                   onKeyDown={formPhoneInputRestriction}
                   type="number"
                   size="large"
@@ -274,6 +275,7 @@ export default function ProfileUpdate() {
                 ]}
               >
                 <Input
+                  addonBefore="+91"
                   onKeyDown={formPhoneInputRestriction}
                   size="large"
                   placeholder="Enter your Alternate Mobile No"
