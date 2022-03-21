@@ -20,6 +20,7 @@ import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { createFarm } from "../../api/farm.api";
 import { toSentenceCase } from "../../utils/toSentenceCase";
 import {
+  formEmailInputRestriction,
   formNameInputRestriction,
   formPhoneInputRestriction,
   formPincodeInputRestriction,
@@ -194,6 +195,12 @@ export default function CreateFarm() {
                     required: true,
                     message: "Please enter Farm Latitude!",
                   },
+                  {
+                    pattern: new RegExp(
+                      /^-?([1-8]?[1-9]|[1-9]0)\.{1}\d{1,15}/g
+                    ),
+                    message: "Invalid Latitude!",
+                  },
                 ]}
               >
                 <Input size="large" placeholder="Enter Farm Lattitude Here" />
@@ -206,6 +213,10 @@ export default function CreateFarm() {
                 label="Longitude"
                 rules={[
                   { required: true, message: "Please enter Farm Longitude!" },
+                  {
+                    pattern: new RegExp(/^-?(([-+]?)([\d]{1,3})((\.)(\d+))?)/g),
+                    message: "Invalid Longitude!",
+                  },
                 ]}
               >
                 <Input
@@ -301,6 +312,9 @@ export default function CreateFarm() {
                     ))}
                     <Form.Item>
                       <Button
+                        disabled={
+                          productMaster.length === selectedProduct.length
+                        }
                         type="primary"
                         onClick={() => {
                           setSelectedProduct(form.getFieldValue("products"));
@@ -350,7 +364,7 @@ export default function CreateFarm() {
                   { required: true, message: "Please enter your Email Id!" },
                   {
                     type: "email",
-                    message: "Invalid Email!",
+                    message: "Ivalid Email!",
                   },
                 ]}
               >

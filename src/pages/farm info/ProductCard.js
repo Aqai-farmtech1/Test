@@ -2,9 +2,10 @@ import React from "react";
 import "./farminfo.css";
 import { productGoat } from "../../utils/constants";
 import { Button, Divider, Skeleton } from "antd";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 export default function ProductCard({ productDetail, isLoading }) {
+  const { farmid } = useParams();
   return (
     <div className="product_card_main">
       <div className="product_card_image_conatiner">
@@ -78,7 +79,7 @@ export default function ProductCard({ productDetail, isLoading }) {
             </div>
           </div>
           <div className="product_details_view_button_container">
-            <NavLink to="goat">
+            <NavLink to={`/farm/${farmid}/goat`}>
               <Button
                 className="product_details_view_button"
                 type="primary"
