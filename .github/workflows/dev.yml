@@ -1,0 +1,33 @@
+name: Development
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: 
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v2
+        with:
+          path: "dev"
+          
+      - name: Install Packages & Setup
+        run: |
+          cd dev/
+          npm install
+      
+      - name: Build
+        run: |
+          cd dev/
+          npm run build
+          
+      - name: GZip File
+        run: |
+          cd dev
+          find dist -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|css\)$' -exec gzip -f -k {} \;
+      - name: systemd service
+        run: sudo service aqgromalin-farm-dev-react restart
+      
+      - name: Nginx Service
+        run: sudo service nginx restart
