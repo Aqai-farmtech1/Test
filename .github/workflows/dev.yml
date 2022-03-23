@@ -26,6 +26,7 @@ jobs:
         run: |
           cd dev
           find dist -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|css\)$' -exec gzip -f -k {} \;
+          
       - name: systemd service
         run: sudo service aqgromalin-farm-dev-react restart
       
